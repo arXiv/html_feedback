@@ -8,11 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const close = modal.querySelector('.close')
   
 
+//click the button and the modal appear
 reportBtn.addEventListener("click", () => {
     //createReportBox();
     modal.style.display = 'block'
   });
 
+//generate the screenshot, next step: create screenshot of only highlighted area, use existing library to write that
 function generate_selected_screenshot(){
   const viewportWidth = document.documentElement.clientWidth;
   const viewportHeight = document.documentElement.clientHeight;
@@ -38,6 +40,7 @@ function generate_selected_screenshot(){
   });
 };
 
+//highlight selection, next step:optimize the selection element layer, like Table S1.T1, optimize the button format and area, optimize the sensitivity of selection(like mouseup)
 document.onselectionchange = function () {
     const selectedText = window.getSelection();
     if (selectedText.toString().trim()) {
@@ -110,17 +113,8 @@ document.onselectionchange = function () {
     }
   };
 
-  // Rest of the code remains the same (createReportBox, closeReportBox, takeScreenshot)
-
-/*document.addEventListener("keydown", (e) => {
-    if (e.key === "s") {
-      createReportBox();
-    } else if (e.key === "c") {
-      closeReportBox();
-    }
-  });*/
-
-
+  
+  //click the button to generate the screenshot, next step: use external library to fasten the process
   document.getElementById("take-screenshot").addEventListener("click", function() {
     modal.style.display = 'none';
     // Capture screenshot of the whole page
@@ -148,6 +142,7 @@ document.onselectionchange = function () {
     });
   });
   
+  //submit to the backend, next step: finish
   function submitBugReport() {
     document.getElementById('notification').style= 'display: block';
     /*
@@ -170,6 +165,7 @@ document.onselectionchange = function () {
       });*/
   }
 
+  //submit process, next step: finish
   document.getElementById("myFormContent").addEventListener("submit", function(event) {
     submitBugReport()
     
@@ -186,14 +182,14 @@ document.onselectionchange = function () {
     console.log('Browser:', browserName, browserVersion);
   });
 
+  //Hide the modal
   close.addEventListener('click', function(event) {
-    // Hide the modal
     modal.style.display = 'none';
   });
   
+  // Hide the modal if clicked outside
   window.addEventListener('click', function(event) {
     if (event.target == modal) {
-      // Hide the modal if clicked outside
       modal.style.display = 'none';
     }
   })
