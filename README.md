@@ -53,3 +53,5 @@ Start the server by `python app.py` or `flask --app app run`
 5. The unclear screenshot issue is caused by changing the scale. After designing the new report box, the scale was changed back to the old one, making it clear again. I also found that some fonts cannot be captured, which is likely due to them being re-rendered later. Tried using rasterizeHTML, but it was not successful.![](assets/image-20230420001656731.png)
 
 ![image-20230420001808605](assets/image-20230420001808605.png)
+6. We made the screenshot in the form clickable. By clicking on the screenshot, it will be enlarged so that users can see the details on it.
+7. The screenshot could not show the exact contents that are highlighted by the users before. After modifying, the selected texts stay highlighted in the screenshot.
