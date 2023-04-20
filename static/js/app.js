@@ -200,45 +200,4 @@ document.onselectionchange = function () {
       modal.style.display = 'none';
     }
   })
-  
-  /*
-  document.getElementById("myFormContent").addEventListener("submit", function(event) {
-    // Prevent form from submitting normally
-    event.preventDefault();
-  
-    // Send form data and screenshot to backend using AJAX request
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        //console.log(xhr.responseText);
-        console.log("send data")
-      }
-    };
-    var formData = new FormData(document.getElementById("myFormContent"));
-    xhr.send(formData);
-    
-    // Extract the browser name and version information
-    var userAgent = navigator.userAgent;
-    var browserInfo = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i);
-    var browserName = browserInfo[1];
-    var browserVersion = browserInfo[2];
-  
-    //Capitalize the first letter of the browser name
-    browserName = browserName.charAt(0).toUpperCase() + browserName.slice(1);
-  
-    // Print the browser name and version information
-    console.log('Browser:', browserName, browserVersion);
-
-// Hide the modal if clicked outside
-window.addEventListener('click', function(event) {
-  if (event.target == modal) {
-    // Clear the screenshot data
-    document.getElementById("screenshot").value = "";
-    document.getElementById("screenshot-image").src = "";
-    // Hide the modal
-    modal.style.display = 'none';
-  }
-})
 });
