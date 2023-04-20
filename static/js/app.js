@@ -1,9 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const reportBtn = document.querySelector(".report-btn");
-  const content = document.querySelector(".content");
-  let reportBox;
-  let closeBtn;
-  let textReport;
   const modal = document.getElementById('myForm')
   //const close = modal.querySelector('.close')
   const close= modal.querySelector('.btn-close')
@@ -245,6 +240,8 @@ document.addEventListener("mouseup", function (event) {
   close.addEventListener('click', function(event) {
     modal.style.display = 'none';
     // Delay the execution of the modal close code by 3 second
+    document.getElementById("screenshot").value = "";
+    document.getElementById("screenshot-image").src = "";
   });
   
   // Hide the modal if clicked outside
