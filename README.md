@@ -36,7 +36,7 @@ Start the server by `python app.py` or `flask --app app run`
 3. Fix the bug of the existing project.
 
 
-#### Develop Log 4/19
+### Develop Log 4/19
 #### Issues Found
 
 1. The bug button keeps floating.
