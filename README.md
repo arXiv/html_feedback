@@ -39,6 +39,7 @@ Start the server by `python app.py` or `flask --app app run`
 ## Develop Log 4/20
 
 1. Fix the issue of the report box not appearing after selecting text and clicking the button. When the report button is clicked, the mouse release (`mouseup`) event is triggered before the click (`click`) event. As a result, during the processing of the `mouseup` event, the button is removed, preventing the `click` event from triggering properly.
+1. To accurately capture the location of selected text, try to store the selected text in an HTML element, then take a screenshot of that element. This approach allows you to precisely capture the selected text without having to rely on any highlighting or other visual cues.
 
 
 ## Develop Log 4/19
