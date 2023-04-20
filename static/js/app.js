@@ -25,7 +25,7 @@ function generate_selected_screenshot() {
 
   // Create a div element to contain the selected text
   const selectedTextDiv = document.createElement("div");
-  selectedTextDiv.innerText = selectedText;
+  selectedTextDiv.textContent = selectedText;
   document.body.appendChild(selectedTextDiv);
 
   // Take the screenshot
