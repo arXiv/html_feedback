@@ -79,10 +79,16 @@ function generate_selected_screenshot() {
 }
 
 
-
+let selectedText;
+let smallReportButton;
 
 //highlight selection, next step:optimize the selection element layer, like Table S1.T1, optimize the button format and area, optimize the sensitivity of selection(like mouseup)
 document.addEventListener("mouseup", function (event) {
+
+  if (event.target.id === "small-report-button") {
+    return;
+  }
+
   const selectedText = window.getSelection();
   if (selectedText.toString().trim()) {
     // Remove any previous report buttons
@@ -138,12 +144,12 @@ document.addEventListener("mouseup", function (event) {
     }
 
     document.body.appendChild(smallReportButton);
-
+    console.log("Report button added!");
     // Handle the report button click event
     smallReportButton.addEventListener("click", function () {
-      //createReportBox();
-      generate_selected_screenshot()
-      modal.style.display = 'block'
+      console.log("Report button clicked!");
+      generate_selected_screenshot();
+      modal.style.display = 'block';
       smallReportButton.remove();
     });
 
@@ -165,6 +171,7 @@ document.addEventListener("mouseup", function (event) {
     }
   }
 });
+
 
   //click the button to generate the screenshot, next step: use external library to fasten the process
   // This is different from the screenshot of the selected area.

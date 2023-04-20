@@ -33,16 +33,21 @@ Start the server by `python app.py` or `flask --app app run`
 ## Future work plan
 1. Add the feature of shortcut initiation for the convenience of screenreader users
 2. Show the demo to our users and optimize the user experience based on their feedback
-3. Fix the bug of the existing project.
+3. 
+
+## Develop Log 4/20
+
+#### Completed Work(For Whole Group)
+
+1. Fix the issue of the report box not appearing after selecting text and clicking the button. When the report button is clicked, the mouse release (`mouseup`) event is triggered before the click (`click`) event. As a result, during the processing of the `mouseup` event, the button is removed, preventing the `click` event from triggering properly.
 
 
 ## Develop Log 4/19
-#### Issues Found
+#### Found Issues
 
 1. The bug button keeps floating.
 2. Need to highlight selected text and make it visible during screenshot.
-3. Avoid taking screenshots of all areas.
-4. Research indicates that a complete update may be necessary.
+3. Avoid taking screenshots of all areas. Try to make screenshot focus on select text.
 5. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
 #### Completed Work(For Whole Group)
 
