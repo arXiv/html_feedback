@@ -17,7 +17,7 @@ document.getElementById('openForm').addEventListener("click", () => {
 
 // Generate the screenshot. Only capture the selected area.
 // next step: create screenshot of only highlighted area, use existing library to write that
-function generate_selected_screenshot(){
+function generate_selected_screenshot() {
   const viewportWidth = document.documentElement.clientWidth;
   const viewportHeight = document.documentElement.clientHeight;
   const scrollX = window.scrollX;
@@ -29,18 +29,43 @@ function generate_selected_screenshot(){
     scrollY: -scrollY,
     windowWidth: document.documentElement.scrollWidth,
     windowHeight: document.documentElement.scrollHeight,
-    //scale: 0.5 // Set the scale to 50% (or any other value you want)
+    scale: 1.0, // Set the scale to 30% to reduce image size
+    useCORS: true // Use CORS to speed up screenshot generation
   }).then((canvas) => {
     var imageData = canvas.toDataURL("image/png");
-    modal.style.display = 'block';
+    modal.style.display = "block";
     // Set screenshot data in hidden input field or image element
     document.getElementById("screenshot").value = imageData;
-    document.getElementById("screenshot-image").src = imageData;
+    const screenshotImage = document.getElementById("screenshot-image");
+    screenshotImage.src = imageData;
 
     // Show screenshot image or input field
-    document.getElementById("screenshot-image").style= "display: block";
+    screenshotImage.style = "display: block";
+    screenshotImage.style.maxWidth = "300px";
+    screenshotImage.style.maxHeight = "300px";
+
+    // Add event listener to enlarge the image when clicked
+    screenshotImage.addEventListener("click", () => {
+      const enlargedImage = document.createElement("img");
+      enlargedImage.src = screenshotImage.src;
+      enlargedImage.style.position = "fixed";
+      enlargedImage.style.top = "50%";
+      enlargedImage.style.left = "50%";
+      enlargedImage.style.transform = "translate(-50%, -50%)";
+      enlargedImage.style.maxWidth = "50%";
+      enlargedImage.style.maxHeight = "50%";
+      enlargedImage.style.zIndex = "99999";
+      enlargedImage.style.cursor = "zoom-out";
+      document.body.appendChild(enlargedImage);
+
+      // Add event listener to remove enlarged image when clicked
+      enlargedImage.addEventListener("click", () => {
+        document.body.removeChild(enlargedImage);
+      });
+    });
   });
-};
+}
+
 
 
 //highlight selection, next step:optimize the selection element layer, like Table S1.T1, optimize the button format and area, optimize the sensitivity of selection(like mouseup)
