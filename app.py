@@ -22,7 +22,7 @@ class Upload(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def page():
-    return render_template('output.html')
+    return render_template('index.html')
 
 '''
 @app.route('/form', methods=['GET', 'POST'])
