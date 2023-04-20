@@ -13,43 +13,40 @@ document.getElementById('openForm').addEventListener("click", () => {
 // Generate the screenshot. Only capture the selected area.
 // next step: create screenshot of only highlighted area, use existing library to write that
 function generate_selected_screenshot() {
-  const viewportWidth = document.documentElement.clientWidth;
-  const viewportHeight = document.documentElement.clientHeight;
-  const scrollX = window.scrollX;
-  const scrollY = window.scrollY;
-  
-  // Get the selected text
+  // 获取选中的文本
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
 
-  // Create a span element to wrap the selected text
+  // 创建一个隐藏的div，并将选中的文本添加到其中
+  const hiddenDiv = document.createElement("div");
+  hiddenDiv.style.position = "absolute";
+  hiddenDiv.style.overflow = "hidden";
+  hiddenDiv.style.width = "auto";
+  hiddenDiv.style.height = "auto";
+  hiddenDiv.style.visibility = "hidden";
+  hiddenDiv.style.zIndex = "-9999";
+  document.body.appendChild(hiddenDiv);
+
+  // 创建一个包装选中文本的span元素，并设置高亮样式
   const selectedTextSpan = document.createElement("span");
   selectedTextSpan.style.backgroundColor = "yellow";
   selectedTextSpan.style.color = "black";
   selectedTextSpan.appendChild(range.cloneContents());
-  range.deleteContents();
-  range.insertNode(selectedTextSpan);
+  hiddenDiv.appendChild(selectedTextSpan);
 
-  // Take the screenshot
-  html2canvas(document.body, {
-    width: viewportWidth,
-    height: viewportHeight,
-    scrollX: -scrollX,
-    scrollY: -scrollY,
-    windowWidth: document.documentElement.scrollWidth,
-    windowHeight: document.documentElement.scrollHeight,
-    scale: 1.0,
+  // 使用html2canvas获取包含高亮文本的隐藏div的截图
+  html2canvas(hiddenDiv, {
     useCORS: true
   }).then((canvas) => {
-    // Remove the span element from the DOM
-    selectedTextSpan.outerHTML = selectedTextSpan.innerHTML;
+    // 从DOM中移除隐藏的div
+    document.body.removeChild(hiddenDiv);
 
     var imageData = canvas.toDataURL("image/png");
     modal.style.display = "block";
     document.getElementById("screenshot").value = imageData;
     const screenshotImage = document.getElementById("screenshot-image");
     screenshotImage.src = imageData;
-    screenshotImage.style = "display: block";
+    screenshotImage.style.display = "block";
     screenshotImage.style.maxWidth = "300px";
     screenshotImage.style.maxHeight = "300px";
 
@@ -72,6 +69,8 @@ function generate_selected_screenshot() {
     });
   });
 }
+
+
 
 
 let selectedText;
