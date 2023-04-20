@@ -33,3 +33,4 @@ Start the server by `python app.py` or `flask --app app run`
 ## Future work plan
 1. Add the feature of shortcut initiation for the convenience of screenreader users
 2. Show the demo to our users and optimize the user experience based on their feedback
+3. Fix the bug of the existing project.
