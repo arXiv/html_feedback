@@ -5,14 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
   let closeBtn;
   let textReport;
   const modal = document.getElementById('myForm')
-  const close = modal.querySelector('.close')
+  //const close = modal.querySelector('.close')
+  const close= modal.querySelector('.btn-close')
   
 
 //click the button and the modal appear
-reportBtn.addEventListener("click", () => {
-    //createReportBox();
-    modal.style.display = 'block'
-  });
+document.getElementById('openForm').addEventListener("click", () => {
+  modal.style.display = 'block'
+});
+//reportBtn.addEventListener("click", () => {
 
 //generate the screenshot, next step: create screenshot of only highlighted area, use existing library to write that
 function generate_selected_screenshot(){
@@ -27,7 +28,7 @@ function generate_selected_screenshot(){
     scrollY: -scrollY,
     windowWidth: document.documentElement.scrollWidth,
     windowHeight: document.documentElement.scrollHeight,
-    scale: 0.5 // Set the scale to 50% (or any other value you want)
+    //scale: 0.5 // Set the scale to 50% (or any other value you want)
   }).then((canvas) => {
     var imageData = canvas.toDataURL("image/png");
     modal.style.display = 'block';
@@ -80,6 +81,9 @@ document.onselectionchange = function () {
       // Show the report button
       const smallReportButton = document.createElement("button");
       smallReportButton.id = "small-report-button";
+      smallReportButton.type='button'
+      smallReportButton.className='btn btn-secondary btn-sm'
+      smallReportButton.style.backgroundColor='#b31b1b'
       smallReportButton.innerHTML = "Report";
       smallReportButton.style.position = "fixed";
       smallReportButton.style.left = `${rect.left + rect.width / 2}px`;
@@ -129,7 +133,7 @@ document.onselectionchange = function () {
       scrollY: -scrollY,
       windowWidth: document.documentElement.scrollWidth,
       windowHeight: document.documentElement.scrollHeight,
-      scale:0.5
+      //scale:0.5
     }).then((canvas) => {
       var imageData = canvas.toDataURL("image/png");
       modal.style.display = 'block';
@@ -185,6 +189,7 @@ document.onselectionchange = function () {
   //Hide the modal
   close.addEventListener('click', function(event) {
     modal.style.display = 'none';
+    // Delay the execution of the modal close code by 3 second
   });
   
   // Hide the modal if clicked outside

@@ -2,11 +2,12 @@ body {
     position: relative;
   }
   
-  .report-btn {
+  #openForm {
     position: fixed;
     bottom: 20px;
     right: 20px;
     font-size: 20px;
+    background-color: #b31b1b;
   }
   
   .report-box {
@@ -56,7 +57,7 @@ body {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
+    /*width: 50%; /* Could be more or less, depending on screen size */
   }
   
   /* Close button */
