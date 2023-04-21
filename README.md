@@ -33,8 +33,11 @@ Start the server by `python app.py` or `flask --app app run`
 ## Future work & Current Problem
 1. Add the feature of shortcut initiation for the convenience of screenreader users
 2. Show the demo to our users and optimize the user experience based on their feedback
-3. For select text we can highlight now, sometimes it will make text invisiable.
+3. a. For select text we can highlight now, sometimes it will make text invisiable.
+   b. Screenshot the selected range. But small text may not build yet. it is more like source code.
+   c. Create way to locate location and screenshot by document.body!
 4. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
+   Solution?: Change document.nody to document.element. But the screenshot will become empty. Do not know why yet!
 
 ## Develop Log 4/20
 
