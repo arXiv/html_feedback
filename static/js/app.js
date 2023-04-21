@@ -13,11 +13,6 @@ document.getElementById('openForm').addEventListener("click", () => {
 // Generate the screenshot. Only capture the selected area.
 // next step: create screenshot of only highlighted area, use existing library to write that
 function generate_selected_screenshot() {
-  const viewportWidth = document.documentElement.clientWidth;
-  const viewportHeight = document.documentElement.clientHeight;
-  const scrollX = window.scrollX;
-  const scrollY = window.scrollY;
-
   // Get the selected text
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
