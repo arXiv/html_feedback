@@ -29,6 +29,7 @@ Start the server by `python app.py` or `flask --app app run`
 1. Highlight
 2. Screenshot
 3. Use shortcut "p" to open report box, and "i" to close it.
+4. [develop html](http://127.0.0.1:8080/)  [test html](http://127.0.0.1:8080/test)
 
 ## Future work & Current Problem
 1. Report Mode for ScreenReader.
@@ -46,6 +47,13 @@ Start the server by `python app.py` or `flask --app app run`
 In web development, it's sometimes necessary to solicit feedback from users or allow them to report issues. To make it easier for users to submit feedback, we can add a report box to the page where they can enter their comments or upload screenshots.
 
 To make it convenient for users to open and close the report box, we can use keyboard shortcuts. On Windows, users can press "Ctrl + /" to open the report box and "Ctrl + ." or ">" to close it. On Mac, users can press "Command + /" to open the report box and "Command + ." or ">" to close it.
+
+#### Add Test Paper
+
+[develop html](http://127.0.0.1:8080/)
+
+[test html](http://127.0.0.1:8080/test)
+This html is get from: https://ar5iv.labs.arxiv.org/html/1706.03762. 
 
 
 ## Develop Log 4/15 - 4/21
