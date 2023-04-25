@@ -32,12 +32,28 @@ Start the server by `python app.py` or `flask --app app run`
 4. Use "CT_Tech" to find add elements on HTML file.
 
 ## Future work & Current Problem
-1. Report Mode for ScreenReader.
-2. Show the demo to our users and optimize the user experience based on their feedback
-3. a. For select text we can highlight now, sometimes it will make text invisiable.
-   b. Screenshot the selected range. But small text may not build yet. it is more like source code.
-   c. Create way to locate location and screenshot by document.body!
-4. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
+#### Important
+
+1. **Put the report comments into a file (or other inspectable format) for a demo**
+2. **Implement the DOM capture (get top level element and most specific element)**
+3. **implement browser version info from javascript** 
+   Not sure what this mean?
+4. Test Highlight Function: Related to 5. So Try to solve 5a!
+   1. test highlight merged author/dept
+   2. test highlight equation
+   3. test highlighting words with extra chars like:
+      1. \ANDAshish Vaswani
+      2. Noam Shazeer1
+5. Improve for select text report function. Finish one of them.
+   a. For highlight method, sometimes it will make text invisiable.
+   b. For create div method. Some text does not included.
+   c. Try to create third method: Return the HTML file of it!
+6. Report Mode for ScreenReader.
+
+#### Future work
+
+1. Show the demo to our users and optimize the user experience based on their feedback
+2. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
    Solution?: Change document.nody to document.element. But the screenshot will become empty. Do not know why yet!
 
 ## Develop Log 4/ 22 - 4/28
@@ -47,6 +63,12 @@ Start the server by `python app.py` or `flask --app app run`
 In web development, it's sometimes necessary to solicit feedback from users or allow them to report issues. To make it easier for users to submit feedback, we can add a report box to the page where they can enter their comments or upload screenshots.
 
 To make it convenient for users to open and close the report box, we can use keyboard shortcuts. On Windows, users can press "Ctrl + /" to open the report box and "Ctrl + ." or ">" to close it. On Mac, users can press "Command + /" to open the report box and "Command + ." or ">" to close it.
+
+#### Test HTML “add /test ”
+
+#### Update Download：
+
+Now it will download html file. And later I will try to just build a html file base on the users' vision.
 
 
 ## Develop Log 4/15 - 4/21

@@ -209,10 +209,52 @@ document.addEventListener("mouseup", function (event) {
 });
 
 
+function getVisibleContent() {
+  const viewportWidth = document.documentElement.clientWidth;
+  const viewportHeight = document.documentElement.clientHeight;
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+
+  const visibleContent = document.createElement('div');
+  visibleContent.style.position = 'absolute';
+  visibleContent.style.overflow = 'hidden';
+  visibleContent.style.width = `${viewportWidth}px`;
+  visibleContent.style.height = `${viewportHeight}px`;
+  visibleContent.style.left = `${scrollX}px`;
+  visibleContent.style.top = `${scrollY}px`;
+  visibleContent.style.clipPath = `polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)`;
+  visibleContent.innerHTML = document.body.innerHTML;
+
+  return visibleContent.outerHTML;
+}
+
+function getVisibleText() {
+  const viewportWidth = document.documentElement.clientWidth;
+  const viewportHeight = document.documentElement.clientHeight;
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+
+  const wrapper = document.createElement("div");
+
+  const elements = document.elementsFromPoint(scrollX, scrollY);
+  elements.forEach((element) => {
+    if (element.getBoundingClientRect().bottom > 0) {
+      wrapper.appendChild(element.cloneNode(true));
+    }
+  });
+
+  return wrapper.innerHTML;
+}
+
+function getFullPageContent() {
+  return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+}
   //click the button to generate the screenshot, next step: use external library to fasten the process
   // This is different from the screenshot of the selected area.
   document.getElementById("take-screenshot").addEventListener("click", function() {
     modal.style.display = 'none';
+
+
     // Capture screenshot of the whole page
     const viewportWidth = document.documentElement.clientWidth;
     const viewportHeight = document.documentElement.clientHeight;
@@ -236,23 +278,30 @@ document.addEventListener("mouseup", function (event) {
   
       // Show screenshot image or input field
       document.getElementById("screenshot-image").style = "display: block";
-  
-      // Create or update a download button
-      let downloadButton = document.getElementById("download-screenshot");
-      if (!downloadButton) {
-        downloadButton = document.createElement("a");
-        downloadButton.id = "download-screenshot";
-        downloadButton.style.display = "block";
-        downloadButton.style.margin = "10px";
-  
-        // Append the download button to the modal content
-        document.getElementById("myFormContent").appendChild(downloadButton);
-      }
-      downloadButton.href = dataUrl;
-      downloadButton.download = "screenshot.png";
-      downloadButton.textContent = "Download Screenshot";
+
     });
-  });
+    // Create or update a download button
+    let visibleContentHtml = getVisibleText();
+    let downloadButton = document.createElement("a");
+    downloadButton.id = "download-screenshot";
+    downloadButton.href = "data:text/html;charset=utf-8," + encodeURIComponent(visibleContentHtml);
+    downloadButton.download = "visible-content.html";
+    downloadButton.textContent = "Download Visible Content";
+    downloadButton.style.display = "block";
+    downloadButton.style.margin = "10px";
+    document.getElementById("myFormContent").appendChild(downloadButton);
+
+    let fullPageContent = getFullPageContent();
+    let downloadButton2 = document.createElement("a");
+    downloadButton2.id = "download-screenshot2";
+    downloadButton2.href = "data:text/html;charset=utf-8," + encodeURIComponent(fullPageContent);
+    downloadButton2.download = "full-page-content.html";
+    downloadButton2.textContent = "Download Full Page Content";
+    downloadButton2.style.display = "block";
+    downloadButton2.style.margin = "10px";
+
+    document.getElementById("myFormContent").appendChild(downloadButton2);
+});
   
   
   //submit to the backend, next step: finish
@@ -283,6 +332,16 @@ document.addEventListener("mouseup", function (event) {
     // Delay the execution of the modal close code by 3 second
     document.getElementById("screenshot").value = "";
     document.getElementById("screenshot-image").src = "";
+
+    const downloadButton = document.getElementById("download-screenshot");
+    if (downloadButton) {
+      downloadButton.remove();
+    }
+
+    const downloadButton2 = document.getElementById("download-screenshot");
+    if (downloadButton2) {
+      downloadButton2.remove();
+    }
   });
   
   // Hide the modal if clicked outside
