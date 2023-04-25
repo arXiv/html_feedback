@@ -28,15 +28,24 @@ Start the server by `python app.py` or `flask --app app run`
 ## Details about the features(not finished)
 1. Highlight
 2. Screenshot
+3. Use shortcut "p" to open report box, and "i" to close it.
 
 ## Future work & Current Problem
-1. Add the feature of shortcut initiation for the convenience of screenreader users
+1. Report Mode for ScreenReader.
 2. Show the demo to our users and optimize the user experience based on their feedback
 3. a. For select text we can highlight now, sometimes it will make text invisiable.
    b. Screenshot the selected range. But small text may not build yet. it is more like source code.
    c. Create way to locate location and screenshot by document.body!
 4. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
    Solution?: Change document.nody to document.element. But the screenshot will become empty. Do not know why yet!
+
+## Develop Log 4/ 22 - 4/28
+
+#### Using Keyboard Shortcuts to Open and Close the Report Box
+
+In web development, it's sometimes necessary to solicit feedback from users or allow them to report issues. To make it easier for users to submit feedback, we can add a report box to the page where they can enter their comments or upload screenshots.
+
+To make it convenient for users to open and close the report box, we can use keyboard shortcuts. On Windows, users can press "Ctrl + /" to open the report box and "Ctrl + ." or ">" to close it. On Mac, users can press "Command + /" to open the report box and "Command + ." or ">" to close it.
 
 
 ## Develop Log 4/15 - 4/21

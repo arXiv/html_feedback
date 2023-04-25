@@ -2,7 +2,42 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById('myForm')
   //const close = modal.querySelector('.close')
   const close= modal.querySelector('.btn-close')
-  
+
+// Control Report Box based on the button
+document.addEventListener('keydown', function(event) {
+  // Press "p" to open report box
+  if (event.key === 'p'|| event.key === 'P') {
+    const modal = document.getElementById('myForm')
+    modal.style.display = 'block';
+  }
+
+  // Press "i" to close report box
+  if (event.key === 'i' || event.key === 'I') {
+    const modal = document.getElementById('myForm')
+    modal.style.display = 'none';
+  }
+
+  // Combination
+  if (event.key === 'Meta' || event.key === 'Command') {
+    isCommandKeyDown = true;
+  }
+
+  if (isCommandKeyDown && (event.key === '/' || event.key === '?')) {
+    const modal = document.getElementById('myForm');
+    modal.style.display = 'block';
+  }
+
+  if (isCommandKeyDown && (event.key === '.' || event.key === '>')) {
+    const modal = document.getElementById('myForm');
+    modal.style.display = 'none';
+  }
+}); 
+
+document.addEventListener('keyup', function(event) {
+  if (event.key === 'Meta' || event.key === 'Command') {
+    isCommandKeyDown = false;
+  }
+});
 
 //click the button and the modal appear
 document.getElementById('openForm').addEventListener("click", () => {
