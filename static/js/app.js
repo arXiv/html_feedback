@@ -45,39 +45,40 @@ document.getElementById('openForm').addEventListener("click", () => {
 });
 //reportBtn.addEventListener("click", () => {
 
-// Generate the screenshot. Only capture the selected area.
-// next step: create screenshot of only highlighted area, use existing library to write that
+// Generate the screenshot for capture the selected area.
 function generate_selected_screenshot() {
   const viewportWidth = document.documentElement.clientWidth;
   const viewportHeight = document.documentElement.clientHeight;
   const scrollX = window.scrollX;
   const scrollY = window.scrollY;
-  
-  // Get the selected text
+
+  // Get the selected text and save html to selectedHTML.
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
+  var selectedHtml = '';
+  var container = document.createElement('div');
+  container.appendChild(range.cloneContents());
+  selectedHtml = container.innerHTML;
+  const selectedText = range.toString();
 
-  // Create a span element to wrap the selected text
-  const selectedTextSpan = document.createElement("span");
-  selectedTextSpan.style.backgroundColor = "yellow";
-  selectedTextSpan.style.color = "black";
-  selectedTextSpan.appendChild(range.cloneContents());
-  range.deleteContents();
-  range.insertNode(selectedTextSpan);
+  // Create a div element to contain the selected text
+  const selectedTextDiv = document.createElement("div");
+  selectedTextDiv.textContent = selectedText;
+  document.body.appendChild(selectedTextDiv);
 
   // Take the screenshot
-  html2canvas(document.body, {
-    width: viewportWidth,
-    height: viewportHeight,
-    scrollX: -scrollX,
-    scrollY: -scrollY,
-    windowWidth: document.documentElement.scrollWidth,
-    windowHeight: document.documentElement.scrollHeight,
+  html2canvas(selectedTextDiv, {
+    width: selectedTextDiv.offsetWidth,
+    height: selectedTextDiv.offsetHeight,
+    scrollX: 0,
+    scrollY: 0,
+    windowWidth: selectedTextDiv.offsetWidth,
+    windowHeight: selectedTextDiv.offsetHeight,
     scale: 1.0,
     useCORS: true
   }).then((canvas) => {
-    // Remove the span element from the DOM
-    selectedTextSpan.outerHTML = selectedTextSpan.innerHTML;
+    // Remove the div element from the DOM
+    document.body.removeChild(selectedTextDiv);
 
     var imageData = canvas.toDataURL("image/png");
     modal.style.display = "block";
@@ -106,6 +107,15 @@ function generate_selected_screenshot() {
       });
     });
   });
+
+  let downloadButton = document.createElement("a");
+  downloadButton.id = "download-screenshot";
+  downloadButton.href = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
+  downloadButton.download = "visible-content.html";
+  downloadButton.textContent = "Download Selected Content";
+  downloadButton.style.display = "block";
+  downloadButton.style.margin = "10px";
+  document.getElementById("myFormContent").appendChild(downloadButton);
 }
 
 

@@ -69,6 +69,9 @@ To make it convenient for users to open and close the report box, we can use key
 #### Update Download：
 
 Now it will download html file. And later I will try to just build a html file base on the users' vision.
+#### Update in Develop_yichen
+The function seems works now. It can capture the math equation now!
+But just work for selected capture. There will be content you can downlaod and see!
 
 
 ## Develop Log 4/15 - 4/21
