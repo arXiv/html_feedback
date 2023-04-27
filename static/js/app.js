@@ -275,8 +275,12 @@ function getFullPageContent() {
     event.preventDefault();
     const formData  =new FormData();
     const data_description = document.getElementById("description").value;
+    const screenshotImage = document.getElementById("screenshot").value;
+    const attachment = document.querySelector('#file').files[0]; 
     // var filename = document.getElementById("description").value;
     formData.append('description', data_description);
+    formData.append('attachment', attachment);
+    formData.append('screenshotImage', screenshotImage);
     fetch('/', {
       method: 'POST',
       body: formData})

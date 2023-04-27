@@ -13,13 +13,20 @@ db = SQLAlchemy(app)
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String())
+    attachment = db.Column(db.LargeBinary)
+    screenshotImage = db.Column(db.LargeBinary)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def page():
     if request.method == 'POST':
         description = request.form['description']
-        new_report = Report(description=description)
+        attachment = request.files['attachment'].read()
+        screenshotImage = request.form['screenshotImage']
+        img_data = base64.b64decode(screenshotImage.split(',')[1])
+        img_io = BytesIO(img_data)
+        
+        new_report = Report(description=description, attachment=attachment, screenshotImage = img_io.read())
         db.session.add(new_report)
         db.session.commit()
         return 'OK'
