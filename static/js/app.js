@@ -219,43 +219,6 @@ document.addEventListener("mouseup", function (event) {
 });
 
 
-function getVisibleContent() {
-  const viewportWidth = document.documentElement.clientWidth;
-  const viewportHeight = document.documentElement.clientHeight;
-  const scrollX = window.scrollX;
-  const scrollY = window.scrollY;
-
-  const visibleContent = document.createElement('div');
-  visibleContent.style.position = 'absolute';
-  visibleContent.style.overflow = 'hidden';
-  visibleContent.style.width = `${viewportWidth}px`;
-  visibleContent.style.height = `${viewportHeight}px`;
-  visibleContent.style.left = `${scrollX}px`;
-  visibleContent.style.top = `${scrollY}px`;
-  visibleContent.style.clipPath = `polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)`;
-  visibleContent.innerHTML = document.body.innerHTML;
-
-  return visibleContent.outerHTML;
-}
-
-function getVisibleText() {
-  const viewportWidth = document.documentElement.clientWidth;
-  const viewportHeight = document.documentElement.clientHeight;
-  const scrollX = window.scrollX;
-  const scrollY = window.scrollY;
-
-  const wrapper = document.createElement("div");
-
-  const elements = document.elementsFromPoint(scrollX, scrollY);
-  elements.forEach((element) => {
-    if (element.getBoundingClientRect().bottom > 0) {
-      wrapper.appendChild(element.cloneNode(true));
-    }
-  });
-
-  return wrapper.innerHTML;
-}
-
 function getFullPageContent() {
   return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
 }
@@ -290,16 +253,6 @@ function getFullPageContent() {
       document.getElementById("screenshot-image").style = "display: block";
 
     });
-    // Create or update a download button
-    let visibleContentHtml = getVisibleText();
-    let downloadButton = document.createElement("a");
-    downloadButton.id = "download-screenshot";
-    downloadButton.href = "data:text/html;charset=utf-8," + encodeURIComponent(visibleContentHtml);
-    downloadButton.download = "visible-content.html";
-    downloadButton.textContent = "Download Visible Content";
-    downloadButton.style.display = "block";
-    downloadButton.style.margin = "10px";
-    document.getElementById("myFormContent").appendChild(downloadButton);
 
     let fullPageContent = getFullPageContent();
     let downloadButton2 = document.createElement("a");
@@ -315,13 +268,33 @@ function getFullPageContent() {
   
   
   //submit to the backend, next step: finish
-  function submitBugReport() {
+  function submitBugReport(event) {
     document.getElementById('notification').style= 'display: block';
+
+
+    event.preventDefault();
+    const formData  =new FormData();
+    const data_description = document.getElementById("description").value;
+    // var filename = document.getElementById("description").value;
+    formData.append('description', data_description);
+    fetch('/', {
+      method: 'POST',
+      body: formData})
+    .then(function(response) {
+      if (response.ok) {
+        alert('报告已提交');
+      } else {
+        alert('提交报告时发生错误');
+      }
+    })
+    .catch(function(error) {
+      alert('提交报告时发生错误');
+    });
   }
 
   //submit process, next step: finish
   document.getElementById("myFormContent").addEventListener("submit", function(event) {
-    submitBugReport()
+    submitBugReport(event)
     
     // Extract the browser name and version information
     var userAgent = navigator.userAgent;
