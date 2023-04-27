@@ -109,12 +109,6 @@ function generate_selected_screenshot() {
 }
 
 
-
-
-
-
-
-
 let selectedText;
 let smallReportButton;
 
@@ -303,10 +297,32 @@ function getFullPageContent() {
     document.getElementById("myFormContent").appendChild(downloadButton2);
 });
   
-  
-  //submit to the backend, next step: finish
+  const form = document.querySelector('#myFormContent');
+  //submit to the backend
   function submitBugReport() {
-    document.getElementById('notification').style= 'display: block';
+    const description = document.querySelector('#description').value;
+    const file = document.querySelector('#file').files[0];
+    const screenshot = document.querySelector('#screenshot').value;
+  
+    // Create a FormData object to store the form data
+    const formData = new FormData();
+    formData.append('description', description);
+    formData.append('file', file);
+    formData.append('screenshot', screenshot);
+  
+    // Make an AJAX request to the Flask backend
+    fetch('/generate_report', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      document.querySelector('#notification').style.display = 'block';
+    })
+    .catch(error => console.error(error));
+  
+    //form.reset();
+    document.querySelector('#screenshot-image').src = '';
   }
 
   //submit process, next step: finish
@@ -314,7 +330,7 @@ function getFullPageContent() {
     submitBugReport()
     
     // Extract the browser name and version information
-    var userAgent = navigator.userAgent;
+    /*var userAgent = navigator.userAgent;
     var browserInfo = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i);
     var browserName = browserInfo[1];
     var browserVersion = browserInfo[2];
@@ -323,7 +339,7 @@ function getFullPageContent() {
     browserName = browserName.charAt(0).toUpperCase() + browserName.slice(1);
   
     // Print the browser name and version information
-    console.log('Browser:', browserName, browserVersion);
+    console.log('Browser:', browserName, browserVersion);*/
   });
 
   //Hide the modal
