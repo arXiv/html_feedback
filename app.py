@@ -24,10 +24,6 @@ class Upload(db.Model):
 def page():
     return render_template('index.html')
 
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    return render_template('test.html')
-
 '''
 @app.route('/form', methods=['GET', 'POST'])
 @cross_origin(supports_credentials=True)
