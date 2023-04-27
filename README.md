@@ -26,8 +26,8 @@ run a python interactive shell
 
 Start the server by `python(python3) app.py` or `flask --app app run`
 
-## Details about the features
-1. Develop abase on Spark, backend use Python and CSS use bootstrap with ArXiv defualr css.
+## Features
+1. Develop web base on Flask, backend on Python, CSS on  bootstrap with ArXiv defualt css , and database on SQLite. 
 
 2. Screenshot (Use Html2canvas)
 
@@ -50,31 +50,30 @@ Start the server by `python(python3) app.py` or `flask --app app run`
 9. Use SQLite as backend database, get report information from frontend.  Information included attachment file, screenshot, id, article title, comments, user id and contact info, selected html, etc.
 
 ## Future work & Current Problem
-#### Important
+### Urgent and important
 
-1. **Put the report comments into a file (or other inspectable format) for a demo**
-2. **Implement the DOM capture (get top level element and most specific element)**
-3. **implement browser version info from javascript** 
-   Not sure what this mean?
-4. Test Highlight Function: Related to 5. So Try to solve 5a!
+1. **Implement the DOM capture (get top level element and most specific element)**
+2. Clean the data in report box after close it!
+3. Add highlight function to this
+4. **implement browser version info from javascript** : You use what kind of browser, and if it will success or not!
+
+#### Do it in "recent" future
+
+1. Test Highlight Function: Related to 5. So Try to solve 5a!
    1. test highlight merged author/dept
    2. test highlight equation
    3. test highlighting words with extra chars like:
       1. \ANDAshish Vaswani
       2. Noam Shazeer1
-5. Improve for select text report function. Finish one of them.
-   a. For highlight method, sometimes it will make text invisiable.
-   b. For create div method. Some text does not included.
-   c. Try to create third method: Return the HTML file of it!
-6. Report Mode for ScreenReader.
+2. Report Mode for ScreenReader.
 
-#### Future work
+### Future work
 
 1. Show the demo to our users and optimize the user experience based on their feedback
 2. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
    Solution?: Change document.nody to document.element. But the screenshot will become empty. Do not know why yet!
 
-## Develop Log 4/ 22 - 4/28
+## Develop Log Current
 
 #### Using Keyboard Shortcuts to Open and Close the Report Box
 
