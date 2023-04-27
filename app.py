@@ -15,18 +15,28 @@ class Report(db.Model):
     description = db.Column(db.String())
     attachment = db.Column(db.LargeBinary)
     screenshotImage = db.Column(db.LargeBinary)
+    selected_html = db.Column(db.String())
 
 
 @app.route('/', methods=['GET', 'POST'])
 def page():
     if request.method == 'POST':
         description = request.form['description']
-        attachment = request.files['attachment'].read()
         screenshotImage = request.form['screenshotImage']
-        img_data = base64.b64decode(screenshotImage.split(',')[1])
-        img_io = BytesIO(img_data)
-        
-        new_report = Report(description=description, attachment=attachment, screenshotImage = img_io.read())
+        if 'url' in request.form:   
+            url = request.form['url']
+        else:
+            url = None
+        if 'attachment' in request.files:
+            attachment = request.files['attachment'].read()
+        else:
+            attachment = None
+        if screenshotImage:
+            img_data = base64.b64decode(screenshotImage.split(',')[1])
+            img_io = BytesIO(img_data)
+            new_report = Report(description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url)
+        else:
+            new_report = Report(description=description, attachment=attachment, selected_html=url)
         db.session.add(new_report)
         db.session.commit()
         return 'OK'

@@ -45,6 +45,7 @@ document.getElementById('openForm').addEventListener("click", () => {
 });
 //reportBtn.addEventListener("click", () => {
 
+let saved_dataURI;
 // Generate the screenshot for capture the selected area.
 function generate_selected_screenshot() {
   const viewportWidth = document.documentElement.clientWidth;
@@ -110,7 +111,8 @@ function generate_selected_screenshot() {
 
   let downloadButton = document.createElement("a");
   downloadButton.id = "download-screenshot";
-  downloadButton.href = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
+  saved_dataURI = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
+  downloadButton.href = saved_dataURI
   downloadButton.download = "visible-content.html";
   downloadButton.textContent = "Download Selected Content";
   downloadButton.style.display = "block";
@@ -281,6 +283,7 @@ function getFullPageContent() {
     formData.append('description', data_description);
     formData.append('attachment', attachment);
     formData.append('screenshotImage', screenshotImage);
+    formData.append('url', saved_dataURI);
     fetch('/', {
       method: 'POST',
       body: formData})
