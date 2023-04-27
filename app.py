@@ -12,7 +12,9 @@ db = SQLAlchemy(app)
 
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String())
+    article_title = db.Column(db.String(100))
+    user_info = db.Column(db.String())
+    description = db.Column(db.String(1000))
     attachment = db.Column(db.LargeBinary)
     screenshotImage = db.Column(db.LargeBinary)
     selected_html = db.Column(db.String())
@@ -21,6 +23,8 @@ class Report(db.Model):
 @app.route('/', methods=['GET', 'POST'])
 def page():
     if request.method == 'POST':
+        article_title = request.form['article_title']
+        user_info = request.form['user_info']
         description = request.form['description']
         screenshotImage = request.form['screenshotImage']
         if 'url' in request.form:   
@@ -34,9 +38,9 @@ def page():
         if screenshotImage:
             img_data = base64.b64decode(screenshotImage.split(',')[1])
             img_io = BytesIO(img_data)
-            new_report = Report(description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url)
+            new_report = Report(article_title=article_title,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url)
         else:
-            new_report = Report(description=description, attachment=attachment, selected_html=url)
+            new_report = Report(user_info=user_info,description=description, attachment=attachment, selected_html=url)
         db.session.add(new_report)
         db.session.commit()
         return 'OK'

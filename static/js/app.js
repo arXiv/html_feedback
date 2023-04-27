@@ -276,10 +276,14 @@ function getFullPageContent() {
 
     event.preventDefault();
     const formData  =new FormData();
+    const article_title = document.querySelector('h1.ltx_title_document').textContent;
+    const user_info = "account:yc2455 contact:@cornll.edu "
     const data_description = document.getElementById("description").value;
     const screenshotImage = document.getElementById("screenshot").value;
     const attachment = document.querySelector('#file').files[0]; 
-    // var filename = document.getElementById("description").value;
+    // add to the form data
+    formData.append('article_title', article_title);
+    formData.append('user_info', user_info);
     formData.append('description', data_description);
     formData.append('attachment', attachment);
     formData.append('screenshotImage', screenshotImage);
