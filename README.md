@@ -2,19 +2,19 @@
 
 This is a flask demo for the ArXiv bug report function. The bug report initiation could be done in two ways(screenshot and highlight). The link to design document is https://www.figma.com/file/p13ZktQJEV8CXx3M7Z10fe/ArXiv-Error-report?node-id=0%3A1&t=gEav7Q8shh8D9Du0-1.
 
-## Steps to run the project
+## Run the code
 
-### Create virtual environment (below are based on mac)
+#### if you want to use virtualenv:
+`python3 -m venv venv`
 
-- if you want to use virtualenv:
-  `python3 -m venv venv`
-- activate env
-  `source venv/bin/activate`
-### Install Dependencies
+#### activate env
+`source venv/bin/activate`
+
+#### Install Dependencies
 
 `pip install Flask, requests, Flask-SQLAlchemy, flask-cors`
 
-### Create database
+#### Create database
 
 run a python interactive shell
 
@@ -22,14 +22,32 @@ run a python interactive shell
 - `db.create_all()`
 - `exit()`
 
-### Start Server
-Start the server by `python app.py` or `flask --app app run`
+#### Start Server
 
-## Details about the features(not finished)
-1. Highlight
-2. Screenshot
-3. Use shortcut "p" to open report box, and "i" to close it.
-4. Use "CT_Tech" to find add elements on HTML file.
+Start the server by `python(python3) app.py` or `flask --app app run`
+
+## Details about the features
+1. Develop abase on Spark, backend use Python and CSS use bootstrap with ArXiv defualr css.
+
+2. Screenshot (Use Html2canvas)
+
+3. Use shortcut to control report box
+
+   a. "p" or "P" or  "Command + /"  or "Command + ?" to open report box.
+
+   b.  "i" or "I" or "Command + ." or "Command + >" to close report box.
+
+4. Build a floating button at right buttom corner, can be clicked to open the report box. 
+
+5. After Select Text auto show up report button. After click report button will auto take screenshot and get select HTML File.
+
+6. Highlight
+
+7. In Report box, people can add comments, attach file, and take screenshot (this function will auto close report box and reopne).
+
+8. The screenshot image can be zoom up.
+
+9. Use SQLite as backend database, get report information from frontend.  Information included attachment file, screenshot, id, article title, comments, user id and contact info, selected html, etc.
 
 ## Future work & Current Problem
 #### Important
@@ -64,14 +82,12 @@ In web development, it's sometimes necessary to solicit feedback from users or a
 
 To make it convenient for users to open and close the report box, we can use keyboard shortcuts. On Windows, users can press "Ctrl + /" to open the report box and "Ctrl + ." or ">" to close it. On Mac, users can press "Command + /" to open the report box and "Command + ." or ">" to close it.
 
-#### Test HTML “add /test ”
+#### Auto Capture Selected HTML.
+After user select text and click report button. We will auto capture the selected HTML.  
 
-#### Update Download：
+#### Add backend database
 
-Now it will download html file. And later I will try to just build a html file base on the users' vision.
-#### Update in Develop_yichen
-The function seems works now. It can capture the math equation now!
-But just work for selected capture. There will be content you can downlaod and see!
+Click submit button will send data to the backend database. We have included attachment file, screenshot, id, article title, comments, user id and contact info, selected html, etc.
 
 
 ## Develop Log 4/15 - 4/21
