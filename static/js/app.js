@@ -108,9 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     });
-<<<<<<< HEAD
-  });
-}
+  }
 
 
 let selectedText;
@@ -121,8 +119,6 @@ document.addEventListener("mouseup", function (event) {
 
   if (event.target.id === "small-report-button") {
     return;
-=======
->>>>>>> 8a3530a60617c5cd43fe0fec037b6595eccff8be
   }
 
 
@@ -307,7 +303,6 @@ document.addEventListener("mouseup", function (event) {
     document.querySelector('#screenshot-image').src = '';
   }
 
-
   //submit process, next step: finish
   document.getElementById("myFormContent").addEventListener("submit", function(event) {
     submitBugReport()
@@ -350,5 +345,6 @@ document.addEventListener("mouseup", function (event) {
     if (event.target == modal) {
       modal.style.display = 'none';
     }
-  })
-});
+  });
+})
+})
