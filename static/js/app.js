@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         enlargedImage.style.zIndex = "99999";
         enlargedImage.style.cursor = "zoom-out";
         document.body.appendChild(enlargedImage);
-        
+
         function removeEnlargedImage() {
           document.body.removeChild(enlargedImage);
           document.removeEventListener("click", removeEnlargedImage);
@@ -130,13 +130,11 @@ document.addEventListener("DOMContentLoaded", () => {
     saved_dataURI = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
   }
 
-  let selectedText;
-  let smallReportButton;
+
   let elementIdentifier;
   let topLayer;
   //highlight selection, next step:optimize the selection element layer, like Table S1.T1, optimize the button format and area, optimize the sensitivity of selection(like mouseup)
   document.addEventListener("mouseup", function (event) {
-
     if (event.target.id === "small-report-button") {
       return;
     }
@@ -227,6 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function getFullPageContent() {
     return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   }
+
+
   //click the button to generate the screenshot, next step: use external library to fasten the process
   // This is different from the screenshot of the selected area.
   document.getElementById("take-screenshot").addEventListener("click", function () {
@@ -349,16 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Delay the execution of the modal close code by 3 second
     document.getElementById("screenshot").value = "";
     document.getElementById("screenshot-image").src = "";
-
-    const downloadButton = document.getElementById("download-screenshot");
-    if (downloadButton) {
-      downloadButton.remove();
-    }
-
-    const downloadButton2 = document.getElementById("download-screenshot");
-    if (downloadButton2) {
-      downloadButton2.remove();
-    }
   });
 
   // Hide the modal if clicked outside
