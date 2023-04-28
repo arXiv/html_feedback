@@ -27,98 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.style.display = 'block';
     }
 
-  if (isCommandKeyDown && (event.key === '.' || event.key === '>')) {
-    const modal = document.getElementById('myForm');
-    modal.style.display = 'none';
-  }
-}); 
+    if (isCommandKeyDown && (event.key === '.' || event.key === '>')) {
+      const modal = document.getElementById('myForm');
+      modal.style.display = 'none';
+    }
+  });
 
-document.addEventListener('keyup', function(event) {
-  if (event.key === 'Meta' || event.key === 'Command') {
-    isCommandKeyDown = false;
-  }
-});
-
-//click the button and the modal appear
-document.getElementById('openForm').addEventListener("click", () => {
-  modal.style.display = 'block'
-});
-//reportBtn.addEventListener("click", () => {
-
-let saved_dataURI;
-// Generate the screenshot for capture the selected area.
-function generate_selected_screenshot() {
-  const viewportWidth = document.documentElement.clientWidth;
-  const viewportHeight = document.documentElement.clientHeight;
-  const scrollX = window.scrollX;
-  const scrollY = window.scrollY;
-
-  // Get the selected text
-  const selection = window.getSelection();
-  const range = selection.getRangeAt(0); 
-
-  // Create a span element to wrap the selected text
-  const selectedTextSpan = document.createElement("span");
-  selectedTextSpan.style.backgroundColor = "yellow";
-  selectedTextSpan.style.color = "black";
-  selectedTextSpan.appendChild(range.cloneContents());
-  range.deleteContents();
-  range.insertNode(selectedTextSpan);
-
-  // Take the screenshot
-  html2canvas(document.body, {
-    width: viewportWidth,
-    height: viewportHeight,
-    scrollX: -scrollX,
-    scrollY: -scrollY,
-    windowWidth: document.documentElement.scrollWidth,
-    windowHeight: document.documentElement.scrollHeight,
-    scale: 1.0,
-    useCORS: true
-  }).then((canvas) => {
-    // Remove the div element from the DOM
-    selectedTextSpan.outerHTML = selectedTextSpan.innerHTML;
-
-    var imageData = canvas.toDataURL("image/png");
-    modal.style.display = "block";
-    document.getElementById("screenshot").value = imageData;
-    // const screenshotImage = document.getElementById("screenshot-image");
-    const screenshotImage = document.querySelector("#screenshot-image");
-    screenshotImage.src = imageData;
-    screenshotImage.style = "display: block";
-    screenshotImage.style.maxWidth = "300px";
-    screenshotImage.style.maxHeight = "300px";
-
-    
-    const enlargedImage = document.createElement("img");
-    screenshotImage.addEventListener("click", () => {
-      enlargedImage.src = screenshotImage.src;
-      enlargedImage.style.position = "fixed";
-      enlargedImage.style.top = "50%";
-      enlargedImage.style.left = "50%";
-      enlargedImage.style.transform = "translate(-50%, -50%)";
-      enlargedImage.style.maxWidth = "50%";
-      enlargedImage.style.maxHeight = "50%";
-      enlargedImage.style.zIndex = "99999";
-      enlargedImage.style.cursor = "zoom-out";
-      document.body.appendChild(enlargedImage);
-    
-      function removeEnlargedImage() {
-        document.body.removeChild(enlargedImage);
-        document.removeEventListener("click", removeEnlargedImage);
-      }
-    
-      document.addEventListener("click", (event) => {
-        if (event.target !== screenshotImage && event.target !== enlargedImage) {
-          removeEnlargedImage();
-        }
-      });
-    
-      enlargedImage.addEventListener("click", () => {
-        removeEnlargedImage();
-      });
-    });
-    
+  document.addEventListener('keyup', function (event) {
+    if (event.key === 'Meta' || event.key === 'Command') {
+      isCommandKeyDown = false;
+    }
   });
 
   //click the button and the modal appear
