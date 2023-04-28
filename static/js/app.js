@@ -53,45 +53,45 @@ function generate_selected_screenshot() {
   const scrollX = window.scrollX;
   const scrollY = window.scrollY;
 
-  // Get the selected text and save html to selectedHTML.
+  // Get the selected text
   const selection = window.getSelection();
-  const range = selection.getRangeAt(0);
-  var selectedHtml = '';
-  var container = document.createElement('div');
-  container.appendChild(range.cloneContents());
-  selectedHtml = container.innerHTML;
-  const selectedText = range.toString();
+  const range = selection.getRangeAt(0); 
 
-  // Create a div element to contain the selected text
-  const selectedTextDiv = document.createElement("div");
-  selectedTextDiv.textContent = selectedText;
-  document.body.appendChild(selectedTextDiv);
+  // Create a span element to wrap the selected text
+  const selectedTextSpan = document.createElement("span");
+  selectedTextSpan.style.backgroundColor = "yellow";
+  selectedTextSpan.style.color = "black";
+  selectedTextSpan.appendChild(range.cloneContents());
+  range.deleteContents();
+  range.insertNode(selectedTextSpan);
 
   // Take the screenshot
-  html2canvas(selectedTextDiv, {
-    width: selectedTextDiv.offsetWidth,
-    height: selectedTextDiv.offsetHeight,
-    scrollX: 0,
-    scrollY: 0,
-    windowWidth: selectedTextDiv.offsetWidth,
-    windowHeight: selectedTextDiv.offsetHeight,
+  html2canvas(document.body, {
+    width: viewportWidth,
+    height: viewportHeight,
+    scrollX: -scrollX,
+    scrollY: -scrollY,
+    windowWidth: document.documentElement.scrollWidth,
+    windowHeight: document.documentElement.scrollHeight,
     scale: 1.0,
     useCORS: true
   }).then((canvas) => {
     // Remove the div element from the DOM
-    document.body.removeChild(selectedTextDiv);
+    selectedTextSpan.outerHTML = selectedTextSpan.innerHTML;
 
     var imageData = canvas.toDataURL("image/png");
     modal.style.display = "block";
     document.getElementById("screenshot").value = imageData;
-    const screenshotImage = document.getElementById("screenshot-image");
+    // const screenshotImage = document.getElementById("screenshot-image");
+    const screenshotImage = document.querySelector("#screenshot-image");
     screenshotImage.src = imageData;
     screenshotImage.style = "display: block";
     screenshotImage.style.maxWidth = "300px";
     screenshotImage.style.maxHeight = "300px";
 
+    
+    const enlargedImage = document.createElement("img");
     screenshotImage.addEventListener("click", () => {
-      const enlargedImage = document.createElement("img");
       enlargedImage.src = screenshotImage.src;
       enlargedImage.style.position = "fixed";
       enlargedImage.style.top = "50%";
@@ -102,11 +102,23 @@ function generate_selected_screenshot() {
       enlargedImage.style.zIndex = "99999";
       enlargedImage.style.cursor = "zoom-out";
       document.body.appendChild(enlargedImage);
-
-      enlargedImage.addEventListener("click", () => {
+    
+      function removeEnlargedImage() {
         document.body.removeChild(enlargedImage);
+        document.removeEventListener("click", removeEnlargedImage);
+      }
+    
+      document.addEventListener("click", (event) => {
+        if (event.target !== screenshotImage && event.target !== enlargedImage) {
+          removeEnlargedImage();
+        }
+      });
+    
+      enlargedImage.addEventListener("click", () => {
+        removeEnlargedImage();
       });
     });
+    
   });
 
   let downloadButton = document.createElement("a");
