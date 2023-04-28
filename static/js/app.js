@@ -276,9 +276,11 @@ document.addEventListener("DOMContentLoaded", () => {
     var browserInfo = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i)
     //device info(system)--give up for now
     //conversion report link
-    const conversion_report = "https://ar5iv.labs.arxiv.org"+document.querySelector('.ar5iv-text-button').href
+    const start_index = article_url.lastIndexOf('/') + 1;
+    const number = article_url.substring(start_index);
+    const conversion_report = "https://ar5iv.labs.arxiv.org/log/"+ number;
     //source file link
-    const source_file = document.querySelector('.ar5iv-text-button arxiv-ui-theme').href
+    const source_file = "https://arxiv.org/abs/" + number;
     //location-low
     //location-high
     const data_description = document.getElementById("description").value;
@@ -297,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formData.append('url', saved_dataURI);
     formData.append('location_Low',elementIdentifier);
     formData.append('location_high',topLayer)
+    console.log("TTTTTT");
     fetch('/', {
         method: 'POST',
         body: formData
