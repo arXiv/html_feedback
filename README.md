@@ -68,7 +68,6 @@ Start the server by `python(python3) app.py` or `flask --app app run`
 
 1. **Implement the DOM capture (get top level element and most specific element)**
 2. Clean the data in report box after close it!
-3. Add highlight function to this
 4. **implement browser version info from javascript** : You use what kind of browser, and if it will success or not!
 
 #### Do it in "recent" future
@@ -81,7 +80,7 @@ Start the server by `python(python3) app.py` or `flask --app app run`
       2. Noam Shazeer1
 2. Report Mode for ScreenReader.
 
-### Future work
+#### Future work
 
 1. Show the demo to our users and optimize the user experience based on their feedback
 2. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
@@ -101,6 +100,16 @@ After user select text and click report button. We will auto capture the selecte
 #### Add backend database
 
 Click submit button will send data to the backend database. We have included attachment file, screenshot, id, article title, comments, user id and contact info, selected html, etc.
+
+#### Add Highligh back
+
+We remove the capture div to highlight for  selected screenshot function. But we have kept the method of created html for selected element.
+
+#### Fix Small Bug for Report Box
+
+We remove the downlaod function we have added before. Fix the bug for highlight. Fix the bug for zoom the picture. 
+
+We clean up the report box after submit or user close it. 
 
 
 ## Develop Log 4/15 - 4/21
