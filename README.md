@@ -1,6 +1,6 @@
 ## Description
 
-This is a flask demo for the ArXiv bug report function. The bug report initiation could be done in two ways(screenshot and highlight). The link to design document is https://www.figma.com/file/p13ZktQJEV8CXx3M7Z10fe/ArXiv-Error-report?node-id=0%3A1&t=gEav7Q8shh8D9Du0-1.
+This is a flask demo for the ArXiv bug report function. The bug report initiation could be done in two ways(screenshot and highlight). The link to design document is [figma ArXiv-Error-report Desgin](https://www.figma.com/file/p13ZktQJEV8CXx3M7Z10fe/ArXiv-Error-report?node-id=0%3A1&t=gEav7Q8shh8D9Du0-1).
 
 ## Run the code
 
@@ -47,7 +47,21 @@ Start the server by `python(python3) app.py` or `flask --app app run`
 
 8. The screenshot image can be zoom up.
 
-9. Use SQLite as backend database, get report information from frontend.  Information included attachment file, screenshot, id, article title, comments, user id and contact info, selected html, etc.
+9. Use SQLite as backend database, get report information from frontend.  
+   Here is the information list:
+
+   - Article_url: url for Ar5iv article
+   - User_info: Not we set default to some value.
+   - report time: time it generated.
+   - Browser_info: the user's browser info
+   - Description: user can write in Report Box
+   - Conversion_report: Log(from pdf to html) prepare for developer
+   - source file: the orginal article url
+   - Attachment: User can attatchment any type of file in report box they think it is useful.
+   - Screenshot
+   - Selected html: use selected function to capture the html of selected text.
+   - Location_low: the selected element identifier
+   - Location_high: the parent node.
 
 ## Future work & Current Problem
 ### Urgent and important
