@@ -33,8 +33,8 @@ Start the server by `python(python3) app.py` or `flask --app app run debug`
 
 3. Three ways to initiate the report box
    - Use shortcut to control
-      a. "p" or "P" or  "Command + /"  or "Command + ?" to open report box.
-      b. "i" or "I" or "Command + ." or "Command + >" to close report box.
+      - "p" or "P" or  "Command + /"  or "Command + ?" to open report box.
+      - "i" or "I" or "Command + ." or "Command + >" to close report box.
    - Click the floating button at right buttom corner to open the report box. 
    - After Selecting the element, the small report button will automatically show up. After clicking the report button, the screenshot with highlight will be captured and show in the screenshot area inside the report button.
 
