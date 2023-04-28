@@ -163,8 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
         elementIdentifier = id || classList[0] || 'Unknown';
 
         //get the topLayer of id
-        if (elementIdentifier.startsWith('S0')) {
-          topLayer = id ? id.split('.').slice(0, 2).join('.') : classList[0];
+        if (elementIdentifier.match(/^S\d/)) {
+          topLayer = id ? id.split('.')[1]: classList[0];
         } else {
           topLayer = id ? id.split('.')[0] : classList[0];
         }
