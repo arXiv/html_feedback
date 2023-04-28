@@ -2,19 +2,19 @@
 
 This is a flask demo for the ArXiv bug report function. The bug report initiation could be done in two ways(screenshot and highlight). The link to design document is https://www.figma.com/file/p13ZktQJEV8CXx3M7Z10fe/ArXiv-Error-report?node-id=0%3A1&t=gEav7Q8shh8D9Du0-1.
 
-## Steps to run the project
+## Run the code
 
-### Create virtual environment (below are based on mac)
+#### if you want to use virtualenv:
+`python3 -m venv venv`
 
-- if you want to use virtualenv:
-  `python3 -m venv venv`
-- activate env
-  `source venv/bin/activate`
-### Install Dependencies
+#### activate env
+`source venv/bin/activate`
+
+#### Install Dependencies
 
 `pip install Flask, requests, Flask-SQLAlchemy, flask-cors`
 
-### Create database
+#### Create database
 
 run a python interactive shell
 
@@ -22,41 +22,72 @@ run a python interactive shell
 - `db.create_all()`
 - `exit()`
 
-### Start Server
-Start the server by `python app.py` or `flask --app app run`
+#### Start Server
 
-## Details about the features(not finished)
-1. Highlight
-2. Screenshot
-3. Use shortcut "p" to open report box, and "i" to close it.
-4. Use "CT_Tech" to find add elements on HTML file.
+Start the server by `python(python3) app.py` or `flask --app app run`
+
+## Features
+1. Develop web base on Flask, backend on Python, CSS on  bootstrap with ArXiv defualt css , and database on SQLite. 
+
+2. Screenshot (Use Html2canvas)
+
+3. Use shortcut to control report box
+
+   a. "p" or "P" or  "Command + /"  or "Command + ?" to open report box.
+
+   b.  "i" or "I" or "Command + ." or "Command + >" to close report box.
+
+4. Build a floating button at right buttom corner, can be clicked to open the report box. 
+
+5. After Select Text auto show up report button. After click report button will auto take screenshot and get select HTML File.
+
+6. Highlight
+
+7. In Report box, people can add comments, attach file, and take screenshot (this function will auto close report box and reopne).
+
+8. The screenshot image can be zoom up.
+
+9. Use SQLite as backend database, get report information from frontend.  
+   Here is the information list:
+
+   - Article_url: url for Ar5iv article
+   - User_info: Not we set default to some value.
+   - report time: time it generated.
+   - Browser_info: the user's browser info
+   - Description: user can write in Report Box
+   - Conversion_report: Log(from pdf to html) prepare for developer
+   - source file: the orginal article url
+   - Attachment: User can attatchment any type of file in report box they think it is useful.
+   - Screenshot
+   - Selected html: use selected function to capture the html of selected text.
+   - Location_low: the selected element identifier
+   - Location_high: the parent node.
 
 ## Future work & Current Problem
-#### Important
+### Urgent and important
 
-1. **Put the report comments into a file (or other inspectable format) for a demo**
-2. **Implement the DOM capture (get top level element and most specific element)**
-3. **implement browser version info from javascript** 
-   Not sure what this mean?
-4. Test Highlight Function: Related to 5. So Try to solve 5a!
+1. **Implement the DOM capture (get top level element and most specific element)**
+2. Clean the data in report box after close it!
+3. Add highlight function to this
+4. **implement browser version info from javascript** : You use what kind of browser, and if it will success or not!
+
+#### Do it in "recent" future
+
+1. Test Highlight Function: Related to 5. So Try to solve 5a!
    1. test highlight merged author/dept
    2. test highlight equation
    3. test highlighting words with extra chars like:
       1. \ANDAshish Vaswani
       2. Noam Shazeer1
-5. Improve for select text report function. Finish one of them.
-   a. For highlight method, sometimes it will make text invisiable.
-   b. For create div method. Some text does not included.
-   c. Try to create third method: Return the HTML file of it!
-6. Report Mode for ScreenReader.
+2. Report Mode for ScreenReader.
 
-#### Future work
+### Future work
 
 1. Show the demo to our users and optimize the user experience based on their feedback
 2. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
    Solution?: Change document.nody to document.element. But the screenshot will become empty. Do not know why yet!
 
-## Develop Log 4/ 22 - 4/28
+## Develop Log Current
 
 #### Using Keyboard Shortcuts to Open and Close the Report Box
 
@@ -64,14 +95,12 @@ In web development, it's sometimes necessary to solicit feedback from users or a
 
 To make it convenient for users to open and close the report box, we can use keyboard shortcuts. On Windows, users can press "Ctrl + /" to open the report box and "Ctrl + ." or ">" to close it. On Mac, users can press "Command + /" to open the report box and "Command + ." or ">" to close it.
 
-#### Test HTML “add /test ”
+#### Auto Capture Selected HTML.
+After user select text and click report button. We will auto capture the selected HTML.  
 
-#### Update Download：
+#### Add backend database
 
-Now it will download html file. And later I will try to just build a html file base on the users' vision.
-#### Update in Develop_yichen
-The function seems works now. It can capture the math equation now!
-But just work for selected capture. There will be content you can downlaod and see!
+Click submit button will send data to the backend database. We have included attachment file, screenshot, id, article title, comments, user id and contact info, selected html, etc.
 
 
 ## Develop Log 4/15 - 4/21
