@@ -43,9 +43,9 @@ Start the server by `python(python3) app.py` or `flask --app app run`
 
 6. Highlight
 
-7. In Report box, people can add comments, attach file, and take screenshot (this function will auto close report box and reopne).
+7. The screenshot image can be zoom up.
 
-8. The screenshot image can be zoom up.
+8. In Report box, people can add comments, attach file, and take screenshot (this function will auto close report box and reopne). And send it to backend.
 
 9. Use SQLite as backend database, get report information from frontend.  
    Here is the information list:
@@ -62,6 +62,8 @@ Start the server by `python(python3) app.py` or `flask --app app run`
    - Selected html: use selected function to capture the html of selected text.
    - Location_low: the selected element identifier
    - Location_high: the parent node.
+
+10. After submit, we will auto close the report box.
 
 ## Future work & Current Problem
 ### Urgent and important
@@ -105,11 +107,11 @@ Click submit button will send data to the backend database. We have included att
 
 We remove the capture div to highlight for  selected screenshot function. But we have kept the method of created html for selected element.
 
-#### Fix Small Bug for Report Box
+#### Fix Small Bug for Report Box and Add auto closs function
 
 We remove the downlaod function we have added before. Fix the bug for highlight. Fix the bug for zoom the picture. 
 
-We clean up the report box after submit or user close it. 
+We clean up the report box after submit or user close it. And it will auto close.
 
 
 ## Develop Log 4/15 - 4/21
