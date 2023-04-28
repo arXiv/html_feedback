@@ -12,21 +12,32 @@ db = SQLAlchemy(app)
 
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    article_title = db.Column(db.String(100))
-    user_info = db.Column(db.String())
+    article_url = db.Column(db.String(100))
+    user_info = db.Column(db.String(100))
+    report_time=db.Column(db.String(100))
+    browser_info=db.Column(db.String(100))
     description = db.Column(db.String(1000))
+    conversion_report=db.Column(db.String(100))
+    source_file=db.Column(db.String(100))
     attachment = db.Column(db.LargeBinary)
     screenshotImage = db.Column(db.LargeBinary)
     selected_html = db.Column(db.String())
-
+    location_low=db.Column(db.String(100))
+    location_high=db.Column(db.String(100))
 
 @app.route('/', methods=['GET', 'POST'])
 def page():
     if request.method == 'POST':
-        article_title = request.form['article_title']
+        article_url = request.form['article_url']
         user_info = request.form['user_info']
         description = request.form['description']
         screenshotImage = request.form['screenshotImage']
+        article_url=request.form['article_url']
+        report_time=request.form['reportTime']
+        browser_info=request.form['browserInfo']
+        conversion_report=request.form['conversion_report']
+        source_file=request.form['source_file']
+
         if 'url' in request.form:   
             url = request.form['url']
         else:
@@ -35,12 +46,20 @@ def page():
             attachment = request.files['attachment'].read()
         else:
             attachment = None
+        if 'location_Low' in request.form:
+            location_Low=request.form['location_Low']
+        else:
+            location_Low=None
+        if 'location_High' in request.form:
+            location_High=request.form['location_High']
+        else:
+            location_Low=None
         if screenshotImage:
             img_data = base64.b64decode(screenshotImage.split(',')[1])
             img_io = BytesIO(img_data)
-            new_report = Report(article_title=article_title,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url)
+            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file)
         else:
-            new_report = Report(user_info=user_info,description=description, attachment=attachment, selected_html=url)
+            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file)
         db.session.add(new_report)
         db.session.commit()
         return 'OK'
