@@ -91,14 +91,15 @@ python3 app.py
 ## Future work & Current Problem
 
 #### Do it in "recent" future
-
-1. Optimize the way of taking screenshot with highlight. Test Highlight Function: Related to 5. So Try to solve 5a!
+1. record the initiation method (shortcut, button, etc)
+2. Floating banner: “This is an Experimental Feature”  and directions for using feedback UI
+3. Optimize the way of taking screenshot with highlight. Test Highlight Function: Related to 5. So Try to solve 5a!
    1. test highlight merged author/dept
    2. test highlight equation
    3. test highlighting words with extra chars like:
       1. \ANDAshish Vaswani
       2. Noam Shazeer1
-2. Report Mode for ScreenReader.
+4. Report Mode for ScreenReader.
 
 #### Future work
 
@@ -125,13 +126,16 @@ Click submit button will send data to the backend database. We have included att
 
 We remove the capture div to highlight for  selected screenshot function. But we have kept the method of created html for selected element.
 
-#### Fix Small Bug for Report Box and Add auto closs function
+#### Fix Small Bug for Report Box and Add auto close function
 
 We remove the downlaod function we have added before. Fix the bug for highlight. Fix the bug for zoom the picture. Now the enlarged image can be closed by clicking anywhere outside of it.
 
 We fixed issue with the element identifyer. Now the top layer shows the correct information we want.
 
 We clean up the report box after submit or user close it. And it will auto close.
+
+#### “File” > “File (optional)”
+#### increase the size of the description field
 
 
 ## Develop Log 4/15 - 4/21
