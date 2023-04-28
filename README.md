@@ -5,18 +5,28 @@ This is a flask demo for the ArXiv bug report function. The bug report initiatio
 ## Run the code
 
 #### if you want to use virtualenv:
-`python3 -m venv venv`
+```shell
+python3 -m venv venv
+```
 
 #### activate env
-`source venv/bin/activate`
+```shell
+source venv/bin/activate
+```
 
-#### Install Dependencies
+#### Install Dependencies 
 
-`pip install Flask, requests, Flask-SQLAlchemy, flask-cors`
+``` shell
+pip3 install Flask requests Flask-SQLAlchemy flask-cors
+```
+
+if pip3 does not work, you can try pip.
 
 #### Create database
 
-run a python interactive shell
+When you run app.py, it will auto generate db in instance.
+
+run a python interactive shell. ()
 
 - `from app import db`
 - `db.create_all()`
@@ -24,7 +34,15 @@ run a python interactive shell
 
 #### Start Server
 
-Start the server by `python(python3) app.py` or `flask --app app run debug`
+```shell
+flask --app app run debug
+```
+
+or (Some env may use python)
+
+```shell
+python3 app.py
+```
 
 ## Features
 1. Develop website based on Flask, with backend on Python, CSS on bootstrap and ArXiv defualt css, and database on SQLite. 
