@@ -109,7 +109,9 @@ We remove the capture div to highlight for  selected screenshot function. But we
 
 #### Fix Small Bug for Report Box and Add auto closs function
 
-We remove the downlaod function we have added before. Fix the bug for highlight. Fix the bug for zoom the picture. 
+We remove the downlaod function we have added before. Fix the bug for highlight. Fix the bug for zoom the picture. Now the enlarged image can be closed by clicking anywhere outside of it.
+
+We fixed issue with the element identifyer. Now the top layer shows the correct information we want.
 
 We clean up the report box after submit or user close it. And it will auto close.
 
