@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedTextSpan.appendChild(range.cloneContents());
     range.deleteContents();
     range.insertNode(selectedTextSpan);
-    
+
 
     // Take the screenshot
     html2canvas(document.body, {
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       screenshotImage.style.maxHeight = "300px";
 
       const enlargedImage = document.createElement("img");
-      screenshotImage.addEventListener("click", () => { 
+      screenshotImage.addEventListener("click", () => {
         enlargedImage.src = screenshotImage.src;
         enlargedImage.style.position = "fixed";
         enlargedImage.style.top = "50%";
@@ -112,18 +112,18 @@ document.addEventListener("DOMContentLoaded", () => {
           document.body.removeChild(enlargedImage);
           document.removeEventListener("click", removeEnlargedImage);
         }
-      
+
         document.addEventListener("click", (event) => {
           if (event.target !== screenshotImage && event.target !== enlargedImage) {
             removeEnlargedImage();
           }
         });
-      
+
         enlargedImage.addEventListener("click", () => {
           removeEnlargedImage();
         });
       });
-      
+
     });
 
     // Use the selected text to generate the dataURI
@@ -169,8 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         //print the current element identifier and its toplayer
-        console.log('Selected element identifier:', elementIdentifier);
-        console.log('Top layer identifier:', topLayer);
+        //console.log('Selected element identifier:', elementIdentifier);
+        //console.log('Top layer identifier:', topLayer);
       }
 
       // Show the report button
@@ -193,10 +193,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       document.body.appendChild(smallReportButton);
-      console.log("Report button added!");
+      //console.log("Report button added!");
       // Handle the report button click event
       smallReportButton.addEventListener("click", function () {
-        console.log("Report button clicked!");
+        //console.log("Report button clicked!");
         generate_selected_screenshot();
         modal.style.display = 'block';
         smallReportButton.remove();
@@ -220,11 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-
-
-  function getFullPageContent() {
-    return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-  }
 
 
   //click the button to generate the screenshot, next step: use external library to fasten the process
@@ -272,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //submit to the backend, next step: finish
   function submitBugReport(event) {
-    document.getElementById('notification').style = 'display: block';
+    //document.getElementById('notification').style = 'display: block';
 
     event.preventDefault();
     const formData = new FormData();
@@ -288,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //conversion report link
     const start_index = article_url.lastIndexOf('/') + 1;
     const number = article_url.substring(start_index);
-    const conversion_report = "https://ar5iv.labs.arxiv.org/log/"+ number;
+    const conversion_report = "https://ar5iv.labs.arxiv.org/log/" + number;
     //source file link
     const source_file = "https://arxiv.org/abs/" + number;
     //location-low
@@ -299,17 +294,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // add to the form data
     formData.append('article_url', article_url);
     formData.append('user_info', user_info);
-    formData.append('reportTime',currentTime);
-    formData.append('browserInfo',browserInfo)
-    formData.append('conversion_report',conversion_report)
-    formData.append('source_file',source_file)
+    formData.append('reportTime', currentTime);
+    formData.append('browserInfo', browserInfo)
+    formData.append('conversion_report', conversion_report)
+    formData.append('source_file', source_file)
     formData.append('description', data_description);
     formData.append('attachment', attachment);
     formData.append('screenshotImage', screenshotImage);
     formData.append('url', saved_dataURI);
-    formData.append('location_low',elementIdentifier);
-    formData.append('location_high',topLayer)
-    console.log("TTTTTT");
+    formData.append('location_low', elementIdentifier);
+    formData.append('location_high', topLayer)
     fetch('/', {
         method: 'POST',
         body: formData
@@ -317,6 +311,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(function (response) {
         if (response.ok) {
           alert('Report submitted');
+          document.querySelector('#myFormContent').reset(); // Reset the form
+          modal.style.display = 'none'
         } else {
           alert('Error occurs when submitting report');
         }
@@ -331,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBugReport(event)
 
     // Extract the browser name and version information
-    var userAgent = navigator.userAgent;
+    /*var userAgent = navigator.userAgent;
     var browserInfo = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i);
     var browserName = browserInfo[1];
     var browserVersion = browserInfo[2];
@@ -340,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
     browserName = browserName.charAt(0).toUpperCase() + browserName.slice(1);
 
     // Print the browser name and version information
-    console.log('Browser:', browserName, browserVersion);
+    console.log('Browser:', browserName, browserVersion);*/
   });
 
   //Hide the modal
