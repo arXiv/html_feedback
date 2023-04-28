@@ -151,13 +151,13 @@ document.addEventListener("DOMContentLoaded", () => {
         var id = parentNode.id;
         var classList = parentNode.classList;
         //if there is no id, than use class to identify
-        var elementIdentifier = id || classList[0] || 'Unknown';
+        elementIdentifier = id || classList[0] || 'Unknown';
 
         //get the topLayer of id
         if (elementIdentifier.startsWith('S0')) {
-          var topLayer = id ? id.split('.').slice(0, 2).join('.') : classList[0];
+          topLayer = id ? id.split('.').slice(0, 2).join('.') : classList[0];
         } else {
-          var topLayer = id ? id.split('.')[0] : classList[0];
+          topLayer = id ? id.split('.')[0] : classList[0];
         }
 
         //print the current element identifier and its toplayer
@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formData.append('attachment', attachment);
     formData.append('screenshotImage', screenshotImage);
     formData.append('url', saved_dataURI);
-    formData.append('location_Low',elementIdentifier);
+    formData.append('location_low',elementIdentifier);
     formData.append('location_high',topLayer)
     console.log("TTTTTT");
     fetch('/', {

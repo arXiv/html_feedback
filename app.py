@@ -42,24 +42,28 @@ def page():
             url = request.form['url']
         else:
             url = None
+            
         if 'attachment' in request.files:
             attachment = request.files['attachment'].read()
         else:
             attachment = None
-        if 'location_Low' in request.form:
-            location_Low=request.form['location_Low']
+            
+        if 'location_low' in request.form:
+            location_low = request.form['location_low']
         else:
-            location_Low=None
-        if 'location_High' in request.form:
-            location_High=request.form['location_High']
+            location_low=None
+            
+        if 'location_high' in request.form:
+            location_high=request.form['location_high']
         else:
-            location_Low=None
+            location_high=None
+            
         if screenshotImage:
             img_data = base64.b64decode(screenshotImage.split(',')[1])
             img_io = BytesIO(img_data)
-            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file)
+            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high)
         else:
-            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file)
+            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high)
         db.session.add(new_report)
         db.session.commit()
         return 'OK'
