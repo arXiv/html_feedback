@@ -1,6 +1,6 @@
 ## Description
 
-This is a flask demo for the ArXiv bug report function. The bug report initiation could be done in two ways(screenshot and highlight). The link to design document is [figma ArXiv-Error-report Desgin](https://www.figma.com/file/p13ZktQJEV8CXx3M7Z10fe/ArXiv-Error-report?node-id=0%3A1&t=gEav7Q8shh8D9Du0-1).
+This is a flask demo for the ArXiv bug report function. The bug report initiation could be done in three ways(screenshot, highlight and shortcut). The link to design document is [figma ArXiv-Error-report Desgin](https://www.figma.com/file/p13ZktQJEV8CXx3M7Z10fe/ArXiv-Error-report?node-id=0%3A1&t=gEav7Q8shh8D9Du0-1).
 
 ## Run the code
 
@@ -24,57 +24,57 @@ run a python interactive shell
 
 #### Start Server
 
-Start the server by `python(python3) app.py` or `flask --app app run`
+Start the server by `python(python3) app.py` or `flask --app app run debug`
 
 ## Features
-1. Develop web base on Flask, backend on Python, CSS on  bootstrap with ArXiv defualt css , and database on SQLite. 
+1. Develop website based on Flask, with backend on Python, CSS on bootstrap and ArXiv defualt css, and database on SQLite. 
 
-2. Screenshot (Use Html2canvas)
+2. Could capture the screenshot of both current view and selected elements with highlight(Use Html2canvas)
 
-3. Use shortcut to control report box
+3. Three ways to initiate the report box
+   - Use shortcut to control
+      a. "p" or "P" or  "Command + /"  or "Command + ?" to open report box.
+      b. "i" or "I" or "Command + ." or "Command + >" to close report box.
+   - Click the floating button at right buttom corner to open the report box. 
+   - After Selecting the element, the small report button will automatically show up. After clicking the report button, the screenshot with highlight will be captured and show in the screenshot area inside the report button.
 
-   a. "p" or "P" or  "Command + /"  or "Command + ?" to open report box.
+4. Report box interaction
+   - In Report box, users can add descriptions(must), attach image file, and take screenshot. 
+   - Click the take screenshot button, the report box will close and reopen to capture the screenshot of current view
+   - The screenshot image can be zoom up to see clearly
+   - Click the area outside the report box, the report box will close automatically
+   - Users could click the × at the top right corner to close the report box
+   - Click the submit button, the information inside the form will pass to the backend. Also users will receive the message of submission status, like "Report submitted!" And the report box will close. 
+   - The information inside the form will be cleared after submitting. 
 
-   b.  "i" or "I" or "Command + ." or "Command + >" to close report box.
+5. Auto capture information that may be helpful for the developer to solve the problem, the detailed description could see the backend below
+   - article url: Article_url, Conversion_report, source_file
+   - user_info
+   - report time
+   - broser_info
+   - selection: selected html, location_low and location_high 
 
-4. Build a floating button at right buttom corner, can be clicked to open the report box. 
-
-5. After Select Text auto show up report button. After click report button will auto take screenshot and get select HTML File.
-
-6. Highlight
-
-7. The screenshot image can be zoom up.
-
-8. In Report box, people can add comments, attach file, and take screenshot (this function will auto close report box and reopne). And send it to backend.
-
-9. Use SQLite as backend database, get report information from frontend.  
+6. Use SQLite as backend database, get report information from frontend.  
    Here is the information list:
 
    - Article_url: url for Ar5iv article
-   - User_info: Not we set default to some value.
-   - report time: time it generated.
-   - Browser_info: the user's browser info
-   - Description: user can write in Report Box
-   - Conversion_report: Log(from pdf to html) prepare for developer
-   - source file: the orginal article url
-   - Attachment: User can attatchment any type of file in report box they think it is useful.
-   - Screenshot
+   - User_info: Now we set default to some value.Designed to contain the user_id and the contact info.eg. account:yc2455 contact:@cornll.edu  
+   - report time: time that the report generated. eg. Thu Apr 27 2023 23:29:13 GMT-0400 (Eastern Daylight Time)
+   - Browser_info: the user's browser info, eg. Chrome/112.0.0.0,Chrome,112.0.0.0
+   - Description: The description of current issue, user can write in Report Box
+   - Conversion_report: The link to Log(from pdf to html), easier for developer to solve the issue
+   - source_file: the orginal article url
+   - Attachment: User's attachment inside the report box
+   - Screenshot: Generated screenshot
    - Selected html: use selected function to capture the html of selected text.
-   - Location_low: the selected element identifier
-   - Location_high: the parent node.
-
-10. After submit, we will auto close the report box.
+   - Location_low: the selected element identifier, like S2.T1.4.4.3
+   - Location_high: the general element range, like T1
 
 ## Future work & Current Problem
-### Urgent and important
-
-1. **Implement the DOM capture (get top level element and most specific element)**
-2. Clean the data in report box after close it!
-4. **implement browser version info from javascript** : You use what kind of browser, and if it will success or not!
 
 #### Do it in "recent" future
 
-1. Test Highlight Function: Related to 5. So Try to solve 5a!
+1. Optimize the way of taking screenshot with highlight. Test Highlight Function: Related to 5. So Try to solve 5a!
    1. test highlight merged author/dept
    2. test highlight equation
    3. test highlighting words with extra chars like:
