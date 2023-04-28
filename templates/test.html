@@ -1767,10 +1767,11 @@ Long Papers)</span>, pages 434–443. ACL, August 2013.
             <div class="modal-body">
             <div class="mb-3">
                 <label for="description" class="form-label">Description*:</label>
-                <input type="text" class="form-control" id="description" name="description" required>
+                <textarea class="form-control" id="description" name="description" required style="height: 80px;"></textarea>
+                <!--<input type="text" class="form-control" id="description" name="description" required style="height: 100px;overflow:scroll;">-->
             </div>
             <div class="mb-3">
-                <label for="file" class="form-label">File:</label>
+                <label for="file" class="form-label">File(optional):</label>
                 <input type="file" class="form-control" id="file" name="file">
             </div>
             <button type="button" class="btn btn-outline-secondary" id="take-screenshot">Take Screenshot</button>

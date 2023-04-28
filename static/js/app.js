@@ -280,7 +280,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentTime = new Date();
     //browser version
     var userAgent = navigator.userAgent;
-    var browserInfo = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i)
+    var browser = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i)
+    var browserName = browser[1];
+    var browserVersion = browser[2];
+    var browserInfo = browserName + '/' + browserVersion;
+
     //device info(system)--give up for now
     //conversion report link
     const start_index = article_url.lastIndexOf('/') + 1;
@@ -313,6 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(function (response) {
         if (response.ok) {
           alert('Report submitted');
+          document.getElementById("screenshot-image").style = "display: none";
           document.querySelector('#myFormContent').reset(); // Reset the form
           modal.style.display = 'none'
         } else {
