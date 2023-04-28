@@ -348,6 +348,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   let isOptionKeyDown = false;
+  // Add or remove report buttons based on the current bug report mode
+  let bugReportMode = false;
 
   // activate screenreader only instruction
   document.body.addEventListener("keydown", function (event) {
@@ -380,7 +382,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check if the 'r' key is pressed while the 'j' key is down
     if (isOptionKeyDown && (event.key === "r" || event.key === "R")) {
-      addReportButtonsToElements();
+      bugReportMode = !bugReportMode;
+
+      if (bugReportMode) {
+        addReportButtonsToElements();
+      } else {
+        removeReportButtons();
+      }
     }
   });
 
@@ -437,5 +445,12 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(function (error) {
         alert("提交报告时发生错误");
       });
+  }
+
+  function removeReportButtons() {
+    const reportButtons = document.querySelectorAll(".report-button");
+    reportButtons.forEach((button) => {
+      button.remove();
+    });
   }
 });
