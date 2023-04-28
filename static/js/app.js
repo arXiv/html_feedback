@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //const close = modal.querySelector('.close')
   const close = modal.querySelector('.btn-close')
 
+  let isCommandKeyDown = false;
   // Control Report Box based on the button
   document.addEventListener('keydown', function (event) {
     // Press "p" to open report box
@@ -16,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById('myForm')
       modal.style.display = 'none';
     }
-
+    
     // Combination
     if (event.key === 'Meta' || event.key === 'Command') {
       isCommandKeyDown = true;
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('openForm').addEventListener("click", () => {
     modal.style.display = 'block'
   });
-  //reportBtn.addEventListener("click", () => {
+
 
   let saved_dataURI;
   // Generate the screenshot for capture the selected area.
@@ -265,6 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("myFormContent").appendChild(downloadButton2);
   });
 
+
   //submit to the backend, next step: finish
   function submitBugReport(event) {
     //document.getElementById('notification').style = 'display: block';
@@ -322,21 +324,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+
   //submit process, next step: finish
   document.getElementById("myFormContent").addEventListener("submit", function (event) {
-    submitBugReport(event)
-
-    // Extract the browser name and version information
-    /*var userAgent = navigator.userAgent;
-    var browserInfo = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i);
-    var browserName = browserInfo[1];
-    var browserVersion = browserInfo[2];
-
-    //Capitalize the first letter of the browser name
-    browserName = browserName.charAt(0).toUpperCase() + browserName.slice(1);
-
-    // Print the browser name and version information
-    console.log('Browser:', browserName, browserVersion);*/
+    submitBugReport(event);
   });
 
   //Hide the modal
