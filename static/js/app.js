@@ -347,9 +347,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  let isOptionKeyDown = false;
+
   // activate screenreader only instruction
   document.body.addEventListener("keydown", function (event) {
-    // Check if the 'Alt + S' shortcut is pressed
+    // Check if the 's' key is pressed
     if (event.key.toLowerCase() === "s") {
       var popup = document.getElementById("shortcuts-popup");
 
@@ -359,8 +361,8 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.style.display = "none";
       }
     }
-    // Check if the question mark key is pressed
-    if (event.key === "?" || (event.code === "Slash" && event.shiftKey)) {
+    // Check if the question mark key is pressed (for keyboard shorcut tab)
+    else if (event.key === "?" || (event.code === "Slash" && event.shiftKey)) {
       var popup = document.getElementById("sr-popup");
 
       // Toggle display property to show or hide the popup
@@ -370,5 +372,70 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.style.display = "none";
       }
     }
+
+    // Check if the 'j' key is pressed
+    else if (event.key.toLowerCase() === "j") {
+      isOptionKeyDown = true;
+    }
+
+    // Check if the 'r' key is pressed while the 'j' key is down
+    if (isOptionKeyDown && (event.key === "r" || event.key === "R")) {
+      addReportButtonsToElements();
+    }
   });
+
+  function addReportButtonsToElements() {
+    const elements = document.querySelectorAll("div, p, h1");
+    elements.forEach((element) => {
+      const reportButton = document.createElement("button");
+      reportButton.innerText = "Report";
+      reportButton.className = "report-button";
+      reportButton.addEventListener("click", () => {
+        // Export the HTML of the corresponding div
+        const elementHtml = element.outerHTML;
+
+        // Save the exported HTML to the database
+        saveBugReportToDatabase(elementHtml);
+      });
+      element.appendChild(reportButton);
+    });
+  }
+
+  function saveBugReportToDatabase(elementHtml) {
+    const bugDescription = elementHtml; // Use the exported HTML as the bug description
+
+    // Prepare the form data
+    const formData = new FormData();
+    const article_title = document.querySelector(
+      "h1.ltx_title_document"
+    ).textContent;
+    const user_info = "account:test contact:test@cornll.edu ";
+    const data_description = bugDescription;
+    const screenshotImage = getFullPageContent();
+    const attachment = document.querySelector("#file").files[0];
+    // add to the form data
+    formData.append("article_title", article_title);
+    formData.append("user_info", user_info);
+    formData.append("description", data_description);
+    formData.append("attachment", attachment);
+    formData.append("screenshotImage", screenshotImage);
+    formData.append("url", saved_dataURI);
+    formData.append("bug_description", bugDescription);
+
+    // Send the form data to the server
+    fetch("/", {
+      method: "POST",
+      body: formData,
+    })
+      .then(function (response) {
+        if (response.ok) {
+          alert("报告已提交");
+        } else {
+          alert("提交报告时发生错误");
+        }
+      })
+      .catch(function (error) {
+        alert("提交报告时发生错误");
+      });
+  }
 });
