@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     range.deleteContents();
     range.insertNode(selectedTextSpan);
 
+
     // Take the screenshot
     html2canvas(document.body, {
       width: viewportWidth,
@@ -334,23 +335,12 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBugReport(event);
   });
 
-
   //Hide the modal
   close.addEventListener('click', function (event) {
     modal.style.display = 'none';
     // Delay the execution of the modal close code by 3 second
     document.getElementById("screenshot").value = "";
     document.getElementById("screenshot-image").src = "";
-
-    const downloadButton = document.getElementById("download-screenshot");
-    if (downloadButton) {
-      downloadButton.remove();
-    }
-
-    const downloadButton2 = document.getElementById("download-screenshot");
-    if (downloadButton2) {
-      downloadButton2.remove();
-    }
   });
 
   // Hide the modal if clicked outside
@@ -358,5 +348,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target == modal) {
       modal.style.display = 'none';
     }
-  });
-})
+  })
+});

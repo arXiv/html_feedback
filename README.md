@@ -17,7 +17,7 @@ source venv/bin/activate
 #### Install Dependencies 
 
 ``` shell
-pip3 install Flask requests Flask-SQLAlchemy flask-cors
+pip3 install -r requirements.txt
 ```
 
 if pip3 does not work, you can try pip.
