@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById('myForm')
   //const close = modal.querySelector('.close')
-  const close= modal.querySelector('.btn-close')
+  const close = modal.querySelector('.btn-close')
 
-  // Control Report Box based on the button
   let isCommandKeyDown = false;
-  document.addEventListener('keydown', function(event) {
+  // Control Report Box based on the button
+  document.addEventListener('keydown', function (event) {
     // Press "p" to open report box
-    if (event.key === 'p'|| event.key === 'P') {
+    if (event.key === 'p' || event.key === 'P') {
       const modal = document.getElementById('myForm')
       modal.style.display = 'block';
     }
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById('myForm')
       modal.style.display = 'none';
     }
-
+    
     // Combination
     if (event.key === 'Meta' || event.key === 'Command') {
       isCommandKeyDown = true;
@@ -32,14 +32,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById('myForm');
       modal.style.display = 'none';
     }
-  }); 
+  });
 
-  document.addEventListener('keyup', function(event) {
+  document.addEventListener('keyup', function (event) {
     if (event.key === 'Meta' || event.key === 'Command') {
       isCommandKeyDown = false;
     }
   });
-
 
   //click the button and the modal appear
   document.getElementById('openForm').addEventListener("click", () => {
@@ -47,19 +46,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // Generate the screenshot. Only capture the selected area.
-  // next step: create screenshot of only highlighted area, use existing library to write that
+  let saved_dataURI;
+  // Generate the screenshot for capture the selected area.
   function generate_selected_screenshot() {
     const viewportWidth = document.documentElement.clientWidth;
     const viewportHeight = document.documentElement.clientHeight;
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
-    
-    // Get the selected text
+
+    // Get the selected text and save html to selectedHTML.
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
 
-    // Create a span element to wrap the selected text
+    // Prepare for selected HTML.
+    var selectedHtml = '';
+    var container = document.createElement('div');
+    container.appendChild(range.cloneContents());
+    selectedHtml = container.innerHTML;
+
+    // Highlight
     const selectedTextSpan = document.createElement("span");
     selectedTextSpan.style.backgroundColor = "yellow";
     selectedTextSpan.style.color = "black";
@@ -78,20 +83,20 @@ document.addEventListener("DOMContentLoaded", () => {
       scale: 1.0,
       useCORS: true
     }).then((canvas) => {
-      // Remove the span element from the DOM
+      // Remove the div element from the DOM
       selectedTextSpan.outerHTML = selectedTextSpan.innerHTML;
 
       var imageData = canvas.toDataURL("image/png");
       modal.style.display = "block";
       document.getElementById("screenshot").value = imageData;
-      const screenshotImage = document.getElementById("screenshot-image");
+      const screenshotImage = document.querySelector("#screenshot-image");
       screenshotImage.src = imageData;
       screenshotImage.style = "display: block";
       screenshotImage.style.maxWidth = "300px";
       screenshotImage.style.maxHeight = "300px";
 
+      const enlargedImage = document.createElement("img");
       screenshotImage.addEventListener("click", () => {
-        const enlargedImage = document.createElement("img");
         enlargedImage.src = screenshotImage.src;
         enlargedImage.style.position = "fixed";
         enlargedImage.style.top = "50%";
@@ -103,31 +108,33 @@ document.addEventListener("DOMContentLoaded", () => {
         enlargedImage.style.cursor = "zoom-out";
         document.body.appendChild(enlargedImage);
 
-        enlargedImage.addEventListener("click", () => {
+        function removeEnlargedImage() {
           document.body.removeChild(enlargedImage);
+          document.removeEventListener("click", removeEnlargedImage);
+        }
+
+        document.addEventListener("click", (event) => {
+          if (event.target !== screenshotImage && event.target !== enlargedImage) {
+            removeEnlargedImage();
+          }
+        });
+
+        enlargedImage.addEventListener("click", () => {
+          removeEnlargedImage();
         });
       });
+
     });
+
+    // Use the selected text to generate the dataURI
+    saved_dataURI = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
   }
 
 
-let selectedText;
-let smallReportButton;
-
-//highlight selection, next step:optimize the selection element layer, like Table S1.T1, optimize the button format and area, optimize the sensitivity of selection(like mouseup)
-document.addEventListener("mouseup", function (event) {
-
-  if (event.target.id === "small-report-button") {
-    return;
-  }
-
-
-  let selectedText;
-  let smallReportButton;
-
+  let elementIdentifier;
+  let topLayer;
   //highlight selection, next step:optimize the selection element layer, like Table S1.T1, optimize the button format and area, optimize the sensitivity of selection(like mouseup)
   document.addEventListener("mouseup", function (event) {
-
     if (event.target.id === "small-report-button") {
       return;
     }
@@ -152,19 +159,18 @@ document.addEventListener("mouseup", function (event) {
         var id = parentNode.id;
         var classList = parentNode.classList;
         //if there is no id, than use class to identify
-        var elementIdentifier = id || classList[0] || 'Unknown';
+        elementIdentifier = id || classList[0] || 'Unknown';
 
         //get the topLayer of id
-        if (elementIdentifier.startsWith('S0')) {
-          var topLayer = id ? id.split('.').slice(0, 2).join('.') : classList[0];
-          }
-        else{
-          var topLayer = id ? id.split('.')[0] : classList[0];
+        if (elementIdentifier.match(/^S\d/)) {
+          topLayer = id ? id.split('.')[1]: classList[0];
+        } else {
+          topLayer = id ? id.split('.')[0] : classList[0];
         }
 
         //print the current element identifier and its toplayer
-        console.log('Selected element identifier:', elementIdentifier);
-        console.log('Top layer identifier:', topLayer);
+        //console.log('Selected element identifier:', elementIdentifier);
+        //console.log('Top layer identifier:', topLayer);
       }
 
       // Show the report button
@@ -187,17 +193,17 @@ document.addEventListener("mouseup", function (event) {
       }
 
       document.body.appendChild(smallReportButton);
-      console.log("Report button added!");
+      //console.log("Report button added!");
       // Handle the report button click event
       smallReportButton.addEventListener("click", function () {
-        console.log("Report button clicked!");
+        //console.log("Report button clicked!");
         generate_selected_screenshot();
         modal.style.display = 'block';
         smallReportButton.remove();
       });
 
       // Handle the window scroll event
-      window.onscroll = function() {
+      window.onscroll = function () {
         if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
           smallReportButton.style.display = "none";
         } else {
@@ -216,16 +222,10 @@ document.addEventListener("mouseup", function (event) {
   });
 
 
-  function getFullPageContent() {
-    return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-  }
-
-
   //click the button to generate the screenshot, next step: use external library to fasten the process
   // This is different from the screenshot of the selected area.
-  document.getElementById("take-screenshot").addEventListener("click", function() {
+  document.getElementById("take-screenshot").addEventListener("click", function () {
     modal.style.display = 'none';
-
 
     // Capture screenshot of the whole page
     const viewportWidth = document.documentElement.clientWidth;
@@ -252,16 +252,6 @@ document.addEventListener("mouseup", function (event) {
       document.getElementById("screenshot-image").style = "display: block";
 
     });
-    // Create or update a download button
-    let visibleContentHtml = getVisibleText();
-    let downloadButton = document.createElement("a");
-    downloadButton.id = "download-screenshot";
-    downloadButton.href = "data:text/html;charset=utf-8," + encodeURIComponent(visibleContentHtml);
-    downloadButton.download = "visible-content.html";
-    downloadButton.textContent = "Download Visible Content";
-    downloadButton.style.display = "block";
-    downloadButton.style.margin = "10px";
-    document.getElementById("myFormContent").appendChild(downloadButton);
 
     let fullPageContent = getFullPageContent();
     let downloadButton2 = document.createElement("a");
@@ -273,56 +263,80 @@ document.addEventListener("mouseup", function (event) {
     downloadButton2.style.margin = "10px";
 
     document.getElementById("myFormContent").appendChild(downloadButton2);
-  }); 
-  
-  const form = document.querySelector('#myFormContent');
-  //submit to the backend
-  function submitBugReport() {
-    const description = document.querySelector('#description').value;
-    const file = document.querySelector('#file').files[0];
-    const screenshot = document.querySelector('#screenshot').value;
-  
-    // Create a FormData object to store the form data
+  });
+
+
+  //submit to the backend, next step: finish
+  function submitBugReport(event) {
+    //document.getElementById('notification').style = 'display: block';
+
+    event.preventDefault();
     const formData = new FormData();
-    formData.append('description', description);
-    formData.append('file', file);
-    formData.append('screenshot', screenshot);
-  
-    // Make an AJAX request to the Flask backend
-    fetch('/generate_report', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      document.querySelector('#notification').style.display = 'block';
-    })
-    .catch(error => console.error(error));
-  
-    //form.reset();
-    document.querySelector('#screenshot-image').src = '';
+    const metaElement = document.querySelector('meta[property="og:url"]');
+    const article_url = metaElement ? metaElement.getAttribute('content') : null;
+    const user_info = "account:yc2455 contact:@cornll.edu "
+    //report time
+    const currentTime = new Date();
+    //browser version
+    var userAgent = navigator.userAgent;
+    var browser = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i)
+    var browserName = browser[1];
+    var browserVersion = browser[2];
+    var browserInfo = browserName + '/' + browserVersion;
+
+    //device info(system)--give up for now
+    //conversion report link
+    const start_index = article_url.lastIndexOf('/') + 1;
+    const number = article_url.substring(start_index);
+    const conversion_report = "https://ar5iv.labs.arxiv.org/log/" + number;
+    //source file link
+    const source_file = "https://arxiv.org/abs/" + number;
+    //location-low
+    //location-high
+    const data_description = document.getElementById("description").value;
+    const screenshotImage = document.getElementById("screenshot").value;
+    const attachment = document.querySelector('#file').files[0];
+    // add to the form data
+    formData.append('article_url', article_url);
+    formData.append('user_info', user_info);
+    formData.append('reportTime', currentTime);
+    formData.append('browserInfo', browserInfo)
+    formData.append('conversion_report', conversion_report)
+    formData.append('source_file', source_file)
+    formData.append('description', data_description);
+    formData.append('attachment', attachment);
+    formData.append('screenshotImage', screenshotImage);
+    formData.append('url', saved_dataURI);
+    formData.append('location_low', elementIdentifier);
+    formData.append('location_high', topLayer)
+    fetch('/', {
+        method: 'POST',
+        body: formData
+      })
+      .then(function (response) {
+        if (response.ok) {
+          alert('Report submitted');
+          document.getElementById("screenshot-image").style = "display: none";
+          document.querySelector('#myFormContent').reset(); // Reset the form
+          modal.style.display = 'none'
+        } else {
+          alert('Error occurs when submitting report');
+        }
+      })
+      .catch(function (error) {
+        alert('Error occurs when submitting report');
+      });
   }
 
+
   //submit process, next step: finish
-  document.getElementById("myFormContent").addEventListener("submit", function(event) {
-    submitBugReport()
-    
-    // Extract the browser name and version information
-    /*var userAgent = navigator.userAgent;
-    var browserInfo = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i);
-    var browserName = browserInfo[1];
-    var browserVersion = browserInfo[2];
-  
-    //Capitalize the first letter of the browser name
-    browserName = browserName.charAt(0).toUpperCase() + browserName.slice(1);
-  
-    // Print the browser name and version information
-    console.log('Browser:', browserName, browserVersion);*/
+  document.getElementById("myFormContent").addEventListener("submit", function (event) {
+    submitBugReport(event);
   });
 
 
   //Hide the modal
-  close.addEventListener('click', function(event) {
+  close.addEventListener('click', function (event) {
     modal.style.display = 'none';
     // Delay the execution of the modal close code by 3 second
     document.getElementById("screenshot").value = "";
@@ -338,13 +352,11 @@ document.addEventListener("mouseup", function (event) {
       downloadButton2.remove();
     }
   });
-  
 
   // Hide the modal if clicked outside
-  window.addEventListener('click', function(event) {
+  window.addEventListener('click', function (event) {
     if (event.target == modal) {
       modal.style.display = 'none';
     }
   });
-})
 })

@@ -1,54 +1,105 @@
 ## Description
 
-This is a flask demo for the ArXiv bug report function. The bug report initiation could be done in two ways(screenshot and highlight). The link to design document is https://www.figma.com/file/p13ZktQJEV8CXx3M7Z10fe/ArXiv-Error-report?node-id=0%3A1&t=gEav7Q8shh8D9Du0-1.
+This is a flask demo for the ArXiv bug report function. The bug report initiation could be done in three ways(screenshot, highlight and shortcut). The link to design document is [figma ArXiv-Error-report Desgin](https://www.figma.com/file/p13ZktQJEV8CXx3M7Z10fe/ArXiv-Error-report?node-id=0%3A1&t=gEav7Q8shh8D9Du0-1).
 
-## Steps to run the project
+## Run the code
 
-### Create virtual environment (below are based on mac)
+#### if you want to use virtualenv:
+```shell
+python3 -m venv venv
+```
 
-- if you want to use virtualenv:
-  `python3 -m venv venv`
-- activate env
-  `source venv/bin/activate`
-### Install Dependencies
+#### activate env
+```shell
+source venv/bin/activate
+```
 
-`pip install Flask, requests, Flask-SQLAlchemy, flask-cors`
+#### Install Dependencies 
 
-### Create database
+``` shell
+pip3 install Flask requests Flask-SQLAlchemy flask-cors
+```
 
-run a python interactive shell
+if pip3 does not work, you can try pip.
+
+#### Create database
+
+When you run app.py, it will auto generate db in instance.
+
+run a python interactive shell. ()
 
 - `from app import db`
 - `db.create_all()`
 - `exit()`
 
-### Start Server
-Start the server by `python app.py` or `flask --app app run`
+#### Start Server
 
-## Details about the features(not finished)
-1. Highlight
-2. Screenshot
-3. Use shortcut "p" to open report box, and "i" to close it.
-4. Use "CT_Tech" to find add elements on HTML file.
+```shell
+flask --app app run debug
+```
+
+or (Some env may use python)
+
+```shell
+python3 app.py
+```
+
+## Features
+1. Develop website based on Flask, with backend on Python, CSS on bootstrap and ArXiv defualt css, and database on SQLite. 
+
+2. Could capture the screenshot of both current view and selected elements with highlight(Use Html2canvas)
+
+3. Three ways to initiate the report box
+   - Use shortcut to control
+      - "p" or "P" or  "Command + /"  or "Command + ?" to open report box.
+      - "i" or "I" or "Command + ." or "Command + >" to close report box.
+   - Click the floating button at right buttom corner to open the report box. 
+   - After Selecting the element, the small report button will automatically show up. After clicking the report button, the screenshot with highlight will be captured and show in the screenshot area inside the report button.
+
+4. Report box interaction
+   - In Report box, users can add descriptions(must), attach image file, and take screenshot. 
+   - Click the take screenshot button, the report box will close and reopen to capture the screenshot of current view
+   - The screenshot image can be zoom up to see clearly
+   - Click the area outside the report box, the report box will close automatically
+   - Users could click the × at the top right corner to close the report box
+   - Click the submit button, the information inside the form will pass to the backend. Also users will receive the message of submission status, like "Report submitted!" And the report box will close. 
+   - The information inside the form will be cleared after submitting. 
+
+5. Auto capture information that may be helpful for the developer to solve the problem, the detailed description could see the backend below
+   - article url: Article_url, Conversion_report, source_file
+   - user_info
+   - report time
+   - broser_info
+   - selection: selected html, location_low and location_high 
+
+6. Use SQLite as backend database, get report information from frontend.  
+   Here is the information list:
+
+   - Article_url: url for Ar5iv article
+   - User_info: Now we set default to some value.Designed to contain the user_id and the contact info.eg. account:yc2455 contact:@cornll.edu  
+   - report time: time that the report generated. eg. Thu Apr 27 2023 23:29:13 GMT-0400 (Eastern Daylight Time)
+   - Browser_info: the user's browser info, eg. Chrome/112.0.0.0,Chrome,112.0.0.0
+   - Description: The description of current issue, user can write in Report Box
+   - Conversion_report: The link to Log(from pdf to html), easier for developer to solve the issue
+   - source_file: the orginal article url
+   - Attachment: User's attachment inside the report box
+   - Screenshot: Generated screenshot
+   - Selected html: use selected function to capture the html of selected text.
+   - Location_low: the selected element identifier, like S2.T1.4.4.3
+   - Location_high: the general element range, like T1
 
 ## Future work & Current Problem
-#### Important
 
-1. **Put the report comments into a file (or other inspectable format) for a demo**
-2. **Implement the DOM capture (get top level element and most specific element)**
-3. **implement browser version info from javascript** 
-   Not sure what this mean?
-4. Test Highlight Function: Related to 5. So Try to solve 5a!
+#### Do it in "recent" future
+1. record the initiation method (shortcut, button, etc)
+2. Floating banner: “This is an Experimental Feature”  and directions for using feedback UI
+3. Optimize the way of taking screenshot with highlight. Test Highlight Function: Related to 5. So Try to solve 5a!
    1. test highlight merged author/dept
    2. test highlight equation
    3. test highlighting words with extra chars like:
       1. \ANDAshish Vaswani
       2. Noam Shazeer1
-5. Improve for select text report function. Finish one of them.
-   a. For highlight method, sometimes it will make text invisiable.
-   b. For create div method. Some text does not included.
-   c. Try to create third method: Return the HTML file of it!
-6. Report Mode for ScreenReader.
+4. Report Mode for ScreenReader.
 
 #### Future work
 
@@ -56,7 +107,7 @@ Start the server by `python app.py` or `flask --app app run`
 2. Issues with screenshot functionality: Firstly, some characters cannot be captured (likely due to HTML2Canvas limitations), and secondly, in split-screen mode, the screenshot position shifts downwards.
    Solution?: Change document.nody to document.element. But the screenshot will become empty. Do not know why yet!
 
-## Develop Log 4/ 22 - 4/28
+## Develop Log Current
 
 #### Using Keyboard Shortcuts to Open and Close the Report Box
 
@@ -64,11 +115,27 @@ In web development, it's sometimes necessary to solicit feedback from users or a
 
 To make it convenient for users to open and close the report box, we can use keyboard shortcuts. On Windows, users can press "Ctrl + /" to open the report box and "Ctrl + ." or ">" to close it. On Mac, users can press "Command + /" to open the report box and "Command + ." or ">" to close it.
 
-#### Test HTML “add /test ”
+#### Auto Capture Selected HTML.
+After user select text and click report button. We will auto capture the selected HTML.  
 
-#### Update Download：
+#### Add backend database
 
-Now it will download html file. And later I will try to just build a html file base on the users' vision.
+Click submit button will send data to the backend database. We have included attachment file, screenshot, id, article title, comments, user id and contact info, selected html, etc.
+
+#### Add Highligh back
+
+We remove the capture div to highlight for  selected screenshot function. But we have kept the method of created html for selected element.
+
+#### Fix Small Bug for Report Box and Add auto close function
+
+We remove the downlaod function we have added before. Fix the bug for highlight. Fix the bug for zoom the picture. Now the enlarged image can be closed by clicking anywhere outside of it.
+
+We fixed issue with the element identifyer. Now the top layer shows the correct information we want.
+
+We clean up the report box after submit or user close it. And it will auto close.
+
+#### “File” > “File (optional)”
+#### increase the size of the description field
 
 
 ## Develop Log 4/15 - 4/21
