@@ -138,6 +138,34 @@ function addBugReportForm() {
   document.body.appendChild(floatingBanner);
   document.body.appendChild(button);
   document.body.appendChild(modal);
+
+  // Add other!
+  var floatingBanner = document.createElement("div");
+  floatingBanner.setAttribute("class", "floating-banner");
+  floatingBanner.appendChild(document.createTextNode("This is an Experimental Feature"));
+
+  // Apply CSS styles to the floating banner
+  floatingBanner.style.position = "fixed";
+  floatingBanner.style.top = "10px";
+  floatingBanner.style.right = "10px";
+  floatingBanner.style.padding = "10px";
+  floatingBanner.style.background = "yellow";
+  floatingBanner.style.zIndex = "9999";
+
+  // Create a close button
+  var closeButton2 = document.createElement("button");
+  closeButton2.appendChild(document.createTextNode("X"));
+  closeButton2.style.marginLeft = "10px";
+
+  // Add an event listener to the close button
+  closeButton2.addEventListener("click", function() {
+    floatingBanner.style.display = "none"; // Hide the floating banner when the button is clicked
+  });
+
+  // Append the close button to the floating banner
+  floatingBanner.appendChild(closeButton2);
+
+  document.body.appendChild(floatingBanner);
 }
 
 
