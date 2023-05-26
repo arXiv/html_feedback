@@ -1,4 +1,144 @@
+function addBugReportForm() {
+  // Create the button element
+  var button = document.createElement("button");
+  button.setAttribute("type", "button");
+  button.setAttribute("class", "btn btn-primary");
+  button.setAttribute("id", "openForm");
+  button.appendChild(document.createTextNode("Report Bug"));
+
+  // Create the floating banner element
+  var floatingBanner = document.createElement("div");
+  floatingBanner.setAttribute("class", "floating-banner");
+  floatingBanner.appendChild(document.createTextNode("This is an Experimental Feature"));
+
+  // Create the modal container element
+  var modal = document.createElement("div");
+  modal.setAttribute("class", "modal");
+  modal.setAttribute("id", "myForm");
+
+  // Create the modal dialog element
+  var modalDialog = document.createElement("div");
+  modalDialog.setAttribute("class", "modal-dialog");
+
+  // Create the form element
+  var form = document.createElement("form");
+  form.setAttribute("class", "modal-content");
+  form.setAttribute("id", "myFormContent");
+  form.setAttribute("enctype", "multipart/form-data");
+
+  // Create the modal header
+  var modalHeader = document.createElement("div");
+  modalHeader.setAttribute("class", "modal-header");
+
+  // Create the modal title
+  var modalTitle = document.createElement("h5");
+  modalTitle.setAttribute("class", "modal-title");
+  modalTitle.appendChild(document.createTextNode("Bug Report Form"));
+
+  // Create the close button for the modal
+  var closeButton = document.createElement("button");
+  closeButton.setAttribute("type", "button");
+  closeButton.setAttribute("class", "btn-close");
+  closeButton.setAttribute("data-bs-dismiss", "modal");
+  closeButton.setAttribute("aria-label", "Close");
+
+  // Append the title and close button to the modal header
+  modalHeader.appendChild(modalTitle);
+  modalHeader.appendChild(closeButton);
+
+  // Create the modal body
+  var modalBody = document.createElement("div");
+  modalBody.setAttribute("class", "modal-body");
+
+  // Create the description input field
+  var descriptionLabel = document.createElement("label");
+  descriptionLabel.setAttribute("for", "description");
+  descriptionLabel.setAttribute("class", "form-label");
+  descriptionLabel.appendChild(document.createTextNode("Description*:"));
+
+  var descriptionTextarea = document.createElement("textarea");
+  descriptionTextarea.setAttribute("class", "form-control");
+  descriptionTextarea.setAttribute("id", "description");
+  descriptionTextarea.setAttribute("name", "description");
+  descriptionTextarea.setAttribute("required", "required");
+  descriptionTextarea.setAttribute("style", "height: 80px;");
+
+  // Create the file input field
+  var fileLabel = document.createElement("label");
+  fileLabel.setAttribute("for", "file");
+  fileLabel.setAttribute("class", "form-label");
+  fileLabel.appendChild(document.createTextNode("File(optional):"));
+
+  var fileInput = document.createElement("input");
+  fileInput.setAttribute("type", "file");
+  fileInput.setAttribute("class", "form-control");
+  fileInput.setAttribute("id", "file");
+  fileInput.setAttribute("name", "file");
+
+  // Create the take screenshot button
+  var takeScreenshotButton = document.createElement("button");
+  takeScreenshotButton.setAttribute("type", "button");
+  takeScreenshotButton.setAttribute("class", "btn btn-outline-secondary");
+  takeScreenshotButton.setAttribute("id", "take-screenshot");
+  takeScreenshotButton.appendChild(document.createTextNode("Take Screenshot"));
+
+  // Create the hidden input field for the screenshot
+  var screenshotInput = document.createElement("input");
+  screenshotInput.setAttribute("type", "hidden");
+  screenshotInput.setAttribute("id", "screenshot");
+  screenshotInput.setAttribute("name", "screenshot");
+
+  // Create the screenshot image element
+  var screenshotImage = document.createElement("img");
+  screenshotImage.setAttribute("id", "screenshot-image");
+  screenshotImage.setAttribute("class", "img-fluid");
+  screenshotImage.setAttribute("src", "");
+
+  // Create the modal footer
+  var modalFooter = document.createElement("div");
+  modalFooter.setAttribute("class", "modal-footer d-flex justify-content-end");
+
+  // Create the submit button
+  var submitButton = document.createElement("button");
+  submitButton.setAttribute("type", "submit");
+  submitButton.setAttribute("class", "btn btn-primary");
+  submitButton.setAttribute("id", "modal-submit");
+  submitButton.setAttribute("style", "background-color: #b31b1b;");
+  submitButton.appendChild(document.createTextNode("Submit"));
+
+  // Create a container div for the buttons
+  var buttonsContainer = document.createElement("div");
+  buttonsContainer.setAttribute("class", "d-flex justify-content-between");
+
+  // Append the elements to their respective parents
+  modalBody.appendChild(descriptionLabel);
+  modalBody.appendChild(descriptionTextarea);
+  modalBody.appendChild(fileLabel);
+  modalBody.appendChild(fileInput);
+  modalBody.appendChild(takeScreenshotButton);
+  modalBody.appendChild(screenshotInput);
+  modalBody.appendChild(screenshotImage);
+
+  modalFooter.appendChild(submitButton);
+
+  form.appendChild(modalHeader);
+  form.appendChild(modalBody);
+  form.appendChild(modalFooter);
+
+  modalDialog.appendChild(form);
+
+  modal.appendChild(modalDialog);
+
+  // Append the button and modal to the document body
+  document.body.appendChild(floatingBanner);
+  document.body.appendChild(button);
+  document.body.appendChild(modal);
+}
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
+  addBugReportForm();
   const modal = document.getElementById('myForm')
   //const close = modal.querySelector('.close')
   const close = modal.querySelector('.btn-close')
