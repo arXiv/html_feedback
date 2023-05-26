@@ -100,16 +100,6 @@ function addBugReportForm() {
   screenshotImage.setAttribute("class", "img-fluid");
   screenshotImage.setAttribute("src", "");
 
-  // Notification ?
-  var notification = document.createElement("div");
-  notification.setAttribute("id", "notification");
-  notification.setAttribute("class", "alert alert-success mt-3");
-  notification.setAttribute("role", "alert");
-  notification.setAttribute("style", "display: none;");
-  notification.appendChild(document.createTextNode("Bug report submitted successfully!"));
-
-  
-
   // Create the modal footer
   var modalFooter = document.createElement("div");
   modalFooter.setAttribute("class", "modal-footer d-flex justify-content-end");
@@ -122,14 +112,17 @@ function addBugReportForm() {
   submitButton.setAttribute("style", "background-color: #b31b1b;");
   submitButton.appendChild(document.createTextNode("Submit"));
 
-  
+  // Create a container div for the buttons
+  var buttonsContainer = document.createElement("div");
+  buttonsContainer.setAttribute("class", "d-flex justify-content-between");
+
+  // Append the elements to their respective parents
   modalBody.appendChild(descriptionLabel);
   modalBody.appendChild(descriptionTextarea);
   modalBody.appendChild(fileDiv);
   modalBody.appendChild(takeScreenshotButton);
   modalBody.appendChild(screenshotInput);
   modalBody.appendChild(screenshotImage);
-  modalBody.appendChild(notification);
 
   modalFooter.appendChild(submitButton);
 
@@ -152,9 +145,9 @@ function addBugReportForm() {
 document.addEventListener("DOMContentLoaded", () => {
   addBugReportForm();
   const modal = document.getElementById('myForm')
-  //const close = modal.querySelector('.btn-close')
-  const close = modal.getElementById('closeForm')
-  
+  //const close = modal.querySelector('.close')
+  const close = modal.querySelector('.btn-close')
+
   let isCommandKeyDown = false;
   // Control Report Box based on the button
   document.addEventListener('keydown', function (event) {
