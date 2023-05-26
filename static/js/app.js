@@ -139,7 +139,7 @@ function addBugReportForm() {
   document.body.appendChild(button);
   document.body.appendChild(modal);
 
-  // Add other!
+  // floatingBanner
   var floatingBanner = document.createElement("div");
   floatingBanner.setAttribute("class", "floating-banner");
   floatingBanner.appendChild(document.createTextNode("This is an Experimental Feature"));
@@ -164,8 +164,34 @@ function addBugReportForm() {
 
   // Append the close button to the floating banner
   floatingBanner.appendChild(closeButton2);
-
   document.body.appendChild(floatingBanner);
+
+  // instruction
+  var instruction = document.createElement("div");
+  instruction.setAttribute("class", "floating-banner");
+  instruction.appendChild(document.createTextNode("press p to open and i to close report box!"));
+
+  // Apply CSS styles to the instruction
+  instruction.style.position = "fixed";
+  instruction.style.top = "10px";
+  instruction.style.left = "10px";
+  instruction.style.padding = "10px";
+  instruction.style.background = "yellow";
+  instruction.style.zIndex = "9999";
+
+  // Create a close button
+  var closeButton = document.createElement("button");
+  closeButton.appendChild(document.createTextNode("X"));
+  closeButton.style.marginLeft = "10px";
+
+  // Add an event listener to the close button
+  closeButton.addEventListener("click", function() {
+  instruction.style.display = "none"; // Hide the instruction when the button is clicked
+  });
+
+  // Append the close button to the instruction
+  instruction.appendChild(closeButton);
+  document.body.appendChild(instruction);
 }
 
 
