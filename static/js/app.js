@@ -6,28 +6,6 @@ function addBugReportForm() {
   button.setAttribute("id", "openForm");
   button.appendChild(document.createTextNode("Report Bug"));
 
-  // Create the floating banner element
-  //floating banner
-    var floatingBanner = document.createElement("aside");
-    floatingBanner.className = 'slider-wrapper bps-banner dark';
-  
-    var divElement =document.createElement('div')
-    divElement.className='copy-donation bps-banner';
-    // Create the <h1> element
-    var h1Element = document.createElement('h1');
-    h1Element.textContent = 'BETA DEMO FOR ARXIV';
-    // Create the <p> element
-    var pElement = document.createElement('p');
-    pElement.textContent = 'This is a beta server for arxiv to demo.';
-  
-    // Append the <h1> and <p> elements to the <div> element
-    divElement.appendChild(h1Element);
-    divElement.appendChild(pElement);
-    
-    // Append the <h1> and <p> elements to the <aside> element
-    floatingBanner.appendChild(divElement);
-  
-
   // Create the modal container element
   var modal = document.createElement("div");
   modal.setAttribute("class", "modal");
@@ -152,12 +130,110 @@ function addBugReportForm() {
   modal.appendChild(modalDialog);
 
   // Append the button and modal to the document body
-  document.body.prepend(floatingBanner);
   document.body.appendChild(button);
   document.body.appendChild(modal);
 }
 
+//add a floating banner
+function addFloatingBanner(){
+  // Create header element
+  var header = document.createElement('header');
+
+  // Create "skip" link
+  var skipLink = document.createElement('a');
+  skipLink.className = 'skip';
+  skipLink.href = '#main';
+  skipLink.textContent = 'Skip to main content';
+
+  // Create logo image with background color set to transparent
+  var logoImage = document.createElement('img');
+  logoImage.alt = 'logo';
+  logoImage.className = 'logo';
+  logoImage.setAttribute('role', 'presentation');
+  logoImage.style.backgroundColor = 'transparent';
+  logoImage.src = '/static/img/arxiv-logo-one-color-white.svg';
+
+  // Create logomark image
+  var logomarkImage = document.createElement('img');
+  logomarkImage.alt = 'logo';
+  logomarkImage.className = 'logomark';
+  logomarkImage.setAttribute('role', 'presentation');
+  logomarkImage.src = '/static/img/arxiv-logomark-small-white.svg';
+
+  // Create header message
+  var headerMessage = document.createElement('div');
+  headerMessage.className = 'header-message';
+  headerMessage.setAttribute('role', 'banner');
+  headerMessage.textContent = 'HTML Beta. We invite your feedback. Click on \'feedback\' button or [keyboard shorcut] to view a list of keyboard commands.';
+
+  // Create "back to abstract" link
+  var backLink = document.createElement('a');
+  backLink.href = '';
+  backLink.textContent = 'Back to Abstract';
+
+  // Append all elements to the header element
+  header.appendChild(skipLink);
+  header.appendChild(logoImage);
+  header.appendChild(logomarkImage);
+  header.appendChild(headerMessage);
+  header.appendChild(backLink);
+
+  // Get the <body> element and append the header element to it
+  var body = document.querySelector('body');
+  body.insertBefore(header, body.firstChild);
+
+  // Create body-message element for desktop
+  var bodyMessageDesktop = document.createElement('div');
+  bodyMessageDesktop.className = 'body-message';
+  bodyMessageDesktop.setAttribute('role', 'status');
+
+  // Create close icon
+  var closeIcon = document.createElement('svg');
+  closeIcon.className = 'close-icon';
+  closeIcon.setAttribute('height', '1em');
+  closeIcon.setAttribute('viewBox', '0 0 512 512');
+  closeIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  closeIcon.innerHTML = '<!-- SVG path for close icon -->';
+
+  // Create paragraph element
+  var paragraph = document.createElement('p');
+  paragraph.textContent = 'The HTML has finished loading. We appreciate your feedback on the accessibility of this content. Use [keyboard shortcut] to view a list of keyboard commands for providing feedback, or click on the “feedback” button.';
+
+  // Append close icon and paragraph to body-message element
+  bodyMessageDesktop.appendChild(closeIcon);
+  bodyMessageDesktop.appendChild(paragraph);
+
+  // Create body-message element for mobile
+  var bodyMessageMobile = document.createElement('div');
+  bodyMessageMobile.className = 'body-message-mobile';
+  bodyMessageMobile.setAttribute('role', 'status');
+
+  // Create mobile close icon
+  var mobileCloseIcon = document.createElement('svg');
+  mobileCloseIcon.className = 'close-icon';
+  mobileCloseIcon.setAttribute('height', '1em');
+  mobileCloseIcon.setAttribute('viewBox', '0 0 512 512');
+  mobileCloseIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  mobileCloseIcon.innerHTML = '<!-- SVG path for close icon -->';
+
+  // Create paragraph element for mobile
+  var mobileParagraph = document.createElement('p');
+  mobileParagraph.innerHTML = 'Loading complete. <br><a href=""><svg height="1em" role="presentation" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg>We love feedback</a>.';
+
+  // Append mobile close icon and paragraph to body-message-mobile element
+  bodyMessageMobile.appendChild(mobileCloseIcon);
+  bodyMessageMobile.appendChild(mobileParagraph);
+
+  var header = document.querySelector('header');
+  var firstElementAfterHeader = header.nextElementSibling;
+
+  // Insert the new element behind the header
+  document.body.insertBefore(bodyMessageDesktop, firstElementAfterHeader);
+  document.body.insertBefore(bodyMessageMobile, firstElementAfterHeader);
+};
+
 document.addEventListener("DOMContentLoaded", () => {
+  addFloatingBanner();
   addBugReportForm();
   const modal = document.getElementById('myForm')
   //const close = modal.querySelector('.close')
