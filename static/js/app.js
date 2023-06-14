@@ -7,9 +7,26 @@ function addBugReportForm() {
   button.appendChild(document.createTextNode("Report Bug"));
 
   // Create the floating banner element
-  var floatingBanner = document.createElement("div");
-  floatingBanner.setAttribute("class", "floating-banner");
-  floatingBanner.appendChild(document.createTextNode("This is an Experimental Feature"));
+  //floating banner
+    var floatingBanner = document.createElement("aside");
+    floatingBanner.className = 'slider-wrapper bps-banner dark';
+  
+    var divElement =document.createElement('div')
+    divElement.className='copy-donation bps-banner';
+    // Create the <h1> element
+    var h1Element = document.createElement('h1');
+    h1Element.textContent = 'BETA DEMO FOR ARXIV';
+    // Create the <p> element
+    var pElement = document.createElement('p');
+    pElement.textContent = 'This is a beta server for arxiv to demo.';
+  
+    // Append the <h1> and <p> elements to the <div> element
+    divElement.appendChild(h1Element);
+    divElement.appendChild(pElement);
+    
+    // Append the <h1> and <p> elements to the <aside> element
+    floatingBanner.appendChild(divElement);
+  
 
   // Create the modal container element
   var modal = document.createElement("div");
@@ -135,66 +152,10 @@ function addBugReportForm() {
   modal.appendChild(modalDialog);
 
   // Append the button and modal to the document body
-  document.body.appendChild(floatingBanner);
+  document.body.prepend(floatingBanner);
   document.body.appendChild(button);
   document.body.appendChild(modal);
-
-  // floatingBanner
-  var floatingBanner = document.createElement("div");
-  floatingBanner.setAttribute("class", "floating-banner");
-  floatingBanner.appendChild(document.createTextNode("This is an Experimental Feature"));
-
-  // Apply CSS styles to the floating banner
-  floatingBanner.style.position = "fixed";
-  floatingBanner.style.top = "10px";
-  floatingBanner.style.right = "10px";
-  floatingBanner.style.padding = "10px";
-  floatingBanner.style.background = "yellow";
-  floatingBanner.style.zIndex = "9999";
-
-  // Create a close button
-  var closeButton2 = document.createElement("button");
-  closeButton2.appendChild(document.createTextNode("X"));
-  closeButton2.style.marginLeft = "10px";
-
-  // Add an event listener to the close button
-  closeButton2.addEventListener("click", function() {
-    floatingBanner.style.display = "none"; // Hide the floating banner when the button is clicked
-  });
-
-  // Append the close button to the floating banner
-  floatingBanner.appendChild(closeButton2);
-  document.body.appendChild(floatingBanner);
-
-  // instruction
-  var instruction = document.createElement("div");
-  instruction.setAttribute("class", "floating-banner");
-  instruction.appendChild(document.createTextNode("press p to open and i to close report box!"));
-
-  // Apply CSS styles to the instruction
-  instruction.style.position = "fixed";
-  instruction.style.top = "10px";
-  instruction.style.left = "10px";
-  instruction.style.padding = "10px";
-  instruction.style.background = "yellow";
-  instruction.style.zIndex = "9999";
-
-  // Create a close button
-  var closeButton = document.createElement("button");
-  closeButton.appendChild(document.createTextNode("X"));
-  closeButton.style.marginLeft = "10px";
-
-  // Add an event listener to the close button
-  closeButton.addEventListener("click", function() {
-  instruction.style.display = "none"; // Hide the instruction when the button is clicked
-  });
-
-  // Append the close button to the instruction
-  instruction.appendChild(closeButton);
-  document.body.appendChild(instruction);
 }
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   addBugReportForm();
