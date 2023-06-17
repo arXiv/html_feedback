@@ -146,6 +146,7 @@ header a {
     max-width: 40em;
     margin: 3em auto;
     border: 2px solid #a5d6fe;
+    font-family: "Noto Serif",serif;
     border-radius: 5px;
     padding: 1em;
     box-shadow: 1px 3px 8px 0.1px grey;
