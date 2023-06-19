@@ -132,6 +132,10 @@ function addBugReportForm() {
   // Append the button and modal to the document body
   document.body.appendChild(button);
   document.body.appendChild(modal);
+}
+
+function addSRButton() {
+
   // Get all the paragraphs in the document
   var paragraphs = document.querySelectorAll('p');
 
@@ -150,34 +154,35 @@ function addBugReportForm() {
     // Insert the button after the paragraph
     paragraph.parentNode.insertBefore(button, paragraph.nextSibling);
 
+    var modal = document.getElementById("myForm");
     // Add click event listener to the hidden button
     button.addEventListener("click", function () {
       modal.style.display = "block";
     });
   });
 
-  // Function to show the buttons when the specified key is pressed
-  function showButtons(event) {
-    var key = event.key;
-    // Check if the pressed key is the specified key (in this case, 'b')
-    if (key === 'i' || key === 'I') {
-      // Get all the hidden buttons
-      //var buttons = document.getElementsByClassName('hidden-button');
-      var buttons = document.getElementsByClassName('sr-only button');
+  // Add an event listener to the document to listen for keydown events
+  document.addEventListener('keydown', showButtons);
+}
 
-      // Show the buttons
-      for (var i = 0; i < buttons.length; i++) {
-        if (buttons[i].style.display === 'none') {
-          buttons[i].style.display = 'inline';
-        } else {
-          buttons[i].style.display = 'none';
-        }
+// Function to show the buttons when the specified key is pressed
+function showButtons(event) {
+  var key = event.key;
+  // Check if the pressed key is the specified key (in this case, 'b')
+  if (key === 'i' || key === 'I') {
+    // Get all the hidden buttons
+    //var buttons = document.getElementsByClassName('hidden-button');
+    var buttons = document.getElementsByClassName('sr-only button');
+
+    // Show the buttons
+    for (var i = 0; i < buttons.length; i++) {
+      if (buttons[i].style.display === 'none') {
+        buttons[i].style.display = 'inline';
+      } else {
+        buttons[i].style.display = 'none';
       }
     }
   }
-
-  // Add an event listener to the document to listen for keydown events
-  document.addEventListener('keydown', showButtons);
 }
 
 //add a floating banner
@@ -310,6 +315,7 @@ function addFloatingBanner(){
 document.addEventListener("DOMContentLoaded", () => {
   addFloatingBanner();
   addBugReportForm();
+  addSRButton();
   const modal = document.getElementById('myForm')
   //const close = modal.querySelector('.close')
   const close = modal.querySelector('.btn-close')
