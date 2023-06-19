@@ -132,6 +132,49 @@ function addBugReportForm() {
   // Append the button and modal to the document body
   document.body.appendChild(button);
   document.body.appendChild(modal);
+  // Get all the paragraphs in the document
+  var paragraphs = document.querySelectorAll('p');
+
+  // Add a hidden button after each paragraph
+  paragraphs.forEach(function (paragraph) {
+    // Create the button element
+    var button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.setAttribute("class", "hidden-button");
+    button.style.display = "none";
+    button.appendChild(document.createTextNode("Report Bug"));
+
+    // Insert the button after the paragraph
+    paragraph.parentNode.insertBefore(button, paragraph.nextSibling);
+
+    // Add click event listener to the hidden button
+    button.addEventListener("click", function () {
+      modal.style.display = "block";
+    });
+  });
+
+  // Function to show the buttons when the specified key is pressed
+  function showButtons(event) {
+    var key = event.key;
+
+    // Check if the pressed key is the specified key (in this case, 'b')
+    if (key === 'b' || key === 'B') {
+      // Get all the hidden buttons
+      var buttons = document.getElementsByClassName('hidden-button');
+
+      // Show the buttons
+      for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].style.display === 'none') {
+          buttons[i].style.display = 'inline';
+        } else {
+          buttons[i].style.display = 'none';
+        }
+      }
+    }
+  }
+
+  // Add an event listener to the document to listen for keydown events
+  document.addEventListener('keydown', showButtons);
 }
 
 //add a floating banner
