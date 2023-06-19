@@ -142,12 +142,12 @@ function addSRButton() {
   // Add a hidden button after each paragraph
   // Add a hidden button after each paragraph
   contents.forEach(function (content) {
-    if (content === contents[0] || content === contents[2] || content === contents[3] || content.classList.contains("logomark")) {
+    if (content === contents[0] || content === contents[1] || content === contents[2] || content === contents[4] ||content.classList.contains("logomark")) {
       return;
     }
     var button = document.createElement("button");
-    //button.setAttribute("class", "hidden-button");
-    button.setAttribute("class", "sr-only button");
+    button.setAttribute("class", "hidden-button");
+    // button.setAttribute("class", "sr-only button");
     button.style.display = "none";
     button.appendChild(document.createTextNode("Report Bug"));
 
@@ -176,8 +176,8 @@ function showButtons(event) {
   // Check if the pressed key is the specified key (in this case, 'b')
   if (key === 'i' || key === 'I') {
     // Get all the hidden buttons
-    //var buttons = document.getElementsByClassName('hidden-button');
-    var buttons = document.getElementsByClassName('sr-only button');
+    var buttons = document.getElementsByClassName('hidden-button');
+    // var buttons = document.getElementsByClassName('sr-only button');
 
     // Show the buttons
     for (var i = 0; i < buttons.length; i++) {
