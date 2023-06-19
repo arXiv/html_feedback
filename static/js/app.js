@@ -137,12 +137,12 @@ function addBugReportForm() {
 function addSRButton() {
 
   // Get all the paragraphs in the document
-  var paragraphs = document.querySelectorAll('p');
+  var contents = document.querySelectorAll('p,svg,figure');
 
   // Add a hidden button after each paragraph
   // Add a hidden button after each paragraph
-  paragraphs.forEach(function (paragraph) {
-    if (paragraph === paragraphs[0]) {
+  contents.forEach(function (content) {
+    if (content === contents[0] || content === contents[2] || content === contents[3] || content.classList.contains("logomark")) {
       return;
     }
     var button = document.createElement("button");
@@ -152,7 +152,7 @@ function addSRButton() {
     button.appendChild(document.createTextNode("Report Bug"));
 
     // Insert the button after the paragraph
-    paragraph.parentNode.insertBefore(button, paragraph.nextSibling);
+    content.parentNode.insertBefore(button, content.nextSibling);
 
     var modal = document.getElementById("myForm");
     modal.setAttribute("role", "dialog");
