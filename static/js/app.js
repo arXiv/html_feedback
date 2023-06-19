@@ -155,9 +155,14 @@ function addSRButton() {
     paragraph.parentNode.insertBefore(button, paragraph.nextSibling);
 
     var modal = document.getElementById("myForm");
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-labelledby", "modal-title");
     // Add click event listener to the hidden button
-    button.addEventListener("click", function () {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
       modal.style.display = "block";
+      modal.setAttribute("tabindex", "-1"); // Ensure the modal is focusable
+      modal.focus();
     });
   });
 
