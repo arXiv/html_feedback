@@ -136,11 +136,14 @@ function addBugReportForm() {
   var paragraphs = document.querySelectorAll('p');
 
   // Add a hidden button after each paragraph
+  // Add a hidden button after each paragraph
   paragraphs.forEach(function (paragraph) {
-    // Create the button element
+    if (paragraph === paragraphs[0]) {
+      return;
+    }
     var button = document.createElement("button");
-    button.setAttribute("type", "button");
-    button.setAttribute("class", "hidden-button");
+    //button.setAttribute("class", "hidden-button");
+    button.setAttribute("class", "sr-only button");
     button.style.display = "none";
     button.appendChild(document.createTextNode("Report Bug"));
 
@@ -156,11 +159,11 @@ function addBugReportForm() {
   // Function to show the buttons when the specified key is pressed
   function showButtons(event) {
     var key = event.key;
-
     // Check if the pressed key is the specified key (in this case, 'b')
-    if (key === 'b' || key === 'B') {
+    if (key === 'i' || key === 'I') {
       // Get all the hidden buttons
-      var buttons = document.getElementsByClassName('hidden-button');
+      //var buttons = document.getElementsByClassName('hidden-button');
+      var buttons = document.getElementsByClassName('sr-only button');
 
       // Show the buttons
       for (var i = 0; i < buttons.length; i++) {
@@ -214,12 +217,41 @@ function addFloatingBanner(){
   backLink.href = '';
   backLink.textContent = 'Back to Abstract';
 
+  //invisible element
+  const invisibleElement = document.createElement('div');
+  invisibleElement.className = 'sr-only keyboard-glossary';
+
+  // Create the <h2> element
+  const heading = document.createElement('h2');
+  heading.textContent = 'Keyboard commands glossary';
+
+  // Create the <ul> element
+  const list = document.createElement('ul');
+
+  // Create the list items and add them to the <ul> element
+  const listItem1 = document.createElement('li');
+  listItem1.textContent = 'List a command here';
+  list.appendChild(listItem1);
+
+  const listItem2 = document.createElement('li');
+  listItem2.textContent = 'A second command';
+  list.appendChild(listItem2);
+
+  const listItem3 = document.createElement('li');
+  listItem3.textContent = 'List a third command here';
+  list.appendChild(listItem3);
+
+  // Append the child elements to the invisible element
+  invisibleElement.appendChild(heading);
+  invisibleElement.appendChild(list);
+
   // Append all elements to the header element
   header.appendChild(skipLink);
   header.appendChild(logoImage);
   header.appendChild(logomarkImage);
   header.appendChild(headerMessage);
   header.appendChild(backLink);
+  header.appendChild(invisibleElement);
 
   // Get the <body> element and append the header element to it
   var body = document.querySelector('body');
