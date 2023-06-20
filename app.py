@@ -24,6 +24,7 @@ class Report(db.Model):
     selected_html = db.Column(db.String())
     location_low=db.Column(db.String(100))
     location_high=db.Column(db.String(100))
+    initiationWay=db.Column(db.String(20))
 
 @app.route('/', methods=['GET', 'POST'])
 def page():
@@ -37,6 +38,7 @@ def page():
         browser_info=request.form['browserInfo']
         conversion_report=request.form['conversion_report']
         source_file=request.form['source_file']
+        initiationWay=request.form['initiationWay']
 
         if 'url' in request.form:   
             url = request.form['url']
@@ -61,9 +63,9 @@ def page():
         if screenshotImage:
             img_data = base64.b64decode(screenshotImage.split(',')[1])
             img_io = BytesIO(img_data)
-            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high)
+            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high,initiationWay=initiationWay)
         else:
-            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high)
+            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high,initiationWay=initiationWay)
         db.session.add(new_report)
         db.session.commit()
         return 'OK'

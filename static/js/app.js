@@ -329,6 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
   var elementIdentifier;
   var topLayer;
   var previousFocusElement;
+  var initiationWay;
 
   addSRButton();
   handleKeyDown();
@@ -509,6 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "block";
         modal.setAttribute("tabindex", "-1"); // Ensure the modal is focusable
         modal.focus();
+        initiationWay='screen reader';
       });
     });
   
@@ -682,6 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isCommandKeyDown && (event.key === '/' || event.key === '?')) {
         modal.style.display = 'block';
+        initiationWay='shortcut';
       }
 
       if (isCommandKeyDown && (event.key === '}' || event.key === ']')) {
@@ -703,6 +706,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleOpenFormClick() {
     document.getElementById('openForm').addEventListener("click", () => {
       modal.style.display = 'block';
+      initiationWay='button';
     });
   }
 
@@ -714,8 +718,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       var selection = window.getSelection();
-      var range=selection.getRangeAt(0);
       if (selection.toString().trim()) {
+        var range=selection.getRangeAt(0);
         removePreviousButton();
         smallButton(selection,range);
         //generate_selected_text(selection,range);
@@ -860,6 +864,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //click small button
     smallReportButton.addEventListener("click", function () {
+      initiationWay='highlight';
       generate_selected_screenshot(range);
       generate_selected_text(selection,range);
       modal.style.display = 'block';
@@ -960,6 +965,9 @@ function submitBugReport() {
   formData.append('url', saved_dataURI);
   formData.append('location_low', elementIdentifier);
   formData.append('location_high', topLayer)
+
+  console.log(initiationWay);
+  formData.append('initiationWay',initiationWay);
   fetch('/', {
       method: 'POST',
       body: formData
@@ -970,12 +978,15 @@ function submitBugReport() {
         document.getElementById("screenshot-image").style = "display: none";
         document.querySelector('#myFormContent').reset(); // Reset the form
         modal.style.display = 'none'
-        previousFocusElement.focus();
+        if(previousFocusElement){
+          previousFocusElement.focus();
+        }
       } else {
         alert('Error occurs when submitting report');
       }
     })
     .catch(function (error) {
+      console.log(error)
       alert('Error occurs when submitting report');
     });
 }
