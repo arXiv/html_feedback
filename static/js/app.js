@@ -1,325 +1,325 @@
-function addBugReportForm() {
-  // Create the button element
-  var button = document.createElement("button");
-  button.setAttribute("type", "button");
-  button.setAttribute("class", "btn btn-primary");
-  button.setAttribute("id", "openForm");
-  button.appendChild(document.createTextNode("Report Bug"));
+// function addBugReportForm() {
+//   // Create the button element
+//   var button = document.createElement("button");
+//   button.setAttribute("type", "button");
+//   button.setAttribute("class", "btn btn-primary");
+//   button.setAttribute("id", "openForm");
+//   button.appendChild(document.createTextNode("Report Bug"));
 
-  // Create the modal container element
-  var modal = document.createElement("div");
-  modal.setAttribute("class", "modal");
-  modal.setAttribute("id", "myForm");
+//   // Create the modal container element
+//   var modal = document.createElement("div");
+//   modal.setAttribute("class", "modal");
+//   modal.setAttribute("id", "myForm");
 
-  // Create the modal dialog element
-  var modalDialog = document.createElement("div");
-  modalDialog.setAttribute("class", "modal-dialog");
+//   // Create the modal dialog element
+//   var modalDialog = document.createElement("div");
+//   modalDialog.setAttribute("class", "modal-dialog");
 
-  // Create the form element
-  var form = document.createElement("form");
-  form.setAttribute("class", "modal-content");
-  form.setAttribute("id", "myFormContent");
-  form.setAttribute("enctype", "multipart/form-data");
+//   // Create the form element
+//   var form = document.createElement("form");
+//   form.setAttribute("class", "modal-content");
+//   form.setAttribute("id", "myFormContent");
+//   form.setAttribute("enctype", "multipart/form-data");
 
-  // Create the modal header
-  var modalHeader = document.createElement("div");
-  modalHeader.setAttribute("class", "modal-header");
+//   // Create the modal header
+//   var modalHeader = document.createElement("div");
+//   modalHeader.setAttribute("class", "modal-header");
 
-  // Create the modal title
-  var modalTitle = document.createElement("h5");
-  modalTitle.setAttribute("class", "modal-title");
-  modalTitle.appendChild(document.createTextNode("Bug Report Form"));
+//   // Create the modal title
+//   var modalTitle = document.createElement("h5");
+//   modalTitle.setAttribute("class", "modal-title");
+//   modalTitle.appendChild(document.createTextNode("Bug Report Form"));
 
-  // Create the close button for the modal
-  var closeButton = document.createElement("button");
-  closeButton.setAttribute("type", "button");
-  closeButton.setAttribute("class", "btn-close");
-  closeButton.setAttribute("data-bs-dismiss", "modal");
-  closeButton.setAttribute("aria-label", "Close");
+//   // Create the close button for the modal
+//   var closeButton = document.createElement("button");
+//   closeButton.setAttribute("type", "button");
+//   closeButton.setAttribute("class", "btn-close");
+//   closeButton.setAttribute("data-bs-dismiss", "modal");
+//   closeButton.setAttribute("aria-label", "Close");
 
-  // Append the title and close button to the modal header
-  modalHeader.appendChild(modalTitle);
-  modalHeader.appendChild(closeButton);
+//   // Append the title and close button to the modal header
+//   modalHeader.appendChild(modalTitle);
+//   modalHeader.appendChild(closeButton);
 
-  // Create the modal body
-  var modalBody = document.createElement("div");
-  modalBody.setAttribute("class", "modal-body");
+//   // Create the modal body
+//   var modalBody = document.createElement("div");
+//   modalBody.setAttribute("class", "modal-body");
 
-  // Create the description input field
-  var descriptionLabel = document.createElement("label");
-  descriptionLabel.setAttribute("for", "description");
-  descriptionLabel.setAttribute("class", "form-label");
-  descriptionLabel.appendChild(document.createTextNode("Description*:"));
+//   // Create the description input field
+//   var descriptionLabel = document.createElement("label");
+//   descriptionLabel.setAttribute("for", "description");
+//   descriptionLabel.setAttribute("class", "form-label");
+//   descriptionLabel.appendChild(document.createTextNode("Description*:"));
 
-  var descriptionTextarea = document.createElement("textarea");
-  descriptionTextarea.setAttribute("class", "form-control");
-  descriptionTextarea.setAttribute("id", "description");
-  descriptionTextarea.setAttribute("name", "description");
-  descriptionTextarea.setAttribute("required", "required");
-  descriptionTextarea.setAttribute("style", "height: 80px;");
+//   var descriptionTextarea = document.createElement("textarea");
+//   descriptionTextarea.setAttribute("class", "form-control");
+//   descriptionTextarea.setAttribute("id", "description");
+//   descriptionTextarea.setAttribute("name", "description");
+//   descriptionTextarea.setAttribute("required", "required");
+//   descriptionTextarea.setAttribute("style", "height: 80px;");
 
-  // Create the file input field
-  var fileDiv = document.createElement("div");
-  fileDiv.setAttribute("class", "mb-3");
+//   // Create the file input field
+//   var fileDiv = document.createElement("div");
+//   fileDiv.setAttribute("class", "mb-3");
 
-  var fileLabel = document.createElement("label");
-  fileLabel.setAttribute("for", "file");
-  fileLabel.setAttribute("class", "form-label");
-  fileLabel.appendChild(document.createTextNode("File(optional):"));
+//   var fileLabel = document.createElement("label");
+//   fileLabel.setAttribute("for", "file");
+//   fileLabel.setAttribute("class", "form-label");
+//   fileLabel.appendChild(document.createTextNode("File(optional):"));
 
-  var fileInput = document.createElement("input");
-  fileInput.setAttribute("type", "file");
-  fileInput.setAttribute("class", "form-control");
-  fileInput.setAttribute("id", "file");
-  fileInput.setAttribute("name", "file");
+//   var fileInput = document.createElement("input");
+//   fileInput.setAttribute("type", "file");
+//   fileInput.setAttribute("class", "form-control");
+//   fileInput.setAttribute("id", "file");
+//   fileInput.setAttribute("name", "file");
 
-  fileDiv.appendChild(fileLabel);
-  fileDiv.appendChild(fileInput);
+//   fileDiv.appendChild(fileLabel);
+//   fileDiv.appendChild(fileInput);
 
-  // Create the take screenshot button
-  var takeScreenshotButton = document.createElement("button");
-  takeScreenshotButton.setAttribute("type", "button");
-  takeScreenshotButton.setAttribute("class", "btn btn-outline-secondary");
-  takeScreenshotButton.setAttribute("id", "take-screenshot");
-  takeScreenshotButton.appendChild(document.createTextNode("Take Screenshot"));
+//   // Create the take screenshot button
+//   var takeScreenshotButton = document.createElement("button");
+//   takeScreenshotButton.setAttribute("type", "button");
+//   takeScreenshotButton.setAttribute("class", "btn btn-outline-secondary");
+//   takeScreenshotButton.setAttribute("id", "take-screenshot");
+//   takeScreenshotButton.appendChild(document.createTextNode("Take Screenshot"));
 
-  // Create the hidden input field for the screenshot
-  var screenshotInput = document.createElement("input");
-  screenshotInput.setAttribute("type", "hidden");
-  screenshotInput.setAttribute("id", "screenshot");
-  screenshotInput.setAttribute("name", "screenshot");
+//   // Create the hidden input field for the screenshot
+//   var screenshotInput = document.createElement("input");
+//   screenshotInput.setAttribute("type", "hidden");
+//   screenshotInput.setAttribute("id", "screenshot");
+//   screenshotInput.setAttribute("name", "screenshot");
 
-  // Create the screenshot image element
-  var screenshotImage = document.createElement("img");
-  screenshotImage.setAttribute("id", "screenshot-image");
-  screenshotImage.setAttribute("class", "img-fluid");
-  screenshotImage.setAttribute("src", "");
+//   // Create the screenshot image element
+//   var screenshotImage = document.createElement("img");
+//   screenshotImage.setAttribute("id", "screenshot-image");
+//   screenshotImage.setAttribute("class", "img-fluid");
+//   screenshotImage.setAttribute("src", "");
 
-  // Create the modal footer
-  var modalFooter = document.createElement("div");
-  modalFooter.setAttribute("class", "modal-footer d-flex justify-content-end");
+//   // Create the modal footer
+//   var modalFooter = document.createElement("div");
+//   modalFooter.setAttribute("class", "modal-footer d-flex justify-content-end");
 
-  // Create the submit button
-  var submitButton = document.createElement("button");
-  submitButton.setAttribute("type", "submit");
-  submitButton.setAttribute("class", "btn btn-primary");
-  submitButton.setAttribute("id", "modal-submit");
-  submitButton.setAttribute("style", "background-color: #b31b1b;");
-  submitButton.appendChild(document.createTextNode("Submit"));
+//   // Create the submit button
+//   var submitButton = document.createElement("button");
+//   submitButton.setAttribute("type", "submit");
+//   submitButton.setAttribute("class", "btn btn-primary");
+//   submitButton.setAttribute("id", "modal-submit");
+//   submitButton.setAttribute("style", "background-color: #b31b1b;");
+//   submitButton.appendChild(document.createTextNode("Submit"));
 
-  // Create a container div for the buttons
-  var buttonsContainer = document.createElement("div");
-  buttonsContainer.setAttribute("class", "d-flex justify-content-between");
+//   // Create a container div for the buttons
+//   var buttonsContainer = document.createElement("div");
+//   buttonsContainer.setAttribute("class", "d-flex justify-content-between");
 
-  // Append the elements to their respective parents
-  modalBody.appendChild(descriptionLabel);
-  modalBody.appendChild(descriptionTextarea);
-  modalBody.appendChild(fileDiv);
-  modalBody.appendChild(takeScreenshotButton);
-  modalBody.appendChild(screenshotInput);
-  modalBody.appendChild(screenshotImage);
+//   // Append the elements to their respective parents
+//   modalBody.appendChild(descriptionLabel);
+//   modalBody.appendChild(descriptionTextarea);
+//   modalBody.appendChild(fileDiv);
+//   modalBody.appendChild(takeScreenshotButton);
+//   modalBody.appendChild(screenshotInput);
+//   modalBody.appendChild(screenshotImage);
 
-  modalFooter.appendChild(submitButton);
+//   modalFooter.appendChild(submitButton);
 
-  form.appendChild(modalHeader);
-  form.appendChild(modalBody);
-  form.appendChild(modalFooter);
+//   form.appendChild(modalHeader);
+//   form.appendChild(modalBody);
+//   form.appendChild(modalFooter);
 
-  modalDialog.appendChild(form);
+//   modalDialog.appendChild(form);
 
-  modal.appendChild(modalDialog);
+//   modal.appendChild(modalDialog);
 
-  // Append the button and modal to the document body
-  document.body.appendChild(button);
-  document.body.appendChild(modal);
-}
+//   // Append the button and modal to the document body
+//   document.body.appendChild(button);
+//   document.body.appendChild(modal);
+// }
 
-function addSRButton() {
-  // Get all the paragraphs in the document
-  var contents = document.querySelectorAll('p,svg,figure');
+// function addSRButton() {
+//   // Get all the paragraphs in the document
+//   var contents = document.querySelectorAll('p,svg,figure');
 
-  // Add a hidden button after each paragraph
-  // Add a hidden button after each paragraph
-  contents.forEach(function (content) {
-    if (content === contents[0] || content === contents[1] || content === contents[2] || content === contents[4] || content.classList.contains("logomark")) {
-      return;
-    }
-    var button = document.createElement("button");
-    //button.setAttribute("class", "hidden-button");
-    button.setAttribute("class", "sr-only button");
-    button.style.display = "none";
-    button.appendChild(document.createTextNode("Report Bug"));
+//   // Add a hidden button after each paragraph
+//   // Add a hidden button after each paragraph
+//   contents.forEach(function (content) {
+//     if (content === contents[0] || content === contents[1] || content === contents[2] || content === contents[4] || content.classList.contains("logomark")) {
+//       return;
+//     }
+//     var button = document.createElement("button");
+//     //button.setAttribute("class", "hidden-button");
+//     button.setAttribute("class", "sr-only button");
+//     button.style.display = "none";
+//     button.appendChild(document.createTextNode("Report Bug"));
 
-    // Insert the button after the paragraph
-    content.parentNode.insertBefore(button, content.nextSibling);
+//     // Insert the button after the paragraph
+//     content.parentNode.insertBefore(button, content.nextSibling);
 
-    var modal = document.getElementById("myForm");
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-labelledby", "modal-title");
-    // Add click event listener to the hidden button
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
-      modal.style.display = "block";
-      modal.setAttribute("tabindex", "-1"); // Ensure the modal is focusable
-      modal.focus();
-    });
-  });
+//     var modal = document.getElementById("myForm");
+//     modal.setAttribute("role", "dialog");
+//     modal.setAttribute("aria-labelledby", "modal-title");
+//     // Add click event listener to the hidden button
+//     button.addEventListener("click", function (event) {
+//       event.preventDefault();
+//       modal.style.display = "block";
+//       modal.setAttribute("tabindex", "-1"); // Ensure the modal is focusable
+//       modal.focus();
+//     });
+//   });
 
-  // Add an event listener to the document to listen for keydown events
-  document.addEventListener('keydown', showButtons);
-}
+//   // Add an event listener to the document to listen for keydown events
+//   document.addEventListener('keydown', showButtons);
+// }
 
-// Function to show the buttons when the specified key is pressed
-function showButtons(event) {
-  var key = event.key;
-  // Check if the pressed key is the specified key (in this case, 'b')
-  if (key === 'i' || key === 'I') {
-    // Get all the hidden buttons
-    // var buttons = document.getElementsByClassName('hidden-button');
-    var buttons = document.getElementsByClassName('sr-only button');
+// // Function to show the buttons when the specified key is pressed
+// function showButtons(event) {
+//   var key = event.key;
+//   // Check if the pressed key is the specified key (in this case, 'b')
+//   if (key === 'i' || key === 'I') {
+//     // Get all the hidden buttons
+//     // var buttons = document.getElementsByClassName('hidden-button');
+//     var buttons = document.getElementsByClassName('sr-only button');
 
-    // Show the buttons
-    for (var i = 0; i < buttons.length; i++) {
-      if (buttons[i].style.display === 'none') {
-        buttons[i].style.display = 'inline';
-      } else {
-        buttons[i].style.display = 'none';
-      }
-    }
-  }
-}
+//     // Show the buttons
+//     for (var i = 0; i < buttons.length; i++) {
+//       if (buttons[i].style.display === 'none') {
+//         buttons[i].style.display = 'inline';
+//       } else {
+//         buttons[i].style.display = 'none';
+//       }
+//     }
+//   }
+// }
 
-//add a floating banner
-function addFloatingBanner() {
-  // Create header element
-  var header = document.createElement('header');
+// //add a floating banner
+// function addFloatingBanner() {
+//   // Create header element
+//   var header = document.createElement('header');
 
-  // Create "skip" link
-  var skipLink = document.createElement('a');
-  skipLink.className = 'skip';
-  skipLink.href = '#main';
-  skipLink.textContent = 'Skip to main content';
+//   // Create "skip" link
+//   var skipLink = document.createElement('a');
+//   skipLink.className = 'skip';
+//   skipLink.href = '#main';
+//   skipLink.textContent = 'Skip to main content';
 
-  // Create logo image with background color set to transparent
-  var logoImage = document.createElement('img');
-  logoImage.alt = 'logo';
-  logoImage.className = 'logo';
-  logoImage.setAttribute('role', 'presentation');
-  logoImage.style.backgroundColor = 'transparent';
-  logoImage.src = '/static/img/arxiv-logo-one-color-white.svg';
+//   // Create logo image with background color set to transparent
+//   var logoImage = document.createElement('img');
+//   logoImage.alt = 'logo';
+//   logoImage.className = 'logo';
+//   logoImage.setAttribute('role', 'presentation');
+//   logoImage.style.backgroundColor = 'transparent';
+//   logoImage.src = '/static/img/arxiv-logo-one-color-white.svg';
 
-  // Create logomark image
-  var logomarkImage = document.createElement('img');
-  logomarkImage.alt = 'logo';
-  logomarkImage.className = 'logomark';
-  logomarkImage.setAttribute('role', 'presentation');
-  logomarkImage.src = '/static/img/arxiv-logomark-small-white.svg';
+//   // Create logomark image
+//   var logomarkImage = document.createElement('img');
+//   logomarkImage.alt = 'logo';
+//   logomarkImage.className = 'logomark';
+//   logomarkImage.setAttribute('role', 'presentation');
+//   logomarkImage.src = '/static/img/arxiv-logomark-small-white.svg';
 
-  // Create header message
-  var headerMessage = document.createElement('div');
-  headerMessage.className = 'header-message';
-  headerMessage.setAttribute('role', 'banner');
-  headerMessage.textContent = 'HTML Beta. We invite your feedback. Click on \'feedback\' button or [keyboard shorcut] to view a list of keyboard commands.';
+//   // Create header message
+//   var headerMessage = document.createElement('div');
+//   headerMessage.className = 'header-message';
+//   headerMessage.setAttribute('role', 'banner');
+//   headerMessage.textContent = 'HTML Beta. We invite your feedback. Click on \'feedback\' button or [keyboard shorcut] to view a list of keyboard commands.';
 
-  // Create "back to abstract" link
-  var backLink = document.createElement('a');
-  backLink.href = '';
-  backLink.textContent = 'Back to Abstract';
+//   // Create "back to abstract" link
+//   var backLink = document.createElement('a');
+//   backLink.href = '';
+//   backLink.textContent = 'Back to Abstract';
 
-  //invisible element
-  const invisibleElement = document.createElement('div');
-  invisibleElement.className = 'sr-only keyboard-glossary';
+//   //invisible element
+//   const invisibleElement = document.createElement('div');
+//   invisibleElement.className = 'sr-only keyboard-glossary';
 
-  // Create the <h2> element
-  const heading = document.createElement('h2');
-  heading.textContent = 'Keyboard commands glossary';
+//   // Create the <h2> element
+//   const heading = document.createElement('h2');
+//   heading.textContent = 'Keyboard commands glossary';
 
-  // Create the <ul> element
-  const list = document.createElement('ul');
+//   // Create the <ul> element
+//   const list = document.createElement('ul');
 
-  // Create the list items and add them to the <ul> element
-  const listItem1 = document.createElement('li');
-  listItem1.textContent = 'List a command here';
-  list.appendChild(listItem1);
+//   // Create the list items and add them to the <ul> element
+//   const listItem1 = document.createElement('li');
+//   listItem1.textContent = 'List a command here';
+//   list.appendChild(listItem1);
 
-  const listItem2 = document.createElement('li');
-  listItem2.textContent = 'A second command';
-  list.appendChild(listItem2);
+//   const listItem2 = document.createElement('li');
+//   listItem2.textContent = 'A second command';
+//   list.appendChild(listItem2);
 
-  const listItem3 = document.createElement('li');
-  listItem3.textContent = 'List a third command here';
-  list.appendChild(listItem3);
+//   const listItem3 = document.createElement('li');
+//   listItem3.textContent = 'List a third command here';
+//   list.appendChild(listItem3);
 
-  // Append the child elements to the invisible element
-  invisibleElement.appendChild(heading);
-  invisibleElement.appendChild(list);
+//   // Append the child elements to the invisible element
+//   invisibleElement.appendChild(heading);
+//   invisibleElement.appendChild(list);
 
-  // Append all elements to the header element
-  header.appendChild(skipLink);
-  header.appendChild(logoImage);
-  header.appendChild(logomarkImage);
-  header.appendChild(headerMessage);
-  header.appendChild(backLink);
-  header.appendChild(invisibleElement);
+//   // Append all elements to the header element
+//   header.appendChild(skipLink);
+//   header.appendChild(logoImage);
+//   header.appendChild(logomarkImage);
+//   header.appendChild(headerMessage);
+//   header.appendChild(backLink);
+//   header.appendChild(invisibleElement);
 
-  // Get the <body> element and append the header element to it
-  var body = document.querySelector('body');
-  body.insertBefore(header, body.firstChild);
+//   // Get the <body> element and append the header element to it
+//   var body = document.querySelector('body');
+//   body.insertBefore(header, body.firstChild);
 
-  // Create body-message element for desktop
-  var bodyMessageDesktop = document.createElement('div');
-  bodyMessageDesktop.className = 'body-message';
-  bodyMessageDesktop.setAttribute('role', 'status');
+//   // Create body-message element for desktop
+//   var bodyMessageDesktop = document.createElement('div');
+//   bodyMessageDesktop.className = 'body-message';
+//   bodyMessageDesktop.setAttribute('role', 'status');
 
-  // Create close icon
-  var closeIcon = document.createElement('svg');
-  closeIcon.className = 'close-icon';
-  closeIcon.setAttribute('height', '1em');
-  closeIcon.setAttribute('viewBox', '0 0 512 512');
-  closeIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  closeIcon.innerHTML = '<!-- SVG path for close icon -->';
+//   // Create close icon
+//   var closeIcon = document.createElement('svg');
+//   closeIcon.className = 'close-icon';
+//   closeIcon.setAttribute('height', '1em');
+//   closeIcon.setAttribute('viewBox', '0 0 512 512');
+//   closeIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+//   closeIcon.innerHTML = '<!-- SVG path for close icon -->';
 
-  // Create paragraph element
-  var paragraph = document.createElement('p');
-  paragraph.textContent = 'The HTML has finished loading. We appreciate your feedback on the accessibility of this content. Use [keyboard shortcut] to view a list of keyboard commands for providing feedback, or click on the “feedback” button.';
+//   // Create paragraph element
+//   var paragraph = document.createElement('p');
+//   paragraph.textContent = 'The HTML has finished loading. We appreciate your feedback on the accessibility of this content. Use [keyboard shortcut] to view a list of keyboard commands for providing feedback, or click on the “feedback” button.';
 
-  // Append close icon and paragraph to body-message element
-  bodyMessageDesktop.appendChild(closeIcon);
-  bodyMessageDesktop.appendChild(paragraph);
+//   // Append close icon and paragraph to body-message element
+//   bodyMessageDesktop.appendChild(closeIcon);
+//   bodyMessageDesktop.appendChild(paragraph);
 
-  // Create body-message element for mobile
-  var bodyMessageMobile = document.createElement('div');
-  bodyMessageMobile.className = 'body-message-mobile';
-  bodyMessageMobile.setAttribute('role', 'status');
+//   // Create body-message element for mobile
+//   var bodyMessageMobile = document.createElement('div');
+//   bodyMessageMobile.className = 'body-message-mobile';
+//   bodyMessageMobile.setAttribute('role', 'status');
 
-  // Create mobile close icon
-  var mobileCloseIcon = document.createElement('svg');
-  mobileCloseIcon.className = 'close-icon';
-  mobileCloseIcon.setAttribute('height', '1em');
-  mobileCloseIcon.setAttribute('viewBox', '0 0 512 512');
-  mobileCloseIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  mobileCloseIcon.innerHTML = '<!-- SVG path for close icon -->';
+//   // Create mobile close icon
+//   var mobileCloseIcon = document.createElement('svg');
+//   mobileCloseIcon.className = 'close-icon';
+//   mobileCloseIcon.setAttribute('height', '1em');
+//   mobileCloseIcon.setAttribute('viewBox', '0 0 512 512');
+//   mobileCloseIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+//   mobileCloseIcon.innerHTML = '<!-- SVG path for close icon -->';
 
-  // Create paragraph element for mobile
-  var mobileParagraph = document.createElement('p');
-  mobileParagraph.innerHTML = 'Loading complete. <br><a href=""><svg height="1em" role="presentation" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg>We love feedback</a>.';
+//   // Create paragraph element for mobile
+//   var mobileParagraph = document.createElement('p');
+//   mobileParagraph.innerHTML = 'Loading complete. <br><a href=""><svg height="1em" role="presentation" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg>We love feedback</a>.';
 
-  // Append mobile close icon and paragraph to body-message-mobile element
-  bodyMessageMobile.appendChild(mobileCloseIcon);
-  bodyMessageMobile.appendChild(mobileParagraph);
+//   // Append mobile close icon and paragraph to body-message-mobile element
+//   bodyMessageMobile.appendChild(mobileCloseIcon);
+//   bodyMessageMobile.appendChild(mobileParagraph);
 
-  var header = document.querySelector('header');
-  var firstElementAfterHeader = header.nextElementSibling;
+//   var header = document.querySelector('header');
+//   var firstElementAfterHeader = header.nextElementSibling;
 
-  // Insert the new element behind the header
-  document.body.insertBefore(bodyMessageDesktop, firstElementAfterHeader);
-  document.body.insertBefore(bodyMessageMobile, firstElementAfterHeader);
-};
+//   // Insert the new element behind the header
+//   document.body.insertBefore(bodyMessageDesktop, firstElementAfterHeader);
+//   document.body.insertBefore(bodyMessageMobile, firstElementAfterHeader);
+// };
 
 document.addEventListener("DOMContentLoaded", () => {
   addFloatingBanner();
   addBugReportForm();
-  addSRButton();
+  
 
   const modal = document.getElementById('myForm')
   const close = modal.querySelector('.btn-close')
@@ -329,6 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
   var elementIdentifier;
   var topLayer;
 
+  addSRButton();
   handleKeyDown();
   handleKeyUp();
   handleOpenFormClick();
@@ -337,6 +338,323 @@ document.addEventListener("DOMContentLoaded", () => {
   handleFormSubmit();
   handleCloseClick();
   handleClickOutsideModal();
+
+  function addBugReportForm() {
+    // Create the button element
+    var button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.setAttribute("class", "btn btn-primary");
+    button.setAttribute("id", "openForm");
+    button.appendChild(document.createTextNode("Report Bug"));
+  
+    // Create the modal container element
+    var modal = document.createElement("div");
+    modal.setAttribute("class", "modal");
+    modal.setAttribute("id", "myForm");
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-labelledby", "modal-title");
+  
+    // Create the modal dialog element
+    var modalDialog = document.createElement("div");
+    modalDialog.setAttribute("class", "modal-dialog");
+  
+    // Create the form element
+    var form = document.createElement("form");
+    form.setAttribute("class", "modal-content");
+    form.setAttribute("id", "myFormContent");
+    form.setAttribute("enctype", "multipart/form-data");
+  
+    // Create the modal header
+    var modalHeader = document.createElement("div");
+    modalHeader.setAttribute("class", "modal-header");
+  
+    // Create the modal title
+    var modalTitle = document.createElement("h5");
+    modalTitle.setAttribute("class", "modal-title");
+    modalTitle.appendChild(document.createTextNode("Bug Report Form"));
+  
+    // Create the close button for the modal
+    var closeButton = document.createElement("button");
+    closeButton.setAttribute("type", "button");
+    closeButton.setAttribute("class", "btn-close");
+    closeButton.setAttribute("data-bs-dismiss", "modal");
+    closeButton.setAttribute("aria-label", "Close");
+  
+    // Append the title and close button to the modal header
+    modalHeader.appendChild(modalTitle);
+    modalHeader.appendChild(closeButton);
+  
+    // Create the modal body
+    var modalBody = document.createElement("div");
+    modalBody.setAttribute("class", "modal-body");
+  
+    // Create the description input field
+    var descriptionLabel = document.createElement("label");
+    descriptionLabel.setAttribute("for", "description");
+    descriptionLabel.setAttribute("class", "form-label");
+    descriptionLabel.appendChild(document.createTextNode("Description*:"));
+  
+    var descriptionTextarea = document.createElement("textarea");
+    descriptionTextarea.setAttribute("class", "form-control");
+    descriptionTextarea.setAttribute("id", "description");
+    descriptionTextarea.setAttribute("name", "description");
+    descriptionTextarea.setAttribute("required", "required");
+    descriptionTextarea.setAttribute("style", "height: 80px;");
+  
+    // Create the file input field
+    var fileDiv = document.createElement("div");
+    fileDiv.setAttribute("class", "mb-3");
+  
+    var fileLabel = document.createElement("label");
+    fileLabel.setAttribute("for", "file");
+    fileLabel.setAttribute("class", "form-label");
+    fileLabel.appendChild(document.createTextNode("File(optional):"));
+  
+    var fileInput = document.createElement("input");
+    fileInput.setAttribute("type", "file");
+    fileInput.setAttribute("class", "form-control");
+    fileInput.setAttribute("id", "file");
+    fileInput.setAttribute("name", "file");
+  
+    fileDiv.appendChild(fileLabel);
+    fileDiv.appendChild(fileInput);
+  
+    // Create the take screenshot button
+    var takeScreenshotButton = document.createElement("button");
+    takeScreenshotButton.setAttribute("type", "button");
+    takeScreenshotButton.setAttribute("class", "btn btn-outline-secondary");
+    takeScreenshotButton.setAttribute("id", "take-screenshot");
+    takeScreenshotButton.appendChild(document.createTextNode("Take Screenshot"));
+  
+    // Create the hidden input field for the screenshot
+    var screenshotInput = document.createElement("input");
+    screenshotInput.setAttribute("type", "hidden");
+    screenshotInput.setAttribute("id", "screenshot");
+    screenshotInput.setAttribute("name", "screenshot");
+  
+    // Create the screenshot image element
+    var screenshotImage = document.createElement("img");
+    screenshotImage.setAttribute("id", "screenshot-image");
+    screenshotImage.setAttribute("class", "img-fluid");
+    screenshotImage.setAttribute("src", "");
+  
+    // Create the modal footer
+    var modalFooter = document.createElement("div");
+    modalFooter.setAttribute("class", "modal-footer d-flex justify-content-end");
+  
+    // Create the submit button
+    var submitButton = document.createElement("button");
+    submitButton.setAttribute("type", "submit");
+    submitButton.setAttribute("class", "btn btn-primary");
+    submitButton.setAttribute("id", "modal-submit");
+    submitButton.setAttribute("style", "background-color: #b31b1b;");
+    submitButton.appendChild(document.createTextNode("Submit"));
+  
+    // Create a container div for the buttons
+    var buttonsContainer = document.createElement("div");
+    buttonsContainer.setAttribute("class", "d-flex justify-content-between");
+  
+    // Append the elements to their respective parents
+    modalBody.appendChild(descriptionLabel);
+    modalBody.appendChild(descriptionTextarea);
+    modalBody.appendChild(fileDiv);
+    modalBody.appendChild(takeScreenshotButton);
+    modalBody.appendChild(screenshotInput);
+    modalBody.appendChild(screenshotImage);
+  
+    modalFooter.appendChild(submitButton);
+  
+    form.appendChild(modalHeader);
+    form.appendChild(modalBody);
+    form.appendChild(modalFooter);
+  
+    modalDialog.appendChild(form);
+  
+    modal.appendChild(modalDialog);
+  
+    // Append the button and modal to the document body
+    document.body.appendChild(button);
+    document.body.appendChild(modal);
+  }
+  
+  // Create SRButton that can open the report modal
+  function addSRButton() {
+    // Get all the paragraphs in the document
+    var contents = document.querySelectorAll('p,svg,figure');
+  
+    // Add a hidden button after each paragraph
+    // Add a hidden button after each paragraph
+    contents.forEach(function (content) {
+      if (content === contents[0] || content === contents[1] || content === contents[2] || content === contents[4] || content.classList.contains("logomark")) {
+        return;
+      }
+      var button = document.createElement("button");
+      //button.setAttribute("class", "hidden-button");
+      button.setAttribute("class", "sr-only button");
+      button.style.display = "none";
+      button.appendChild(document.createTextNode("Report Bug"));
+  
+      // Insert the button after the paragraph
+      content.parentNode.insertBefore(button, content.nextSibling);
+      // Add click event listener to the hidden button
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        modal.style.display = "block";
+        modal.setAttribute("tabindex", "-1"); // Ensure the modal is focusable
+        modal.focus();
+      });
+    });
+  
+    // Add an event listener to the document to listen for keydown events
+    document.addEventListener('keydown', showButtons);
+  }
+  
+  // Function to show the buttons when the specified key is pressed
+  function showButtons(event) {
+    var key = event.key;
+    // Check if the pressed key is the specified key (in this case, 'b')
+    if (key === 'i' || key === 'I') {
+      // Get all the hidden buttons
+      // var buttons = document.getElementsByClassName('hidden-button');
+      var buttons = document.getElementsByClassName('sr-only button');
+  
+      // Show the buttons
+      for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].style.display === 'none') {
+          buttons[i].style.display = 'inline';
+        } else {
+          buttons[i].style.display = 'none';
+        }
+      }
+    }
+  }
+  
+  //add a floating banner
+  function addFloatingBanner() {
+    // Create header element
+    var header = document.createElement('header');
+  
+    // Create "skip" link
+    var skipLink = document.createElement('a');
+    skipLink.className = 'skip';
+    skipLink.href = '#main';
+    skipLink.textContent = 'Skip to main content';
+  
+    // Create logo image with background color set to transparent
+    var logoImage = document.createElement('img');
+    logoImage.alt = 'logo';
+    logoImage.className = 'logo';
+    logoImage.setAttribute('role', 'presentation');
+    logoImage.style.backgroundColor = 'transparent';
+    logoImage.src = '/static/img/arxiv-logo-one-color-white.svg';
+  
+    // Create logomark image
+    var logomarkImage = document.createElement('img');
+    logomarkImage.alt = 'logo';
+    logomarkImage.className = 'logomark';
+    logomarkImage.setAttribute('role', 'presentation');
+    logomarkImage.src = '/static/img/arxiv-logomark-small-white.svg';
+  
+    // Create header message
+    var headerMessage = document.createElement('div');
+    headerMessage.className = 'header-message';
+    headerMessage.setAttribute('role', 'banner');
+    headerMessage.textContent = 'HTML Beta. We invite your feedback. Click on \'feedback\' button or [keyboard shorcut] to view a list of keyboard commands.';
+  
+    // Create "back to abstract" link
+    var backLink = document.createElement('a');
+    backLink.href = '';
+    backLink.textContent = 'Back to Abstract';
+  
+    //invisible element
+    const invisibleElement = document.createElement('div');
+    invisibleElement.className = 'sr-only keyboard-glossary';
+  
+    // Create the <h2> element
+    const heading = document.createElement('h2');
+    heading.textContent = 'Keyboard commands glossary';
+  
+    // Create the <ul> element
+    const list = document.createElement('ul');
+  
+    // Create the list items and add them to the <ul> element
+    const listItem1 = document.createElement('li');
+    listItem1.textContent = 'List a command here';
+    list.appendChild(listItem1);
+  
+    const listItem2 = document.createElement('li');
+    listItem2.textContent = 'A second command';
+    list.appendChild(listItem2);
+  
+    const listItem3 = document.createElement('li');
+    listItem3.textContent = 'List a third command here';
+    list.appendChild(listItem3);
+  
+    // Append the child elements to the invisible element
+    invisibleElement.appendChild(heading);
+    invisibleElement.appendChild(list);
+  
+    // Append all elements to the header element
+    header.appendChild(skipLink);
+    header.appendChild(logoImage);
+    header.appendChild(logomarkImage);
+    header.appendChild(headerMessage);
+    header.appendChild(backLink);
+    header.appendChild(invisibleElement);
+  
+    // Get the <body> element and append the header element to it
+    var body = document.querySelector('body');
+    body.insertBefore(header, body.firstChild);
+  
+    // Create body-message element for desktop
+    var bodyMessageDesktop = document.createElement('div');
+    bodyMessageDesktop.className = 'body-message';
+    bodyMessageDesktop.setAttribute('role', 'status');
+  
+    // Create close icon
+    var closeIcon = document.createElement('svg');
+    closeIcon.className = 'close-icon';
+    closeIcon.setAttribute('height', '1em');
+    closeIcon.setAttribute('viewBox', '0 0 512 512');
+    closeIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    closeIcon.innerHTML = '<!-- SVG path for close icon -->';
+  
+    // Create paragraph element
+    var paragraph = document.createElement('p');
+    paragraph.textContent = 'The HTML has finished loading. We appreciate your feedback on the accessibility of this content. Use [keyboard shortcut] to view a list of keyboard commands for providing feedback, or click on the “feedback” button.';
+  
+    // Append close icon and paragraph to body-message element
+    bodyMessageDesktop.appendChild(closeIcon);
+    bodyMessageDesktop.appendChild(paragraph);
+  
+    // Create body-message element for mobile
+    var bodyMessageMobile = document.createElement('div');
+    bodyMessageMobile.className = 'body-message-mobile';
+    bodyMessageMobile.setAttribute('role', 'status');
+  
+    // Create mobile close icon
+    var mobileCloseIcon = document.createElement('svg');
+    mobileCloseIcon.className = 'close-icon';
+    mobileCloseIcon.setAttribute('height', '1em');
+    mobileCloseIcon.setAttribute('viewBox', '0 0 512 512');
+    mobileCloseIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    mobileCloseIcon.innerHTML = '<!-- SVG path for close icon -->';
+  
+    // Create paragraph element for mobile
+    var mobileParagraph = document.createElement('p');
+    mobileParagraph.innerHTML = 'Loading complete. <br><a href=""><svg height="1em" role="presentation" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg>We love feedback</a>.';
+  
+    // Append mobile close icon and paragraph to body-message-mobile element
+    bodyMessageMobile.appendChild(mobileCloseIcon);
+    bodyMessageMobile.appendChild(mobileParagraph);
+  
+    var header = document.querySelector('header');
+    var firstElementAfterHeader = header.nextElementSibling;
+  
+    // Insert the new element behind the header
+    document.body.insertBefore(bodyMessageDesktop, firstElementAfterHeader);
+    document.body.insertBefore(bodyMessageMobile, firstElementAfterHeader);
+  };
 
   // Code for handling key press to open/close modal
   function handleKeyDown() {
