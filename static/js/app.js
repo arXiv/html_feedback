@@ -499,6 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Add click event listener to the hidden button
       button.addEventListener("click", function (event) {
         event.preventDefault();
+        generate_whole_screenshot();
         modal.style.display = "block";
         modal.setAttribute("tabindex", "-1"); // Ensure the modal is focusable
         modal.focus();
