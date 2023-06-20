@@ -341,27 +341,25 @@ document.addEventListener("DOMContentLoaded", () => {
   // Code for handling key press to open/close modal
   function handleKeyDown() {
     document.addEventListener('keydown', function (event) {
-      if (event.key.toLowerCase() === 'p') {
-        //const modal = document.getElementById('myForm')
-        modal.style.display = 'block';
-      }
+      // if (event.key.toLowerCase() === 'p') {
+      //   //const modal = document.getElementById('myForm')
+      //   modal.style.display = 'block';
+      // }
 
-      if (event.key.toLowerCase() === 'i') {
-        //const modal = document.getElementById('myForm')
-        modal.style.display = 'none';
-      }
+      // if (event.key.toLowerCase() === 'i') {
+      //   //const modal = document.getElementById('myForm')
+      //   modal.style.display = 'none';
+      // }
 
       if (event.key === 'Meta' || event.key === 'Command') {
         isCommandKeyDown = true;
       }
 
       if (isCommandKeyDown && (event.key === '/' || event.key === '?')) {
-        //const modal = document.getElementById('myForm');
         modal.style.display = 'block';
       }
 
-      if (isCommandKeyDown && (event.key === '.' || event.key === '>')) {
-        //const modal = document.getElementById('myForm');
+      if (isCommandKeyDown && (event.key === '}' || event.key === ']')) {
         modal.style.display = 'none';
       }
     });
