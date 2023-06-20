@@ -342,6 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
   handleClickOutsideModal();
 
   function addBugReportForm() {
+    var theme = document.documentElement.getAttribute("data-theme");
     // Create the button element
     var button = document.createElement("button");
     button.setAttribute("type", "button");
@@ -381,10 +382,13 @@ document.addEventListener("DOMContentLoaded", () => {
     closeButton.setAttribute("class", "btn-close");
     closeButton.setAttribute("data-bs-dismiss", "modal");
     closeButton.setAttribute("aria-label", "Close");
-  
+
     // Append the title and close button to the modal header
     modalHeader.appendChild(modalTitle);
     modalHeader.appendChild(closeButton);
+    if(theme==='dark'){
+      modalHeader.setAttribute('data-bs-theme',"dark");
+    }
   
     // Create the modal body
     var modalBody = document.createElement("div");
@@ -475,6 +479,12 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.appendChild(modalDialog);
   
     // Append the button and modal to the document body
+    var theme = document.documentElement.getAttribute("data-theme");
+
+    if(theme==='dark'){
+      
+    }
+
     document.body.appendChild(button);
     document.body.appendChild(modal);
   }
