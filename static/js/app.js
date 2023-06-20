@@ -328,6 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
   var saved_dataURI;
   var elementIdentifier;
   var topLayer;
+  var previousFocusElement;
 
   addSRButton();
   handleKeyDown();
@@ -493,6 +494,11 @@ document.addEventListener("DOMContentLoaded", () => {
       button.setAttribute("class", "sr-only button");
       button.style.display = "none";
       button.appendChild(document.createTextNode("Report Bug"));
+
+      // handle the focus
+      button.addEventListener("focus", function () {
+        previousFocusElement = document.activeElement;
+      });
   
       // Insert the button after the paragraph
       content.parentNode.insertBefore(button, content.nextSibling);
@@ -964,6 +970,7 @@ function submitBugReport() {
         document.getElementById("screenshot-image").style = "display: none";
         document.querySelector('#myFormContent').reset(); // Reset the form
         modal.style.display = 'none'
+        previousFocusElement.focus();
       } else {
         alert('Error occurs when submitting report');
       }
@@ -977,6 +984,7 @@ function submitBugReport() {
 function handleCloseClick() {
   close.addEventListener('click', function (event) {
     modal.style.display = 'none';
+    previousFocusElement.focus();
     // Delay the execution of the modal close code by 3 second
     document.getElementById("screenshot").value = "";
     document.getElementById("screenshot-image").src = "";
