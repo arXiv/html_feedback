@@ -531,8 +531,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to show the buttons when the specified key is pressed
   function showButtons(event) {
     var key = event.key;
-    // Check if the pressed key is the specified key combination (in this case, 'Shift + B')
-    if (event.shiftKey && (key === 'b' || key === 'B')) {
+    // Check if the pressed key is the specified key (in this case, 'b')
+    if (event.shiftKey && (key ==='b' || key === 'B')) {
       // Get all the hidden buttons
       // var buttons = document.getElementsByClassName('hidden-button');
       var buttons = document.getElementsByClassName('sr-only button');
