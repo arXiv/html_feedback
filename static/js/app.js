@@ -135,14 +135,13 @@ function addBugReportForm() {
 }
 
 function addSRButton() {
-
   // Get all the paragraphs in the document
   var contents = document.querySelectorAll('p,svg,figure');
 
   // Add a hidden button after each paragraph
   // Add a hidden button after each paragraph
   contents.forEach(function (content) {
-    if (content === contents[0] || content === contents[1] || content === contents[2] || content === contents[4] ||content.classList.contains("logomark")) {
+    if (content === contents[0] || content === contents[1] || content === contents[2] || content === contents[4] || content.classList.contains("logomark")) {
       return;
     }
     var button = document.createElement("button");
@@ -191,7 +190,7 @@ function showButtons(event) {
 }
 
 //add a floating banner
-function addFloatingBanner(){
+function addFloatingBanner() {
   // Create header element
   var header = document.createElement('header');
 
@@ -317,7 +316,7 @@ function addFloatingBanner(){
   document.body.insertBefore(bodyMessageMobile, firstElementAfterHeader);
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+/*document.addEventListener("DOMContentLoaded", () => {
   addFloatingBanner();
   addBugReportForm();
   addSRButton();
@@ -671,4 +670,376 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.style.display = 'none';
     }
   })
+});*/
+
+document.addEventListener("DOMContentLoaded", () => {
+  addFloatingBanner();
+  addBugReportForm();
+  addSRButton();
+
+  const modal = document.getElementById('myForm')
+  const close = modal.querySelector('.btn-close')
+
+  var isCommandKeyDown = false;
+  var saved_dataURI;
+  var elementIdentifier;
+  var topLayer;
+
+  handleKeyDown(modal, isCommandKeyDown);
+  handleKeyUp();
+  handleOpenFormClick(modal);
+  handleHighlight(modal);
+  handleScreenshotClick(modal);
+  handleFormSubmit(elementIdentifier, topLayer, saved_dataURI,modal);
+  handleCloseClick(close, modal);
+  handleClickOutsideModal(modal);
+
+  // Code for handling key press to open/close modal
+  function handleKeyDown(modal, isCommandKeyDown) {
+    document.addEventListener('keydown', function (event) {
+      if (event.key.toLowerCase() === 'p') {
+        //const modal = document.getElementById('myForm')
+        modal.style.display = 'block';
+      }
+
+      if (event.key.toLowerCase() === 'i') {
+        //const modal = document.getElementById('myForm')
+        modal.style.display = 'none';
+      }
+
+      if (event.key === 'Meta' || event.key === 'Command') {
+        isCommandKeyDown = true;
+      }
+
+      if (isCommandKeyDown && (event.key === '/' || event.key === '?')) {
+        //const modal = document.getElementById('myForm');
+        modal.style.display = 'block';
+      }
+
+      if (isCommandKeyDown && (event.key === '.' || event.key === '>')) {
+        //const modal = document.getElementById('myForm');
+        modal.style.display = 'none';
+      }
+    });
+  }
+
+  // Code for handling key press to open/close modal
+  function handleKeyUp() {
+    document.addEventListener('keyup', function (event) {
+      if (event.key === 'Meta' || event.key === 'Command') {
+        isCommandKeyDown = false;
+      }
+    });
+  }
+
+  //click the button and open the modal
+  function handleOpenFormClick(modal) {
+    document.getElementById('openForm').addEventListener("click", () => {
+      modal.style.display = 'block';
+    });
+  }
+
+  //The highlight initiation way
+  function handleHighlight() {
+    document.addEventListener("mouseup", function (event) {
+      if (event.target.id === "small-report-button") {
+        return;
+      }
+
+      var selection = window.getSelection();
+      var range=selection.getRangeAt(0);
+      //console.log(range)
+      //console.log(selection)
+      if (selection.toString().trim()) {
+        removePreviousButton();
+        smallButton(selection,range);
+        //generate_selected_text(selection,range);
+      } else {
+        //大问题
+        removePreviousButton();
+      }
+    });
+  }
+
+  // Generate the screenshot capturing the selected area.
+  function generate_selected_screenshot(range) {
+    const viewportWidth = document.documentElement.clientWidth;
+    const viewportHeight = document.documentElement.clientHeight;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+
+    console.log(range)
+
+    // Highlight
+    const selectedTextSpan = document.createElement("span");
+    selectedTextSpan.style.backgroundColor = "yellow";
+    selectedTextSpan.style.color = "black";
+    selectedTextSpan.appendChild(range.cloneContents());
+    range.deleteContents();
+    range.insertNode(selectedTextSpan);
+
+    // Take the screenshot
+    html2canvas(document.body, {
+      width: viewportWidth,
+      height: viewportHeight,
+      scrollX: -scrollX,
+      scrollY: -scrollY,
+      windowWidth: document.documentElement.scrollWidth,
+      windowHeight: document.documentElement.scrollHeight,
+      scale: 1.0,
+      useCORS: true
+    }).then((canvas) => {
+      // Remove the div element from the DOM
+      selectedTextSpan.outerHTML = selectedTextSpan.innerHTML;
+
+      var imageData = canvas.toDataURL("image/png");
+      modal.style.display = "block";
+      document.getElementById("screenshot").value = imageData;
+      const screenshotImage = document.querySelector("#screenshot-image");
+      screenshotImage.src = imageData;
+      screenshotImage.style = "display: block";
+      screenshotImage.style.maxWidth = "300px";
+      screenshotImage.style.maxHeight = "300px";
+
+      const enlargedImage = document.createElement("img");
+      screenshotImage.addEventListener("click", () => {
+        enlargedImage.src = screenshotImage.src;
+        enlargedImage.style.position = "fixed";
+        enlargedImage.style.top = "50%";
+        enlargedImage.style.left = "50%";
+        enlargedImage.style.transform = "translate(-50%, -50%)";
+        enlargedImage.style.maxWidth = "50%";
+        enlargedImage.style.maxHeight = "50%";
+        enlargedImage.style.zIndex = "99999";
+        enlargedImage.style.cursor = "zoom-out";
+        document.body.appendChild(enlargedImage);
+
+        function removeEnlargedImage() {
+          document.body.removeChild(enlargedImage);
+          document.removeEventListener("click", removeEnlargedImage);
+        }
+
+        document.addEventListener("click", (event) => {
+          if (event.target !== screenshotImage && event.target !== enlargedImage) {
+            removeEnlargedImage();
+          }
+        });
+
+        enlargedImage.addEventListener("click", () => {
+          removeEnlargedImage();
+        });
+      });
+
+    });
+  }
+
+  //get the info of selected text, reset the global variable's value
+  function generate_selected_text(selection,range) {
+    if (selection.type === 'Range') {
+      var anchorNode = selection.anchorNode;
+      var parentNode = anchorNode.parentNode;
+      var id = parentNode.id;
+      var classList = parentNode.classList;
+      //if there is no id, than use class to identify
+      elementIdentifier = id || classList[0] || 'Unknown';
+
+      //get the topLayer of id
+      if (elementIdentifier.match(/^S\d/)) {
+        topLayer = id ? id.split('.')[1] : classList[0];
+      } else {
+        topLayer = id ? id.split('.')[0] : classList[0];
+      }
+
+      // Prepare for selected HTML.
+      var selectedHtml = '';
+      var container = document.createElement('div');
+      container.appendChild(range.cloneContents());
+      selectedHtml = container.innerHTML;
+      // Use the selected text to generate the dataURI
+      saved_dataURI = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
+    }
+  }
+
+  //remove the previous small button
+  function removePreviousButton() {
+    const previousButtons = document.querySelectorAll(
+      "button[id='small-report-button']"
+    );
+    for (const button of previousButtons) {
+      button.remove();
+    }
+  }
+
+  //Generate the smallButton for bug report, click and scroll included
+  function smallButton(selection) {
+    //create small button
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+
+    const smallReportButton = document.createElement("button");
+    smallReportButton.id = "small-report-button";
+    smallReportButton.type = 'button';
+    smallReportButton.className = 'btn btn-secondary btn-sm';
+    smallReportButton.style.backgroundColor = '#b31b1b';
+    smallReportButton.innerHTML = "Report";
+    smallReportButton.style.position = "fixed";
+    smallReportButton.style.left = `${rect.left + rect.width / 2}px`;
+
+    // Check if there is enough space above the selected text
+    if (rect.top > 40) {
+      smallReportButton.style.top = `${rect.top}px`;
+      smallReportButton.style.transform = "translate(-50%, -100%)";
+    } else {
+      smallReportButton.style.top = `${rect.top}px`;
+      smallReportButton.style.transform = "translate(-50%, 100%)";
+    }
+    document.body.appendChild(smallReportButton);
+
+    //click small button
+    smallReportButton.addEventListener("click", function () {
+      generate_selected_screenshot(range);
+      generate_selected_text(selection,range);
+      console.log('saved_dataURI inside',saved_dataURI)
+      console.log('element identofier inside',elementIdentifier)
+      console.log('toplayer inside',topLayer)
+      modal.style.display = 'block';
+      smallReportButton.remove();
+    });
+
+    // Handle the window scroll event
+    window.onscroll = function () {
+      if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
+        smallReportButton.style.display = "none";
+      } else {
+        smallReportButton.style.display = "block";
+      }
+    }
+  }
+
+//click screenshot button
+function handleScreenshotClick(modal) {
+  document.getElementById("take-screenshot").addEventListener("click", function () {
+    modal.style.display = 'none';
+    generate_whole_screenshot(modal);
+  });
+}
+
+function generate_whole_screenshot(modal) {
+  // Code for taking screenshot and creating download button
+  const viewportWidth = document.documentElement.clientWidth;
+  const viewportHeight = document.documentElement.clientHeight;
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+  html2canvas(document.body, {
+    width: viewportWidth,
+    height: viewportHeight,
+    scrollX: -scrollX,
+    scrollY: -scrollY,
+    windowWidth: document.documentElement.scrollWidth,
+    windowHeight: document.documentElement.scrollHeight,
+    //scale:0.5
+  }).then((canvas) => {
+    const dataUrl = canvas.toDataURL("image/png");
+    modal.style.display = 'block'; // Make sure to display the modal again
+
+    // Set screenshot data in hidden input field or image element
+    document.getElementById("screenshot").value = dataUrl;
+    document.getElementById("screenshot-image").src = dataUrl;
+
+    // Show screenshot image or input field
+    document.getElementById("screenshot-image").style = "display: block";
+  });
+}
+
+//submit report
+function handleFormSubmit(elementIdentifier, topLayer, saved_dataURI) {
+  document.getElementById("myFormContent").addEventListener("submit", function (event) {
+    event.preventDefault();
+    submitBugReport(elementIdentifier, topLayer, saved_dataURI);
+  });
+}
+
+//submit to the backend, next step: finish
+function submitBugReport(elementIdentifier, topLayer, saved_dataURI) {
+  //document.getElementById('notification').style = 'display: block';
+  const formData = new FormData();
+  const metaElement = document.querySelector('meta[property="og:url"]');
+  const article_url = metaElement ? metaElement.getAttribute('content') : null;
+  const user_info = "account:yc2455 contact:@cornll.edu "
+  //report time
+  const currentTime = new Date();
+  //browser version
+  var userAgent = navigator.userAgent;
+  var browser = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i)
+  var browserName = browser[1];
+  var browserVersion = browser[2];
+  var browserInfo = browserName + '/' + browserVersion;
+
+  //device info(system)--give up for now
+  //conversion report link
+  const start_index = article_url.lastIndexOf('/') + 1;
+  const number = article_url.substring(start_index);
+  const conversion_report = "https://ar5iv.labs.arxiv.org/log/" + number;
+  //source file link
+  const source_file = "https://arxiv.org/abs/" + number;
+  //location-low
+  //location-high
+  const data_description = document.getElementById("description").value;
+  const screenshotImage = document.getElementById("screenshot").value;
+  const attachment = document.querySelector('#file').files[0];
+  // add to the form data
+  formData.append('article_url', article_url);
+  formData.append('user_info', user_info);
+  formData.append('reportTime', currentTime);
+  formData.append('browserInfo', browserInfo)
+  formData.append('conversion_report', conversion_report)
+  formData.append('source_file', source_file)
+  formData.append('description', data_description);
+  formData.append('attachment', attachment);
+  formData.append('screenshotImage', screenshotImage);
+
+  console.log('saved_dataURI in the form',saved_dataURI)
+  console.log('element identofier in the form',elementIdentifier)
+  console.log('toplayer in the form',topLayer)
+
+  formData.append('url', saved_dataURI);
+  formData.append('location_low', elementIdentifier);
+  formData.append('location_high', topLayer)
+  fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(function (response) {
+      if (response.ok) {
+        alert('Report submitted');
+        document.getElementById("screenshot-image").style = "display: none";
+        document.querySelector('#myFormContent').reset(); // Reset the form
+        modal.style.display = 'none'
+      } else {
+        alert('Error occurs when submitting report');
+      }
+    })
+    .catch(function (error) {
+      alert('Error occurs when submitting report');
+    });
+}
+
+//close the modal and reset value
+function handleCloseClick(close, modal) {
+  close.addEventListener('click', function (event) {
+    modal.style.display = 'none';
+    // Delay the execution of the modal close code by 3 second
+    document.getElementById("screenshot").value = "";
+    document.getElementById("screenshot-image").src = "";
+  });
+}
+
+function handleClickOutsideModal(modal) {
+  window.addEventListener('click', function (event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
+}
+
 });
