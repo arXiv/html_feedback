@@ -480,7 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create SRButton that can open the report modal
   function addSRButton() {
     // Get all the paragraphs in the document
-    var contents = document.querySelectorAll('p,svg,figure');
+    var contents = document.querySelectorAll('p, svg, figure, .ltx_title, .ltx_authors');
   
     // Add a hidden button after each paragraph
     // Add a hidden button after each paragraph
