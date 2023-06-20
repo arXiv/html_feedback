@@ -111,8 +111,6 @@ label {
 }
 
 [data-theme=dark] .btn.btn-outline-secondary#take-screenshot {
-  /* Add styles for the button */
-  /* Example styles: */
   color:  #c9d1d9;
   border-color:  #c9d1d9;
 }
