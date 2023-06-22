@@ -397,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Create the description input field
     var descriptionLabel = document.createElement("label");
     descriptionLabel.setAttribute("for", "description");
-    descriptionLabel.setAttribute("class", "form-label");
+    //descriptionLabel.setAttribute("class", "form-label");
     descriptionLabel.appendChild(document.createTextNode("Description*:"));
   
     var descriptionTextarea = document.createElement("textarea");
@@ -406,6 +406,8 @@ document.addEventListener("DOMContentLoaded", () => {
     descriptionTextarea.setAttribute("name", "description");
     descriptionTextarea.setAttribute("required", "required");
     descriptionTextarea.setAttribute("style", "height: 80px;");
+    descriptionTextarea.setAttribute("maxlength", "1000"); // Set the maximum length to 200 characters
+    descriptionTextarea.setAttribute("placeholder","1000 characters maximum");
   
     // Create the file input field
     var fileDiv = document.createElement("div");
@@ -414,13 +416,14 @@ document.addEventListener("DOMContentLoaded", () => {
     var fileLabel = document.createElement("label");
     fileLabel.setAttribute("for", "file");
     fileLabel.setAttribute("class", "form-label");
-    fileLabel.appendChild(document.createTextNode("File(optional):"));
+    fileLabel.appendChild(document.createTextNode("Image File(optional):"));
   
     var fileInput = document.createElement("input");
     fileInput.setAttribute("type", "file");
     fileInput.setAttribute("class", "form-control");
     fileInput.setAttribute("id", "file");
     fileInput.setAttribute("name", "file");
+    fileInput.setAttribute("accept", "image/*"); // Specify the allowed file types
   
     fileDiv.appendChild(fileLabel);
     fileDiv.appendChild(fileInput);
@@ -477,13 +480,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modalDialog.appendChild(form);
   
     modal.appendChild(modalDialog);
-  
-    // Append the button and modal to the document body
-    var theme = document.documentElement.getAttribute("data-theme");
-
-    if(theme==='dark'){
-      
-    }
 
     document.body.appendChild(button);
     document.body.appendChild(modal);
@@ -975,8 +971,7 @@ function submitBugReport() {
   formData.append('url', saved_dataURI);
   formData.append('location_low', elementIdentifier);
   formData.append('location_high', topLayer)
-
-  console.log(initiationWay);
+  //console.log(initiationWay);
   formData.append('initiationWay',initiationWay);
   fetch('/', {
       method: 'POST',
