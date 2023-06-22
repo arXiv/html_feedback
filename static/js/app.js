@@ -671,6 +671,37 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.insertBefore(bodyMessageMobile, firstElementAfterHeader);
   };
 
+  // Handle enlargeImage for selected text and wholeScreen.
+  function getEnlargeImage(enlargedImage, screenshotImage){
+    screenshotImage.addEventListener("click", () => {
+      enlargedImage.src = screenshotImage.src;
+      enlargedImage.style.position = "fixed";
+      enlargedImage.style.top = "50%";
+      enlargedImage.style.left = "50%";
+      enlargedImage.style.transform = "translate(-50%, -50%)";
+      enlargedImage.style.maxWidth = "50%";
+      enlargedImage.style.maxHeight = "50%";
+      enlargedImage.style.zIndex = "99999";
+      enlargedImage.style.cursor = "zoom-out";
+      document.body.appendChild(enlargedImage);
+
+      function removeEnlargedImage() {
+        document.body.removeChild(enlargedImage);
+        document.removeEventListener("click", removeEnlargedImage);
+      }
+
+      document.addEventListener("click", (event) => {
+        if (event.target !== screenshotImage && event.target !== enlargedImage) {
+          removeEnlargedImage();
+        }
+      });
+
+      enlargedImage.addEventListener("click", () => {
+        removeEnlargedImage();
+      });
+    });
+  }
+
   // Code for handling key press to open/close modal
   function handleKeyDown() {
     document.addEventListener('keydown', function (event) {
@@ -775,34 +806,7 @@ document.addEventListener("DOMContentLoaded", () => {
       screenshotImage.style.maxHeight = "300px";
 
       const enlargedImage = document.createElement("img");
-      screenshotImage.addEventListener("click", () => {
-        enlargedImage.src = screenshotImage.src;
-        enlargedImage.style.position = "fixed";
-        enlargedImage.style.top = "50%";
-        enlargedImage.style.left = "50%";
-        enlargedImage.style.transform = "translate(-50%, -50%)";
-        enlargedImage.style.maxWidth = "50%";
-        enlargedImage.style.maxHeight = "50%";
-        enlargedImage.style.zIndex = "99999";
-        enlargedImage.style.cursor = "zoom-out";
-        document.body.appendChild(enlargedImage);
-
-        function removeEnlargedImage() {
-          document.body.removeChild(enlargedImage);
-          document.removeEventListener("click", removeEnlargedImage);
-        }
-
-        document.addEventListener("click", (event) => {
-          if (event.target !== screenshotImage && event.target !== enlargedImage) {
-            removeEnlargedImage();
-          }
-        });
-
-        enlargedImage.addEventListener("click", () => {
-          removeEnlargedImage();
-        });
-      });
-
+      getEnlargeImage(enlargedImage, screenshotImage);
     });
   }
 
@@ -919,6 +923,9 @@ function generate_whole_screenshot() {
 
     // Show screenshot image or input field
     document.getElementById("screenshot-image").style = "display: block";
+
+    const enlargedImage = document.createElement("img");
+    getEnlargeImage(enlargedImage, document.getElementById("screenshot-image"));
   });
 }
 
