@@ -151,7 +151,14 @@ document.addEventListener("DOMContentLoaded", () => {
     submitButton.setAttribute("class", "btn btn-primary");
     submitButton.setAttribute("id", "modal-submit");
     submitButton.setAttribute("style", "background-color: #b31b1b;");
-    submitButton.appendChild(document.createTextNode("Submit"));
+    submitButton.appendChild(document.createTextNode("Report with Github"));
+
+    var srSubmit = document.createElement("button");
+    srSubmit.setAttribute("type", "submit");
+    //srSubmit.setAttribute("class", "sr-only button");
+    srSubmit.setAttribute("id", "modal-submit-sr");
+    srSubmit.appendChild(document.createTextNode("Submit without Github"));
+
   
     // Create a container div for the buttons
     var buttonsContainer = document.createElement("div");
@@ -165,6 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modalBody.appendChild(screenshotInput);
     modalBody.appendChild(screenshotImage);
   
+    modalFooter.appendChild(srSubmit);
     modalFooter.appendChild(submitButton);
   
     form.appendChild(modalHeader);
