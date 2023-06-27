@@ -13,21 +13,17 @@ document.addEventListener("DOMContentLoaded", () => {
   var previousFocusElement;
   var initiationWay;
 
-  // Needed Variables for github issue.
-  var article_url_issue = "**article_url**: test \n\n";
-  var reportTime_issue = "**reportTime**: test \n\n";
-  var browserInfo_issue = "browserInfo: test \n\n";
-  var description_issue = "description: test \n\n";
-  var conversion_report_issue = "conversion_report: test \n\n";
-  var source_file_issue = "source_file: test \n\n";
-  var attachment_issue = "attachment: test \n\n";
-  var screenshotImage_issue = "screenshotImage: test \n\n";
-  var htmlText_issue = "htmlText: test \n\n";
-  var location_low_issue = "location_low: test \n\n";
-  var location_high_issue = "location_high: test \n\n";
-  var initiationWay_issue = "initiationWay: test \n\n";
-  // body to contain all the variables.
-  var body = "No Data";
+  // Variables for github issue. Do not need screenshot and attachment.
+  var article_url_issue = "**article_url**: \n\n";
+  var reportTime_issue = "**reportTime**: \n\n";
+  var browserInfo_issue = "browserInfo: \n\n";
+  var description_issue = "description: \n\n";
+  var conversion_report_issue = "conversion_report: \n\n";
+  var source_file_issue = "source_file: \n\n";
+  var htmlText_issue = "htmlText: \n\n";
+  var location_low_issue = "location_low: \n\n";
+  var location_high_issue = "location_high: \n\n";
+  var initiationWay_issue = "initiationWay: \n\n";
 
   addSRButton();
   handleKeyDown();
@@ -641,7 +637,7 @@ function submitBugReport() {
   const formData = new FormData();
   const metaElement = document.querySelector('meta[property="og:url"]');
   const article_url = metaElement ? metaElement.getAttribute('content') : null;
-  const user_info = "account:yc2455 contact:@cornll.edu "
+  const user_info = "account:test contact:test@cornll.edu "
   //report time
   const currentTime = new Date();
   //browser version
@@ -686,10 +682,7 @@ function submitBugReport() {
   description_issue = "**description**: " + data_description + "\n\n";
 
   formData.append('attachment', attachment);
-  attachment_issue = "**attachment**: " + attachment + "\n\n";
-
   formData.append('**screenshotImage**', screenshotImage);
-  screenshotImage_issue = "screenshotImage: " + screenshotImage + "\n\n";
 
   formData.append('url', saved_dataURI);
   htmlText_issue = "htmlText: " + saved_dataURI + "\n\n";
@@ -704,7 +697,7 @@ function submitBugReport() {
   initiationWay_issue = "initiationWay: " + initiationWay + "\n\n";
 
   // Add all github issue variables to the body.
-  var autoFillData = "## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + attachment_issue + screenshotImage_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+  var autoFillData = "## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
   var userDescription = "\n ## Description \n\n" + "Description of issue:\n\n Please attach a screenshot(or document) if possible.\n\n" ;
   const additionalText = `
   Steps to reproduce:
@@ -719,7 +712,8 @@ function submitBugReport() {
   `;
   title_issue = "# Bug Reprot \n "
   body = title_issue + userDescription + additionalText  + autoFillData;
-  var encodedTitle = encodeURIComponent("Ar5iv Bug Report");
+  var artile_number = article_url.substring(article_url.lastIndexOf('/') + 1);
+  var encodedTitle = encodeURIComponent("Improve article " + artile_number);
   var encodedBody = encodeURIComponent(body);
 
   var link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
