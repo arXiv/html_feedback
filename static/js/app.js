@@ -819,16 +819,16 @@ function reportWithoutGitHub(obj){
   `;
   title_issue = "# Bug Report \n "
   body = title_issue + userDescription + additionalText  + autoFillData;
-
   var title = "Improve article "+ obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
 
   //need to update the token
-  var accessToken = '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';
-  var repository = 'yaxuanhuang0710/test';
-  var url = 'https://api.github.com/repos/' + repository + '/issues';
+  const owner = "yaxuanhuang0710";
+  const repo = "test"; 
+  var accessToken = 'Replace with Token';
+  const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
   var headers = {
-      'Authorization': 'token ' + accessToken,
-      'Content-Type': 'application/json'
+      'Authorization': 'Bearer '+accessToken,
+      'Accept': 'application/vnd.github.v3+json',
   };
   var data = {
     title: title,
