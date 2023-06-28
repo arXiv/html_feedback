@@ -632,76 +632,135 @@ function generate_whole_screenshot() {
 }
 
 //submit report
-function handleFormSubmit() {
+/*function handleFormSubmit() {
   document.getElementById("myFormContent").addEventListener("submit", function (event) {
     event.preventDefault();
     submitBugReport();
   });
+}*/
+
+function handleFormSubmit() {
+  //users use screen reader click the hidden button
+  document.getElementById('modal-submit-sr').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+    const metaElement = document.querySelector('meta[property="og:url"]');
+    const article_url = metaElement ? metaElement.getAttribute('content') : null;
+    const user_info = "account:test contact:test@cornll.edu "
+    //report time
+    const currentTime = new Date();
+    //browser version
+    var userAgent = navigator.userAgent;
+    var browser = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i)
+    var browserName = browser[1];
+    var browserVersion = browser[2];
+    var browserInfo = browserName + '/' + browserVersion;
+
+    //device info(system)--give up for now
+    //conversion report link
+    const start_index = article_url.lastIndexOf('/') + 1;
+    const number = article_url.substring(start_index);
+    const conversion_report = "https://ar5iv.labs.arxiv.org/log/" + number;
+    //source file link
+    const source_file = "https://arxiv.org/abs/" + number;
+    //location-low
+    //location-high
+    const data_description = document.getElementById("description").value;
+    const screenshotImage = document.getElementById("screenshot").value;
+    const attachment = document.querySelector('#file').files[0];
+
+    reportDB({article_url,user_info,currentTime,browserInfo,conversion_report,source_file,data_description,attachment,screenshotImage});
+    reportWithoutGitHub({article_url,user_info,currentTime,browserInfo,conversion_report,source_file,data_description});
+  });
+
+  //signhted users click on submit button
+  document.getElementById('modal-submit').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    const metaElement = document.querySelector('meta[property="og:url"]');
+    const article_url = metaElement ? metaElement.getAttribute('content') : null;
+    const user_info = "account:test contact:test@cornll.edu "
+    //report time
+    const currentTime = new Date();
+    //browser version
+    var userAgent = navigator.userAgent;
+    var browser = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i)
+    var browserName = browser[1];
+    var browserVersion = browser[2];
+    var browserInfo = browserName + '/' + browserVersion;
+
+    //device info(system)--give up for now
+    //conversion report link
+    const start_index = article_url.lastIndexOf('/') + 1;
+    const number = article_url.substring(start_index);
+    const conversion_report = "https://ar5iv.labs.arxiv.org/log/" + number;
+    //source file link
+    const source_file = "https://arxiv.org/abs/" + number;
+    //location-low
+    //location-high
+    const data_description = document.getElementById("description").value;
+    const screenshotImage = document.getElementById("screenshot").value;
+    const attachment = document.querySelector('#file').files[0];
+
+    reportDB({article_url,user_info,currentTime,browserInfo,conversion_report,source_file,data_description,attachment,screenshotImage});
+    reportWithGitHub({article_url,user_info,currentTime,browserInfo,conversion_report,source_file,data_description});
+});
 }
 
-//submit to the backend, next step: finish
-function submitBugReport() {
-  //document.getElementById('notification').style = 'display: block';
+//report info to databse
+function reportDB(obj){
+  //add the info to form
   const formData = new FormData();
-  const metaElement = document.querySelector('meta[property="og:url"]');
-  const article_url = metaElement ? metaElement.getAttribute('content') : null;
-  const user_info = "account:test contact:test@cornll.edu "
-  //report time
-  const currentTime = new Date();
-  //browser version
-  var userAgent = navigator.userAgent;
-  var browser = userAgent.match(/(firefox|edge|opr|chrome|safari)[\/]([\d.]+)/i)
-  var browserName = browser[1];
-  var browserVersion = browser[2];
-  var browserInfo = browserName + '/' + browserVersion;
-
-  //device info(system)--give up for now
-  //conversion report link
-  const start_index = article_url.lastIndexOf('/') + 1;
-  const number = article_url.substring(start_index);
-  const conversion_report = "https://ar5iv.labs.arxiv.org/log/" + number;
-  //source file link
-  const source_file = "https://arxiv.org/abs/" + number;
-  //location-low
-  //location-high
-  const data_description = document.getElementById("description").value;
-  const screenshotImage = document.getElementById("screenshot").value;
-  const attachment = document.querySelector('#file').files[0];
-  // add to the form data
-  formData.append('article_url', article_url);
-  article_url_issue = "**article_url**: " + article_url + "\n\n";
-
-  formData.append('user_info', user_info);
-  user_info_issue = "**user_info**: " + user_info + "\n\n";
-
-  formData.append('reportTime', currentTime);
-  reportTime_issue = "**reportTime**: " + currentTime + "\n\n";
-
-  formData.append('browserInfo', browserInfo)
-  browserInfo_issue = "**browserInfo**: " + browserInfo + "\n\n";
-
-  formData.append('conversion_report', conversion_report)
-  conversion_report_issue = "**conversion_report**: " + conversion_report + "\n\n";
-
-  formData.append('source_file', source_file)
-  source_file_issue = "**source_file**: " + source_file + "\n\n";
-
-  formData.append('description', data_description);
-  description_issue = "**description**: " + data_description + "\n\n";
-
-  formData.append('attachment', attachment);
-  formData.append('**screenshotImage**', screenshotImage);
-
+  formData.append('article_url', obj.article_url);
+  formData.append('user_info', obj.user_info);
+  formData.append('reportTime', obj.currentTime);
+  formData.append('browserInfo', obj.browserInfo);
+  formData.append('conversion_report', obj.conversion_report);
+  formData.append('source_file', obj.source_file);
+  formData.append('description', obj.data_description);
+  formData.append('attachment', obj.attachment);
+  formData.append('screenshotImage', obj.screenshotImage);
   formData.append('url', saved_dataURI);
-  htmlText_issue = "htmlText: " + saved_dataURI + "\n\n";
-
   formData.append('location_low', elementIdentifier);
-  location_low_issue = "location_low: " + elementIdentifier + "\n\n";
-
-  formData.append('location_high', topLayer)
-  location_high_issue = "location_high: " + topLayer + "\n\n";
-
+  formData.append('location_high', topLayer);
   formData.append('initiationWay',initiationWay);
+
+  //post
+  fetch('/', {
+    method: 'POST',
+    body: formData
+  })
+  .then(function (response) {
+    if (response.ok) {
+      alert('Report submitted');
+      document.getElementById("screenshot-image").style = "display: none";
+      document.querySelector('#myFormContent').reset(); // Reset the form
+      modal.style.display = 'none'
+      if(previousFocusElement){
+        previousFocusElement.focus();
+      }
+    } else {
+      alert('Error occurs when submitting report');
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+    alert('Error occurs when submitting report');
+  });
+}
+
+//pre-populate the info to github issue
+function reportWithGitHub(obj) {
+  //document.getElementById('notification').style = 'display: block';
+  article_url_issue = "**article_url**: " + obj.article_url + "\n\n";
+  user_info_issue = "**user_info**: " + obj.user_info + "\n\n";
+  reportTime_issue = "**reportTime**: " + obj.currentTime + "\n\n";
+  browserInfo_issue = "**browserInfo**: " + obj.browserInfo + "\n\n";
+  conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
+  source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
+  description_issue = "**description**: " + obj.data_description + "\n\n";
+  htmlText_issue = "htmlText: " + saved_dataURI + "\n\n";
+  location_low_issue = "location_low: " + elementIdentifier + "\n\n";
+  location_high_issue = "location_high: " + topLayer + "\n\n";
   initiationWay_issue = "initiationWay: " + initiationWay + "\n\n";
 
   // Add all github issue variables to the body.
@@ -720,36 +779,55 @@ function submitBugReport() {
   `;
   title_issue = "# Bug Reprot \n "
   body = title_issue + userDescription + additionalText  + autoFillData;
-  var artile_number = article_url.substring(article_url.lastIndexOf('/') + 1);
+  var artile_number = obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
   var encodedTitle = encodeURIComponent("Improve article " + artile_number);
   var encodedBody = encodeURIComponent(body);
 
   var link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
   // window.location.href = link;
   window.open(link, '_blank');
-  console.log(link);
+  //console.log(link);
+}
 
-  fetch('/', {
-      method: 'POST',
-      body: formData
-    })
-    .then(function (response) {
-      if (response.ok) {
-        alert('Report submitted');
-        document.getElementById("screenshot-image").style = "display: none";
-        document.querySelector('#myFormContent').reset(); // Reset the form
-        modal.style.display = 'none'
-        if(previousFocusElement){
-          previousFocusElement.focus();
-        }
-      } else {
-        alert('Error occurs when submitting report');
-      }
-    })
-    .catch(function (error) {
-      console.log(error)
-      alert('Error occurs when submitting report');
-    });
+//not yet finished
+function reportWithoutGitHub(obj){
+  article_url_issue = "**article_url**: " + obj.article_url + "\n\n";
+  user_info_issue = "**user_info**: " + obj.user_info + "\n\n";
+  reportTime_issue = "**reportTime**: " + obj.currentTime + "\n\n";
+  browserInfo_issue = "**browserInfo**: " + obj.browserInfo + "\n\n";
+  conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
+  source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
+  description_issue = "**description**: " + obj.data_description + "\n\n";
+  htmlText_issue = "htmlText: " + saved_dataURI + "\n\n";
+  location_low_issue = "location_low: " + elementIdentifier + "\n\n";
+  location_high_issue = "location_high: " + topLayer + "\n\n";
+  initiationWay_issue = "initiationWay: " + initiationWay + "\n\n";
+
+  // Add all github issue variables to the body.
+  var autoFillData = "## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+  var userDescription = "\n ## Description \n\n" + "Description of issue:\n\n Please attach a screenshot(or document) if possible.\n\n" ;
+  const additionalText = `
+  Steps to reproduce:
+
+  1. Go to the chat interface.
+  2. Type 'Hello' and press Enter.
+  3. Observe the error message.
+
+  Expected result: The system should respond with a greeting.
+
+  Actual result: An error message is displayed.
+  `;
+  title_issue = "# Bug Reprot \n "
+  body = title_issue + userDescription + additionalText  + autoFillData;
+  var artile_number = obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
+  var encodedTitle = encodeURIComponent("Improve article " + artile_number);
+  var encodedBody = encodeURIComponent(body);
+
+  var link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
+  // window.location.href = link;
+  window.open(link, '_blank');
+  //console.log(link);
+
 }
 
 //close the modal and reset value
