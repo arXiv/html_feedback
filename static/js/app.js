@@ -743,8 +743,7 @@ function reportDB(obj){
     }
   })
   .catch(function (error) {
-    console.log(error);
-    alert('Error occurs when submitting report');
+    console.error('An error occurred:', error);
   });
 }
 
@@ -777,7 +776,7 @@ function reportWithGitHub(obj) {
 
   Actual result: An error message is displayed.
   `;
-  title_issue = "# Bug Reprot \n "
+  title_issue = "# Bug Report \n "
   body = title_issue + userDescription + additionalText  + autoFillData;
   var artile_number = obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
   var encodedTitle = encodeURIComponent("Improve article " + artile_number);
@@ -791,6 +790,7 @@ function reportWithGitHub(obj) {
 
 //not yet finished
 function reportWithoutGitHub(obj){
+  //get the info
   article_url_issue = "**article_url**: " + obj.article_url + "\n\n";
   user_info_issue = "**user_info**: " + obj.user_info + "\n\n";
   reportTime_issue = "**reportTime**: " + obj.currentTime + "\n\n";
@@ -817,17 +817,39 @@ function reportWithoutGitHub(obj){
 
   Actual result: An error message is displayed.
   `;
-  title_issue = "# Bug Reprot \n "
+  title_issue = "# Bug Report \n "
   body = title_issue + userDescription + additionalText  + autoFillData;
-  var artile_number = obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
-  var encodedTitle = encodeURIComponent("Improve article " + artile_number);
-  var encodedBody = encodeURIComponent(body);
 
-  var link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
-  // window.location.href = link;
-  window.open(link, '_blank');
-  //console.log(link);
+  var title = "Improve article "+ obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
 
+  //need to update the token
+  var accessToken = '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';
+  var repository = 'yaxuanhuang0710/test';
+  var url = 'https://api.github.com/repos/' + repository + '/issues';
+  var headers = {
+      'Authorization': 'token ' + accessToken,
+      'Content-Type': 'application/json'
+  };
+  var data = {
+    title: title,
+    body: body
+  };
+  
+    fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(data)
+  })
+  .then(function(response) {
+      if (response.status === 201) {
+          //console.log('GitHub issue created successfully.');
+      } else {
+          alert('Error occurs when submitting report using GitHub.');
+      }
+  })
+  .catch(function(error) {
+      console.error('An error occurred:', error);
+  });
 }
 
 //close the modal and reset value
