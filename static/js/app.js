@@ -824,36 +824,17 @@ function reportWithoutGitHub(obj){
   //need to update the token
   const owner = "yaxuanhuang0710";
   const repo = "test"; 
-  var accessToken = '这里要换';
-  //var repository = 'yaxuanhuang0710/test';
-  //var url = 'https://api.github.com/repos/' + repository + '/issues';
+  var accessToken = 'Replace with Token';
   const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
   var headers = {
-      //'Authorization': 'token ' + accessToken,
-      //'Content-Type': 'application/json'
-      Authorization: `Bearer ${accessToken}`,
-      Accept: "application/vnd.github.v3+json",
+      'Authorization': 'Bearer '+accessToken,
+      'Accept': 'application/vnd.github.v3+json',
   };
   var data = {
     title: title,
     body: body
   };
   
-    /*fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(data)
-  })
-  .then(function(response) {
-      if (response.status === 201) {
-          //console.log('GitHub issue created successfully.');
-      } else {
-          alert('Error occurs when submitting report using GitHub.');
-      }
-  })
-  .catch(function(error) {
-      console.error('An error occurred:', error);
-  });*/
     fetch(url, {
       method: 'POST',
       headers: headers,
