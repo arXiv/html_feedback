@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Need to build the modal and the button first.
   addFloatingBanner();
   addBugReportForm();
-
 
   const modal = document.getElementById('myForm')
   const close = modal.querySelector('.btn-close')
@@ -13,19 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   var previousFocusElement;
   var initiationWay;
 
-  // Variables for github issue. Do not need screenshot and attachment.
-  // var article_url_issue = "**article_url**: \n\n";
-  // var reportTime_issue = "**reportTime**: \n\n";
-  // var browserInfo_issue = "browserInfo: \n\n";
-  // var description_issue = "description: \n\n";
-  // var conversion_report_issue = "conversion_report: \n\n";
-  // //var source_file_issue = "source_file: \n\n";
-  // var htmlText_issue = "htmlText: \n\n";
-  // var location_low_issue = "location_low: \n\n";
-  // var location_high_issue = "location_high: \n\n";
-  // var initiationWay_issue = "initiationWay: \n\n";
-
-  // Hide for Phase1.
   addSRButton();
   handleKeyDown();
   handleKeyUp();
@@ -35,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   handleCloseClick();
   handleClickOutsideModal();
 
+  // Create the Report Bug Form. Defualt is hidden.
   function addBugReportForm() {
     var theme = document.documentElement.getAttribute("data-theme");
     // Create the button element
@@ -195,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(modal);
   }
 
-  // Create SRButton that can open the report modal
+  // Create SRButton.
   function addSRButton() {
     // Get all the paragraphs in the document
     var contents = document.querySelectorAll('p, svg, figure, .ltx_title, .ltx_authors');
@@ -239,9 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('keydown', showButtons);
   }
 
-  
-
-  // Function to show the buttons when the specified key is pressed
+  // Show or hide the SR buttons.
   function showButtons(event) {
     var key = event.key;
     // Check if the pressed key is the specified key (in this case, 'b')
@@ -262,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  //add a floating banner
+  // Add floating banner.
   function addFloatingBanner() {
     // Create header element
     var header = document.createElement('header');
@@ -389,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.insertBefore(bodyMessageMobile, firstElementAfterHeader);
   };
 
-  // Code for handling key press to open/close modal
+  // Shortcut to open and close the report box modal.
   function handleKeyDown() {
     document.addEventListener('keydown', function (event) {
 
@@ -410,7 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Code for handling key press to open/close modal
+  // Keyboard detection. (Support other functions)
   function handleKeyUp() {
     document.addEventListener('keyup', function (event) {
       if (event.key === 'Meta' || event.key === 'Command') {
@@ -419,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  //click the button and open the modal
+  // Open modal when click right-bottom report button.
   function handleOpenFormClick() {
     document.getElementById('openForm').addEventListener("click", () => {
       modal.style.display = 'block';
@@ -427,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  //The highlight initiation way
+  // Hanlde the text selection.
   function handleHighlight() {
     document.addEventListener("mouseup", function (event) {
       if (event.target.id === "small-report-button") {
@@ -447,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  //get the info of selected text, reset the global variable's value
+  // Get the info of selected text.
   function generate_selected_text(selection, range) {
     if (selection.type === 'Range') {
       var anchorNode = selection.anchorNode;
@@ -474,7 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  //remove the previous small button
+  // Remove the previous small report button.
   function removePreviousButton() {
     const previousButtons = document.querySelectorAll(
       "button[id='small-report-button']"
@@ -484,7 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  //Generate the smallButton for bug report, click and scroll included
+  // Generate the small report button for bug report.
   function smallButton(selection) {
     //create small button
     const range = selection.getRangeAt(0);
@@ -527,6 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Handle submit form.
   function handleFormSubmit() {
     //users use screen reader click the hidden button
     document.getElementById('modal-submit-sr').addEventListener('click', function (event) {
@@ -622,7 +609,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  //report info to databse
+  //Report info to databse
   function reportDB(obj) {
     //add the info to form
     const formData = new FormData();
@@ -660,6 +647,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  // Hadnle github report issue when click visible the button(Report with GitHub).
   function reportWithGitHub(obj) {
     const article_url_issue = "**article_url**: " + obj.article_url + "\n\n";
     const user_info_issue = "**user_info**: " + obj.user_info + "\n\n";
@@ -685,6 +673,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.open(link, '_blank');
   }
 
+  // Handle github report issue when click invisible the button(Report without GitHub).
   async function reportWithoutGitHub(obj) {
     try {
       // Get the info
@@ -742,8 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
-  //close the modal and reset value
+  // Close the report box modal and reset value
   function handleCloseClick() {
     close.addEventListener('click', function (event) {
       modal.style.display = 'none';
@@ -757,6 +745,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Hanlde click outside the report box modal.
   function handleClickOutsideModal() {
     window.addEventListener('click', function (event) {
       if (event.target == modal) {
