@@ -32,7 +32,8 @@ def page():
         article_url = request.form['article_url']
         user_info = request.form['user_info']
         description = request.form['description']
-        screenshotImage = request.form['screenshotImage']
+        screenshotImage = None
+        attachment = None
         article_url=request.form['article_url']
         report_time=request.form['reportTime']
         browser_info=request.form['browserInfo']
@@ -45,10 +46,10 @@ def page():
         else:
             url = None
             
-        if 'attachment' in request.files:
-            attachment = request.files['attachment'].read()
-        else:
-            attachment = None
+        # if 'attachment' in request.files:
+        #     attachment = request.files['attachment'].read()
+        # else:
+        #     attachment = None
             
         if 'location_low' in request.form:
             location_low = request.form['location_low']
@@ -60,20 +61,31 @@ def page():
         else:
             location_high=None
             
-        if screenshotImage:
-            img_data = base64.b64decode(screenshotImage.split(',')[1])
-            img_io = BytesIO(img_data)
-            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high,initiationWay=initiationWay)
-        else:
-            new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high,initiationWay=initiationWay)
+        # if screenshotImage:
+        #     img_data = base64.b64decode(screenshotImage.split(',')[1])
+        #     img_io = BytesIO(img_data)
+        #     new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, screenshotImage=img_io.read(), selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high,initiationWay=initiationWay)
+        # else:
+        #     new_report = Report(article_url=article_url,user_info=user_info,description=description, attachment=attachment, selected_html=url,report_time=report_time,browser_info=browser_info,conversion_report=conversion_report,source_file=source_file, location_low=location_low, location_high=location_high,initiationWay=initiationWay)
+        new_report = Report(
+            article_url=article_url,
+            user_info=user_info,
+            description=description,
+            attachment=attachment,
+            screenshotImage=None,
+            selected_html=url,
+            report_time=report_time,
+            browser_info=browser_info,
+            conversion_report=conversion_report,
+            source_file=source_file,
+            location_low=location_low,
+            location_high=location_high,
+            initiationWay=initiationWay
+        )
         db.session.add(new_report)
         db.session.commit()
         return 'OK'
     return render_template('index.html')
-
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    return render_template('test.html')
 
 @app.route('/static/<path:path>')
 def serve_static(path):
