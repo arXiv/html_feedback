@@ -76,6 +76,7 @@ body {
   font-size: 28px;
   font-weight: bold;
 }
+
 .close:hover,
 .close:focus {
   color: black;
@@ -100,19 +101,19 @@ label {
 }
 
 [data-theme=dark] .form-control:focus {
-  color:  #c9d1d9;
+  color: #c9d1d9;
   background-color: #0d1117;
 }
 
 [data-theme=dark] .form-control {
   background-color: #0d1117;
-  color:#c9d1d9;
+  color: #c9d1d9;
   /* Add additional styles as needed */
 }
 
 [data-theme=dark] .btn.btn-outline-secondary#take-screenshot {
-  color:  #c9d1d9;
-  border-color:  #c9d1d9;
+  color: #c9d1d9;
+  border-color: #c9d1d9;
 }
 
 /* Submit button */
@@ -290,9 +291,9 @@ body:after {
   overflow: hidden;
 }
 
-#warningLabel{
+#warningLabel {
   color: #b31313;
-  background-color:rgb(250, 241, 230);
+  background-color: rgb(250, 241, 230);
   font-size: 12px;
   letter-spacing: 1px;
   padding: 1em;
