@@ -88,6 +88,11 @@ document.addEventListener("DOMContentLoaded", () => {
     var modalBody = document.createElement("div");
     modalBody.setAttribute("class", "modal-body");
   
+    const warningLabel = document.createElement("div");
+    warningLabel.id = "warningLabel";
+    warningLabel.setAttribute('class','form-text');
+    warningLabel.textContent = "Warning: Issue reports are not private. If you are an author submitting feedback about a pre-release submission, be advised that the contents of the bug report will be publicly available.";
+
     // Create the description input field
     var descriptionLabel = document.createElement("label");
     descriptionLabel.setAttribute("for", "description");
@@ -166,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
     buttonsContainer.setAttribute("class", "d-flex justify-content-between");
   
     // Append the elements to their respective parents
+    modalBody.appendChild(warningLabel);
     modalBody.appendChild(descriptionLabel);
     modalBody.appendChild(descriptionTextarea);
     // Hide for Phase1.

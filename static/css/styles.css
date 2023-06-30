@@ -289,3 +289,13 @@ body:after {
   height: 1px;
   overflow: hidden;
 }
+
+#warningLabel{
+  color: #b31313;
+  background-color:rgb(250, 241, 230);
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 1em;
+  border-radius: .5em;
+  margin: 1em auto;
+}
