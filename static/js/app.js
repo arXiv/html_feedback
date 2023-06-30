@@ -93,8 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
     descriptionTextarea.setAttribute("name", "description");
     descriptionTextarea.setAttribute("required", "required");
     descriptionTextarea.setAttribute("style", "height: 80px;");
-    descriptionTextarea.setAttribute("maxlength", "1000"); // Set the maximum length to 200 characters
-    descriptionTextarea.setAttribute("placeholder", "1000 characters maximum");
+    descriptionTextarea.setAttribute("maxlength", "500"); // Set the maximum length to 200 characters
+    descriptionTextarea.setAttribute("placeholder", "500 characters maximum");
 
     // Create the file input field
     var fileDiv = document.createElement("div");
@@ -194,8 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       var button = document.createElement("button");
-      button.setAttribute("class", "sr-only button");
-      button.style.display = "none";
+      //button.setAttribute("class", "sr-only button");
+      button.setAttribute("class", "button");
+      //button.style.display = "none";
       button.appendChild(document.createTextNode("Report Bug"));
 
       // handle the focus
@@ -218,7 +219,9 @@ document.addEventListener("DOMContentLoaded", () => {
         var htmlContent = content.innerHTML;
         
         // Print the HTML content and its location
-        saved_dataURI="data:text/html;charset=utf-8," + encodeURIComponent(htmlContent);
+        selectedHtml="data:text/html;charset=utf-8," + encodeURIComponent(htmlContent);
+        //console.log(selectedHtml);
+        console.log(selectedHtml);
         elementIdentifier=content.id;
       });
     });
@@ -670,6 +673,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const encodedBody = encodeURIComponent(body);
 
     const link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
+
     window.open(link, '_blank');
   }
 
