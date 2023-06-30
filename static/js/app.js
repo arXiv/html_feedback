@@ -199,15 +199,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function addSRButton() {
     // Get all the paragraphs in the document
     var contents = document.querySelectorAll('p, svg, figure, .ltx_title, .ltx_authors');
-
-    // Add a hidden button after each paragraph
+  
     // Add a hidden button after each paragraph
     contents.forEach(function (content) {
       if (content === contents[0] || content === contents[1] || content === contents[2] || content === contents[4] || content.classList.contains("logomark")) {
         return;
       }
       var button = document.createElement("button");
-      //button.setAttribute("class", "hidden-button");
       button.setAttribute("class", "sr-only button");
       button.style.display = "none";
       button.appendChild(document.createTextNode("Report Bug"));
@@ -216,23 +214,32 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("focus", function () {
         previousFocusElement = document.activeElement;
       });
-
+  
       // Insert the button after the paragraph
       content.parentNode.insertBefore(button, content.nextSibling);
-      // Add click event listener to the hidden button
+      
+      // Get the HTML content and its location when the button is clicked
       button.addEventListener("click", function (event) {
         event.preventDefault();
-        generate_whole_screenshot();
         modal.style.display = "block";
         modal.setAttribute("tabindex", "-1"); // Ensure the modal is focusable
         modal.focus();
         initiationWay = 'screen reader';
+        
+        // Get the HTML content
+        var htmlContent = content.innerHTML;
+        
+        // Print the HTML content and its location
+        saved_dataURI="data:text/html;charset=utf-8," + encodeURIComponent(htmlContent);
+        elementIdentifier=content.id;
       });
     });
-
+  
     // Add an event listener to the document to listen for keydown events
     document.addEventListener('keydown', showButtons);
   }
+
+  
 
   // Function to show the buttons when the specified key is pressed
   function showButtons(event) {
