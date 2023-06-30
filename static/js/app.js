@@ -1,50 +1,3 @@
-// Use console to find location.
-// Log the screen top and bottom location in Y and their ratios
-function logScreenPosition() {
-  // Get the current scroll position
-  var scrollY = window.scrollY || document.documentElement.scrollTop;
-
-  // Get the viewport dimensions
-  var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-  // Get the total document height
-  var documentHeight = Math.max(
-    document.body.scrollHeight, document.documentElement.scrollHeight,
-    document.body.offsetHeight, document.documentElement.offsetHeight,
-    document.body.clientHeight, document.documentElement.clientHeight
-  );
-
-  // Calculate the top and bottom screen location in Y 
-  var screenTopY = scrollY;
-  var screenBottomY = scrollY + viewportHeight;
-
-  // Convert the top and bottom locations to a ratio of screen height
-  var screenTopYRatio = screenTopY / documentHeight * 100;  // percentage
-  var screenBottomYRatio = screenBottomY / documentHeight * 100;  // percentage
-
-  // Log the screen top and bottom location in Y and their ratios
-  console.log("Screen Top Y:", screenTopY, "Ratio:", screenTopYRatio.toFixed(1) + "%");
-  console.log("Screen Bottom Y:", screenBottomY, "Ratio:", screenBottomYRatio.toFixed(1) + "%");
-}
-
-// Function to scroll to a specific ratio
-// scrollToRatio(50) 50 = 50%.
-function scrollToRatio(ratio) {
-  var documentHeight = Math.max(
-    document.body.scrollHeight, document.documentElement.scrollHeight,
-    document.body.offsetHeight, document.documentElement.offsetHeight,
-    document.body.clientHeight, document.documentElement.clientHeight
-  );
-  
-  var scrollToY = documentHeight * (ratio / 100);
-  
-  window.scrollTo({
-    top: scrollToY,
-    behavior: "smooth"  // optional, for smooth scrolling
-  });
-}
-
-
 document.addEventListener("DOMContentLoaded", () => {
   addFloatingBanner();
   addBugReportForm();
@@ -54,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const close = modal.querySelector('.btn-close')
 
   var isCommandKeyDown = false;
-  var saved_dataURI;
+  var selectedHtml;
   var elementIdentifier;
   var topLayer;
   var previousFocusElement;
@@ -81,15 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
   handleFormSubmit();
   handleCloseClick();
   handleClickOutsideModal();
-
-window.addEventListener('scroll', function() {
-  // Get the current scroll position
-  logScreenPosition()
-});
-
-
-
-
 
   function addBugReportForm() {
     var theme = document.documentElement.getAttribute("data-theme");
@@ -519,7 +463,7 @@ window.addEventListener('scroll', function() {
       container.appendChild(range.cloneContents());
       selectedHtml = container.innerHTML;
       // Use the selected text to generate the dataURI
-      saved_dataURI = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
+      selectedHtml = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
     }
   }
 
@@ -682,7 +626,7 @@ window.addEventListener('scroll', function() {
     formData.append('conversion_report', obj.conversion_report);
     formData.append('source_file', obj.source_file);
     formData.append('description', obj.data_description);
-    formData.append('url', saved_dataURI);
+    formData.append('selectedHtml', selectedHtml);
     formData.append('location_low', elementIdentifier);
     formData.append('location_high', topLayer);
     formData.append('initiationWay', initiationWay);
@@ -717,7 +661,7 @@ window.addEventListener('scroll', function() {
     const conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
     const source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
     const description_issue = "**description**: " + obj.data_description + "\n\n";
-    const htmlText_issue = "**htmlText**: " + saved_dataURI + "\n\n"; // Make sure saved_dataURI is defined
+    const htmlText_issue = "**htmlText**: " + selectedHtml + "\n\n"; // Make sure saved_dataURI is defined
     const location_low_issue = "**location_low**: " + elementIdentifier + "\n\n"; // Make sure elementIdentifier is defined
     const location_high_issue = "**location_high**: " + topLayer + "\n\n"; // Make sure topLayer is defined
     const initiationWay_issue = "**initiationWay**: " + initiationWay + "\n\n"; // Make sure initiationWay is defined
@@ -744,7 +688,7 @@ window.addEventListener('scroll', function() {
       const conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
       const source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
       const description_issue = "**description**: " + obj.data_description + "\n\n";
-      const htmlText_issue = "**htmlText**: " + saved_dataURI + "\n\n";
+      const htmlText_issue = "**htmlText**: " + selectedHtml + "\n\n";
       const location_low_issue = "**location_low**: " + elementIdentifier + "\n\n";
       const location_high_issue = "**location_high**: " + topLayer + "\n\n";
       const initiationWay_issue = "**initiationWay**: " + initiationWay + "\n\n";

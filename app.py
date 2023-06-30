@@ -24,7 +24,7 @@ class Report(db.Model):
     selected_html = db.Column(db.String())
     location_low=db.Column(db.String(100))
     location_high=db.Column(db.String(100))
-    initiationWay=db.Column(db.String(20))
+    initiation_way=db.Column(db.String(20))
 
 @app.route('/', methods=['GET', 'POST'])
 def page():
@@ -32,19 +32,18 @@ def page():
         article_url = request.form['article_url']
         user_info = request.form['user_info']
         description = request.form['description']
-        screenshotImage = None
+        # screenshotImage = None
         attachment = None
-        article_url=request.form['article_url']
-        report_time=request.form['reportTime']
-        browser_info=request.form['browserInfo']
-        conversion_report=request.form['conversion_report']
-        source_file=request.form['source_file']
-        initiationWay=request.form['initiationWay']
+        report_time = request.form['reportTime']
+        browser_info = request.form['browserInfo']
+        conversion_report = request.form['conversion_report']
+        source_file = request.form['source_file']
+        initiation_way = request.form['initiationWay']
 
-        if 'url' in request.form:   
-            url = request.form['url']
+        if 'selectedHtml' in request.form:   
+            selected_html = request.form['selectedHtml']
         else:
-            url = None
+            selected_html = None
             
         # if 'attachment' in request.files:
         #     attachment = request.files['attachment'].read()
@@ -54,12 +53,12 @@ def page():
         if 'location_low' in request.form:
             location_low = request.form['location_low']
         else:
-            location_low=None
+            location_low = None
             
         if 'location_high' in request.form:
-            location_high=request.form['location_high']
+            location_high = request.form['location_high']
         else:
-            location_high=None
+            location_high = None
             
         # if screenshotImage:
         #     img_data = base64.b64decode(screenshotImage.split(',')[1])
@@ -73,19 +72,20 @@ def page():
             description=description,
             attachment=attachment,
             screenshotImage=None,
-            selected_html=url,
+            selected_html=selected_html,
             report_time=report_time,
             browser_info=browser_info,
             conversion_report=conversion_report,
             source_file=source_file,
             location_low=location_low,
             location_high=location_high,
-            initiationWay=initiationWay
+            initiation_way=initiation_way
         )
         db.session.add(new_report)
         db.session.commit()
         return 'OK'
     return render_template('index.html')
+
 
 @app.route('/static/<path:path>')
 def serve_static(path):
