@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create SRButton.
   function addSRButton() {
     // Get all the paragraphs in the document
-    var contents = document.querySelectorAll('p, svg, figure, .ltx_title, .ltx_authors');
+    var contents = document.querySelectorAll('p, svg, figure, .ltx_title, .ltx_authors,.ltx_eqn_row');
   
     // Add a hidden button after each paragraph
     contents.forEach(function (content) {
@@ -194,9 +194,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       var button = document.createElement("button");
-      //button.setAttribute("class", "sr-only button");
-      button.setAttribute("class", "button");
-      //button.style.display = "none";
+      button.setAttribute("class", "sr-only button");
+      button.style.display = "none";
       button.appendChild(document.createTextNode("Report Bug"));
 
       // handle the focus
@@ -220,8 +219,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Print the HTML content and its location
         selectedHtml="data:text/html;charset=utf-8," + encodeURIComponent(htmlContent);
-        //console.log(selectedHtml);
-        console.log(selectedHtml);
         elementIdentifier=content.id;
       });
     });
@@ -659,21 +656,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
     const source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
     const description_issue = "**description**: " + obj.data_description + "\n\n";
-    const htmlText_issue = "**htmlText**: " + selectedHtml + "\n\n"; // Make sure saved_dataURI is defined
+    var htmlText_issue = "**htmlText**: " + selectedHtml + "\n\n"; // Make sure saved_dataURI is defined
     const location_low_issue = "**location_low**: " + elementIdentifier + "\n\n"; // Make sure elementIdentifier is defined
     const location_high_issue = "**location_high**: " + topLayer + "\n\n"; // Make sure topLayer is defined
     const initiationWay_issue = "**initiationWay**: " + initiationWay + "\n\n"; // Make sure initiationWay is defined
   
     // Add all GitHub issue variables to the body.
-    const autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+    var autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
     const userDescription = "Feel free attach a screenshot (or document) link below:.\n\n";
-    const body = userDescription + autoFillData;
+    var body = userDescription + autoFillData;
     const article_number = obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
     const encodedTitle = encodeURIComponent("Improve article " + article_number);
-    const encodedBody = encodeURIComponent(body);
+    var encodedBody = encodeURIComponent(body);
 
-    const link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
+    var link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
+    //console.log("previous link length",link.length);
 
+    if(link.length>=8000){
+      htmlText_issue= "**htmlText**: " + selectedHtml.substring(0, 4000) + "\n\n";
+      //console.log("html_?length",htmlText_issue.length);
+      autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+      body = userDescription + autoFillData;
+      encodedBody=encodeURIComponent(body);
+      //console.log("auto_fill",autoFillData.length);
+      //console.log("body",body.length);
+
+      link="https://github.com/arXiv/html_feedback/issues/newassignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
+    }
+    //console.log("link length now",link.length);
     window.open(link, '_blank');
   }
 
