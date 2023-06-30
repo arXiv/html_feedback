@@ -659,46 +659,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  //pre-populate the info to github issue
-  // function reportWithGitHub(obj) {
-  //   //document.getElementById('notification').style = 'display: block';
-  //   article_url_issue = "**article_url**: " + obj.article_url + "\n\n";
-  //   user_info_issue = "**user_info**: " + obj.user_info + "\n\n";
-  //   reportTime_issue = "**reportTime**: " + obj.currentTime + "\n\n";
-  //   browserInfo_issue = "**browserInfo**: " + obj.browserInfo + "\n\n";
-  //   conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
-  //   source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
-  //   description_issue = "**description**: " + obj.data_description + "\n\n";
-  //   htmlText_issue = "htmlText: " + saved_dataURI + "\n\n";
-  //   location_low_issue = "location_low: " + elementIdentifier + "\n\n";
-  //   location_high_issue = "location_high: " + topLayer + "\n\n";
-  //   initiationWay_issue = "initiationWay: " + initiationWay + "\n\n";
-
-  //   // Add all github issue variables to the body.
-  //   var autoFillData = "## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
-  //   var userDescription = "\n ## Description \n\n" + "Description of issue:\n\n Please attach a screenshot(or document) if possible.\n\n" ;
-  //   const additionalText = `
-  //   Steps to reproduce:
-
-  //   1. Go to the chat interface.
-  //   2. Type 'Hello' and press Enter.
-  //   3. Observe the error message.
-
-  //   Expected result: The system should respond with a greeting.
-
-  //   Actual result: An error message is displayed.
-  //   `;
-  //   title_issue = "# Bug Report \n "
-  //   body = title_issue + userDescription + additionalText  + autoFillData;
-  //   var artile_number = obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
-  //   var encodedTitle = encodeURIComponent("Improve article " + artile_number);
-  //   var encodedBody = encodeURIComponent(body);
-
-  //   var link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
-  //   // window.location.href = link;
-  //   window.open(link, '_blank');
-  //   //console.log(link);
-  // }
   function reportWithGitHub(obj) {
     const article_url_issue = "**article_url**: " + obj.article_url + "\n\n";
     const user_info_issue = "**user_info**: " + obj.user_info + "\n\n";
@@ -707,27 +667,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
     const source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
     const description_issue = "**description**: " + obj.data_description + "\n\n";
-    const htmlText_issue = "htmlText: " + saved_dataURI + "\n\n"; // Make sure saved_dataURI is defined
-    const location_low_issue = "location_low: " + elementIdentifier + "\n\n"; // Make sure elementIdentifier is defined
-    const location_high_issue = "location_high: " + topLayer + "\n\n"; // Make sure topLayer is defined
-    const initiationWay_issue = "initiationWay: " + initiationWay + "\n\n"; // Make sure initiationWay is defined
-
+    const htmlText_issue = "**htmlText**: " + saved_dataURI + "\n\n"; // Make sure saved_dataURI is defined
+    const location_low_issue = "**location_low**: " + elementIdentifier + "\n\n"; // Make sure elementIdentifier is defined
+    const location_high_issue = "**location_high**: " + topLayer + "\n\n"; // Make sure topLayer is defined
+    const initiationWay_issue = "**initiationWay**: " + initiationWay + "\n\n"; // Make sure initiationWay is defined
+  
     // Add all GitHub issue variables to the body.
-    const autoFillData = "## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
-    const userDescription = "\n ## Description \n\n" + "Description of the issue:\n\n Please attach a screenshot (or document) if possible.\n\n";
-    const additionalText = `
-      Steps to reproduce:
-  
-      1. Go to the chat interface.
-      2. Type 'Hello' and press Enter.
-      3. Observe the error message.
-  
-      Expected result: The system should respond with a greeting.
-  
-      Actual result: An error message is displayed.
-    `;
-    const title_issue = "# Bug Report \n ";
-    const body = title_issue + userDescription + additionalText + autoFillData;
+    const autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+    const userDescription = "Feel free attach a screenshot (or document) link below:.\n\n";
+    const body = userDescription + autoFillData;
     const article_number = obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
     const encodedTitle = encodeURIComponent("Improve article " + article_number);
     const encodedBody = encodeURIComponent(body);
@@ -736,70 +684,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.open(link, '_blank');
   }
 
-
-  //not yet finished
-  // function reportWithoutGitHub(obj){
-  //   //get the info
-  //   article_url_issue = "**article_url**: " + obj.article_url + "\n\n";
-  //   user_info_issue = "**user_info**: " + obj.user_info + "\n\n";
-  //   reportTime_issue = "**reportTime**: " + obj.currentTime + "\n\n";
-  //   browserInfo_issue = "**browserInfo**: " + obj.browserInfo + "\n\n";
-  //   conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
-  //   source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
-  //   description_issue = "**description**: " + obj.data_description + "\n\n";
-  //   htmlText_issue = "htmlText: " + saved_dataURI + "\n\n";
-  //   location_low_issue = "location_low: " + elementIdentifier + "\n\n";
-  //   location_high_issue = "location_high: " + topLayer + "\n\n";
-  //   initiationWay_issue = "initiationWay: " + initiationWay + "\n\n";
-
-  //   // Add all github issue variables to the body.
-  //   var autoFillData = "## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
-  //   var userDescription = "\n ## Description \n\n" + "Description of issue:\n\n Please attach a screenshot(or document) if possible.\n\n" ;
-  //   const additionalText = `
-  //   Steps to reproduce:
-
-  //   1. Go to the chat interface.
-  //   2. Type 'Hello' and press Enter.
-  //   3. Observe the error message.
-
-  //   Expected result: The system should respond with a greeting.
-
-  //   Actual result: An error message is displayed.
-  //   `;
-  //   title_issue = "# Bug Report \n "
-  //   body = title_issue + userDescription + additionalText  + autoFillData;
-  //   var title = "Improve article "+ obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
-
-  //   //need to update the token
-  //   const owner = "yaxuanhuang0710";
-  //   const repo = "test"; 
-  //   var accessToken = 'Replace with Token';
-  //   const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
-  //   var headers = {
-  //       'Authorization': 'Bearer '+accessToken,
-  //       'Accept': 'application/vnd.github.v3+json',
-  //   };
-  //   var data = {
-  //     title: title,
-  //     body: body
-  //   };
-
-  //     fetch(url, {
-  //       method: 'POST',
-  //       headers: headers,
-  //       body: JSON.stringify(data)
-  //   })
-  //   .then(function(response) {
-  //       if (response.status === 201) {
-  //           //console.log('GitHub issue created successfully.');
-  //       } else {
-  //           alert('Error occurs when submitting report using GitHub.');
-  //       }
-  //   })
-  //   .catch(function(error) {
-  //       console.error('An error occurred:', error);
-  //   });
-  // }
   async function reportWithoutGitHub(obj) {
     try {
       // Get the info
@@ -810,27 +694,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const conversion_report_issue = "**conversion_report**: " + obj.conversion_report + "\n\n";
       const source_file_issue = "**source_file**: " + obj.source_file + "\n\n";
       const description_issue = "**description**: " + obj.data_description + "\n\n";
-      const htmlText_issue = "htmlText: " + saved_dataURI + "\n\n";
-      const location_low_issue = "location_low: " + elementIdentifier + "\n\n";
-      const location_high_issue = "location_high: " + topLayer + "\n\n";
-      const initiationWay_issue = "initiationWay: " + initiationWay + "\n\n";
-
+      const htmlText_issue = "**htmlText**: " + saved_dataURI + "\n\n";
+      const location_low_issue = "**location_low**: " + elementIdentifier + "\n\n";
+      const location_high_issue = "**location_high**: " + topLayer + "\n\n";
+      const initiationWay_issue = "**initiationWay**: " + initiationWay + "\n\n";
+  
       // Add all GitHub issue variables to the body.
-      const autoFillData = "## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
-      const userDescription = "\n ## Description \n\n" + "Description of issue:\n\n Please attach a screenshot (or document) if possible.\n\n";
-      const additionalText = `
-      Steps to reproduce:
-  
-      1. Go to the chat interface.
-      2. Type 'Hello' and press Enter.
-      3. Observe the error message.
-  
-      Expected result: The system should respond with a greeting.
-  
-      Actual result: An error message is displayed.
-      `;
+      const autoFillData = "\n## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+      const userDescription = "\n## Description \n\n" + "Description of issue:\n\n Please attach a screenshot (or document) if possible.\n\n";
       const title_issue = "# Bug Report \n ";
-      const body = title_issue + userDescription + additionalText + autoFillData;
+      const body = title_issue + userDescription + autoFillData;
       const title = "Improve article " + obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
 
       // Need to update the token
