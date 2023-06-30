@@ -239,6 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var key = event.key;
     // Check if the pressed key is the specified key (in this case, 'b')
     if (event.shiftKey && (key === 'b' || key === 'B')) {
+      event.preventDefault();
       // Get all the hidden buttons
       // var buttons = document.getElementsByClassName('hidden-button');
       var buttons = document.getElementsByClassName('sr-only button');
@@ -384,26 +385,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // Code for handling key press to open/close modal
   function handleKeyDown() {
     document.addEventListener('keydown', function (event) {
-      // if (event.key.toLowerCase() === 'p') {
-      //   //const modal = document.getElementById('myForm')
-      //   modal.style.display = 'block';
-      // }
-
-      // if (event.key.toLowerCase() === 'i') {
-      //   //const modal = document.getElementById('myForm')
-      //   modal.style.display = 'none';
-      // }
 
       if (event.key === 'Meta' || event.key === 'Command') {
         isCommandKeyDown = true;
       }
 
-      if (isCommandKeyDown && (event.key === '/' || event.key === '?')) {
+      if (isCommandKeyDown && (event.key === '{' || event.key === '[')) {
+        event.preventDefault();
         modal.style.display = 'block';
         initiationWay = 'shortcut';
       }
 
       if (isCommandKeyDown && (event.key === '}' || event.key === ']')) {
+        event.preventDefault();
         modal.style.display = 'none';
       }
     });
