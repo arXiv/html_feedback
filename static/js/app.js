@@ -1,3 +1,50 @@
+// Use console to find location.
+// Log the screen top and bottom location in Y and their ratios
+function logScreenPosition() {
+  // Get the current scroll position
+  var scrollY = window.scrollY || document.documentElement.scrollTop;
+
+  // Get the viewport dimensions
+  var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+  // Get the total document height
+  var documentHeight = Math.max(
+    document.body.scrollHeight, document.documentElement.scrollHeight,
+    document.body.offsetHeight, document.documentElement.offsetHeight,
+    document.body.clientHeight, document.documentElement.clientHeight
+  );
+
+  // Calculate the top and bottom screen location in Y 
+  var screenTopY = scrollY;
+  var screenBottomY = scrollY + viewportHeight;
+
+  // Convert the top and bottom locations to a ratio of screen height
+  var screenTopYRatio = screenTopY / documentHeight * 100;  // percentage
+  var screenBottomYRatio = screenBottomY / documentHeight * 100;  // percentage
+
+  // Log the screen top and bottom location in Y and their ratios
+  console.log("Screen Top Y:", screenTopY, "Ratio:", screenTopYRatio.toFixed(1) + "%");
+  console.log("Screen Bottom Y:", screenBottomY, "Ratio:", screenBottomYRatio.toFixed(1) + "%");
+}
+
+// Function to scroll to a specific ratio
+// scrollToRatio(50) 50 = 50%.
+function scrollToRatio(ratio) {
+  var documentHeight = Math.max(
+    document.body.scrollHeight, document.documentElement.scrollHeight,
+    document.body.offsetHeight, document.documentElement.offsetHeight,
+    document.body.clientHeight, document.documentElement.clientHeight
+  );
+  
+  var scrollToY = documentHeight * (ratio / 100);
+  
+  window.scrollTo({
+    top: scrollToY,
+    behavior: "smooth"  // optional, for smooth scrolling
+  });
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   addFloatingBanner();
   addBugReportForm();
@@ -34,6 +81,15 @@ document.addEventListener("DOMContentLoaded", () => {
   handleFormSubmit();
   handleCloseClick();
   handleClickOutsideModal();
+
+window.addEventListener('scroll', function() {
+  // Get the current scroll position
+  logScreenPosition()
+});
+
+
+
+
 
   function addBugReportForm() {
     var theme = document.documentElement.getAttribute("data-theme");
