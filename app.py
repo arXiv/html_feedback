@@ -25,6 +25,7 @@ class Report(db.Model):
     location_low=db.Column(db.String(100))
     location_high=db.Column(db.String(100))
     initiation_way=db.Column(db.String(20))
+    unique_id=db.Column(db.String(30))
 
 @app.route('/', methods=['GET', 'POST'])
 def page():
@@ -39,6 +40,7 @@ def page():
         conversion_report = request.form['conversion_report']
         source_file = request.form['source_file']
         initiation_way = request.form['initiationWay']
+        unique_id=request.form['uniqueId']
 
         if 'selectedHtml' in request.form:   
             selected_html = request.form['selectedHtml']
@@ -79,7 +81,8 @@ def page():
             source_file=source_file,
             location_low=location_low,
             location_high=location_high,
-            initiation_way=initiation_way
+            initiation_way=initiation_way,
+            unique_id=unique_id
         )
         db.session.add(new_report)
         db.session.commit()

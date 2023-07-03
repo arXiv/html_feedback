@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     var srSubmit = document.createElement("button");
     srSubmit.setAttribute("type", "submit");
-    //srSubmit.setAttribute("class", "sr-only button");
+    srSubmit.setAttribute("class", "sr-only button");
     srSubmit.setAttribute("id", "modal-submit-sr");
     srSubmit.appendChild(document.createTextNode("Submit without Github"));
 
@@ -541,6 +541,10 @@ document.addEventListener("DOMContentLoaded", () => {
       //location-high
       const data_description = document.getElementById("description").value;
 
+      const timestamp = Date.now(); // Current timestamp in milliseconds
+      const randomString = Math.random().toString(36).substring(3, 7); // Random string of 4 characters
+      const uniqueId=`${timestamp}_${randomString}`;
+
       reportDB({
         article_url,
         user_info,
@@ -548,7 +552,8 @@ document.addEventListener("DOMContentLoaded", () => {
         browserInfo,
         conversion_report,
         source_file,
-        data_description
+        data_description,
+        uniqueId
       });
       reportWithoutGitHub({
         article_url,
@@ -557,7 +562,8 @@ document.addEventListener("DOMContentLoaded", () => {
         browserInfo,
         conversion_report,
         source_file,
-        data_description
+        data_description,
+        uniqueId
       });
     });
 
@@ -588,6 +594,11 @@ document.addEventListener("DOMContentLoaded", () => {
       //location-high
       const data_description = document.getElementById("description").value;
 
+      const timestamp = Date.now(); // Current timestamp in milliseconds
+      const randomString = Math.random().toString(36).substring(3, 7); // Random string of 4 characters
+      const uniqueId=`${timestamp}_${randomString}`;
+      console.log("uniqueId",uniqueId);
+
       reportDB({
         article_url,
         user_info,
@@ -595,7 +606,8 @@ document.addEventListener("DOMContentLoaded", () => {
         browserInfo,
         conversion_report,
         source_file,
-        data_description
+        data_description,
+        uniqueId
       });
       reportWithGitHub({
         article_url,
@@ -604,7 +616,8 @@ document.addEventListener("DOMContentLoaded", () => {
         browserInfo,
         conversion_report,
         source_file,
-        data_description
+        data_description,
+        uniqueId
       });
     });
   }
@@ -624,6 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formData.append('location_low', elementIdentifier);
     formData.append('location_high', topLayer);
     formData.append('initiationWay', initiationWay);
+    formData.append('uniqueId',obj.uniqueId);
 
     //post
     fetch('/', {
@@ -660,9 +674,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const location_low_issue = "**location_low**: " + elementIdentifier + "\n\n"; // Make sure elementIdentifier is defined
     const location_high_issue = "**location_high**: " + topLayer + "\n\n"; // Make sure topLayer is defined
     const initiationWay_issue = "**initiationWay**: " + initiationWay + "\n\n"; // Make sure initiationWay is defined
+    const uniqueId_issue= "**uniqueId**: " + obj.uniqueId + "\n\n";
   
     // Add all GitHub issue variables to the body.
-    var autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+    var autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue+uniqueId_issue;
     const userDescription = "Feel free attach a screenshot (or document) link below:.\n\n";
     var body = userDescription + autoFillData;
     const article_number = obj.article_url.substring(obj.article_url.lastIndexOf('/') + 1);
@@ -675,7 +690,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if(link.length>=8000){
       htmlText_issue= "**htmlText**: " + selectedHtml.substring(0, 4000) + "\n\n";
       //console.log("html_?length",htmlText_issue.length);
-      autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+      autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue+uniqueId_issue;
       body = userDescription + autoFillData;
       encodedBody=encodeURIComponent(body);
       //console.log("auto_fill",autoFillData.length);
@@ -702,9 +717,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const location_low_issue = "**location_low**: " + elementIdentifier + "\n\n";
       const location_high_issue = "**location_high**: " + topLayer + "\n\n";
       const initiationWay_issue = "**initiationWay**: " + initiationWay + "\n\n";
+      const uniqueId_issue= "**uniqueId**: " + obj.uniqueId + "\n\n";
   
       // Add all GitHub issue variables to the body.
-      const autoFillData = "\n## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue;
+      const autoFillData = "\n## Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue+uniqueId_issue;
       const userDescription = "\n## Description \n\n" + "Description of issue:\n\n Please attach a screenshot (or document) if possible.\n\n";
       const title_issue = "# Bug Report \n ";
       const body = title_issue + userDescription + autoFillData;
@@ -713,7 +729,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Need to update the token
       const owner = "yaxuanhuang0710";
       const repo = "test";
-      const accessToken = 'Replace with Token';
+      //const accessToken = 'Replace with Token';
+      const accessToken='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'
       const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
       const headers = {
         'Authorization': 'Bearer ' + accessToken,
