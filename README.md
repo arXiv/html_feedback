@@ -45,7 +45,7 @@ The website will defualt running on http://127.0.0.1:8080
 4. In Report box, there is a description box. After click submit button, we will create a new tab to GitHub Issue. All the infomation will be auto filled, and also we will send data back to database as well.
 5. Report Data
    - Article_url: url for Ar5iv article
-   - User_info: Now we set default to some value.Designed to contain the user_id and the contact info.eg. account:yc2455 contact:@cornll.edu  
+   - User_info: Now we set default to some value.Designed to contain the user_id and the contact info.eg. account:yc2455 contact:@cornell.edu  
    - report time: time that the report generated. eg. Thu Apr 27 2023 23:29:13 GMT-0400 (Eastern Daylight Time)
    - Browser_info: the user's browser info, e.g. Chrome/112.0.0.0,Chrome,112.0.0.0
    - Description: The description that users write in the Report Box. 
@@ -58,3 +58,18 @@ The website will defualt running on http://127.0.0.1:8080
 
 ## CSS and HTML
 
+In index.html, these files were added:
+1. `<script src="{{ url_for('static', filename='js/app.js') }}"></script>`
+   - This script is sourced from the app.js file located in the js directory within the project's static folder. It is a JavaScript file that contains code specific to the features related to the error report.
+2. `<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>`
+   - This script is sourced from an external URL provided by the CDN (Content Delivery Network) hosted on cdnjs.cloudflare.com. It is the minified version (1.3.3) of the HTML2Canvas library, which is a JavaScript library that allows capturing screenshots or rendering HTML elements into canvas.
+3. `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">`
+   - This link references an external CSS file hosted on cdn.jsdelivr.net. It is the minified version (5.3.0) of the Bootstrap CSS framework which provides pre-designed styles and components to help with responsive web development. We used Bootstrap for many components.
+4. `<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>`
+   - This script includes the necessary JavaScript plugins required by Bootstrap components to function properly.
+5. `<link rel="stylesheet" href="{{ url_for('static', filename='css/ar5iv.0.7.6.min.css') }}" />`
+   - This link references a CSS file named ar5iv.0.7.6.min.css located in the css directory within the project's static folder. It is a CSS file that arXiv has been using before. We used it to follow the design style of arXiv.
+6. `<link rel="stylesheet" href="{{ url_for('static', filename='css/ar5iv-site.0.2.1.css') }}" />`
+   - This link references a CSS file named ar5iv-site.0.2.1.css located in the css directory within the project's static folder. It is a CSS file that arXiv has been using before. We used it to follow the design style of arXiv.
+7. `<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />`
+   - This link references a CSS file named styles.css located in the css directory within the project's static folder. It is likely a CSS file that contains additional styles specific to the project or application that we have written.
