@@ -255,8 +255,9 @@ function hideSmallButton (smallReportButton) {
 
 //submit to the backend, next step: finish
 function submitBugReport (e) {
+    e.preventDefault();
     //document.getElementById('notification').style = 'display: block';
-    const formData = new FormData();
+    const issueData = {};
 
     // Canonical URL
     ARXIV_ABS_PATH = 'https://arxiv.org/abs/';
@@ -305,24 +306,31 @@ function submitBugReport (e) {
     
     const dataDescription = document.getElementById('description').value;
 
+    const uniqueId = window.crypto.randomUUID();
+
     // add to the form data
-    formData.append('template', 'bug_report.md'); // TODO: Change this to a template with fields matching the ones below
-    formData.append('canonicalURL', canonicalURL);
-    formData.append('conversionURL', window.location.origin + window.location.pathname);
-    formData.append('dataURI', dataURI);
-    formData.append('reportTime', currentTime);
-    formData.append('browserInfo', browserInfo)
-    formData.append('description', dataDescription);
-    formData.append('locationLow', elementIdentifier);
-    formData.append('locationHigh', topLayer)
+    // issueData['template'] = 'bug_report.md'); // TODO: Change this to a template with fields matching the ones below
+    issueData['uniqueId'] = uniqueId;
+    issueData['canonicalURL'] = canonicalURL;
+    issueData['conversionURL'] = window.location.origin + window.location.pathname;
+    issueData['dataURI'] = dataURI;
+    issueData['reportTime'] = currentTime;
+    issueData['browserInfo'] = browserInfo;
+    issueData['description'] = dataDescription;
+    issueData['locationLow'] = elementIdentifier;
+    issueData['locationHigh'] = topLayer;
+
+
+    form = new FormData();
+    form.append('template', 'bug_report.md');
+    form.append('title', `${arxivIdv}:${uniqueId}`)
+    form.append('body', makeGithubBody(issueData));
 
     const GITHUB_BASE_URL = 'https://github.com/arXiv/html_feedback/issues/new?' 
-    const queryString = new URLSearchParams(formData).toString()
+    const queryString = new URLSearchParams(form).toString()
     const link = GITHUB_BASE_URL + queryString;
 
     window.open(link, '_blank');
-
-    e.preventDefault();
 }
 
 function handleClickOutsideModal(e, modal) {
@@ -330,6 +338,21 @@ function handleClickOutsideModal(e, modal) {
         modal.style.display = 'none';
 }
 
+
+function makeGithubBody (issueData) {
+    let body = "";
+    body += `### Issue ID: ${issueData.uniqueId}\n\n`;
+    body += `### Article URL: ${issueData.canonicalURL}\n\n`;
+    body += `### HTML URL: ${issueData.conversionURL}\n\n`;
+    body += `### Data URI: ${issueData.dataURI}\n\n`;
+    body += `### Report Time: ${issueData.reportTime}\n\n`;
+    body += `### Browser Info: ${issueData.browserInfo}\n\n`;
+    body += `### Location Low: ${issueData.locationLow}\n\n`;
+    body += `### Location High: ${issueData.locationHigh}\n\n`;
+    body += `### Description\n ${issueData.description}`;
+    
+    return body;
+}
 
 // RUN THIS CODE ON INITIALIZE
 detectColorScheme();
@@ -342,13 +365,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.onkeydown = (e) => handleKeyDown(e, modal, reportButtons);
     document.onclick = (e) => handleClickOutsideModal(e, modal);
     document.onmouseup = (e) => handleMouseUp(e, smallReportButton);
-    // const close = modal.querySelector('.btn-close')
 
     // Handle the window scroll event
-    window.onscroll = () => {
-        if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40)
-            hideSmallButton(smallReportButton);
-    }
+    window.onscroll = () => showSmallButton(smallReportButton);
 
     document.getElementById('myFormContent').onsubmit = submitBugReport;
 });
