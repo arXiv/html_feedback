@@ -518,6 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //users use screen reader click the hidden button
     document.getElementById('modal-submit-sr').addEventListener('click', function (event) {
       event.preventDefault(); // Prevent the form from submitting
+      removePreviousButton();
       const metaElement = document.querySelector('meta[property="og:url"]');
       const article_url = metaElement ? metaElement.getAttribute('content') : null;
       const user_info = "account:test contact:test@cornll.edu "
@@ -765,6 +766,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Close the report box modal and reset value
   function handleCloseClick() {
     close.addEventListener('click', function (event) {
+      removePreviousButton();
       modal.style.display = 'none';
       if (previousFocusElement) {
         previousFocusElement.focus();
