@@ -1,3 +1,5 @@
+var selectionAnchorNode;
+
 function detectColorScheme() {
     var theme="light";
     var current_theme = localStorage.getItem("ar5iv_theme");
@@ -128,7 +130,10 @@ function addBugReportForm() {
     document.body.appendChild(button);
     document.body.appendChild(modal);
 
-    button.onclick = (e) => showModal(modal, 'button');
+    button.onclick = (e) => {
+        currentAnchorNode = null;
+        showModal(modal, 'button');
+    }
     closeButton.onclick = (e) => hideModal(modal);
 
     return modal;
@@ -206,8 +211,10 @@ const handleKeyDown = (e, modal, buttons) => {
 function handleMouseUp (e, smallButton) {
         if (e.target.id === "small-report-button") 
             return;
-        if (!window.getSelection().isCollapsed)
+        if (!window.getSelection().isCollapsed) {
+            currentAnchorNode = window.getSelection().anchorNode;
             showSmallButton(smallButton);
+        }
         else hideSmallButton(smallButton);
 }
 
@@ -277,17 +284,17 @@ function submitBugReport (e) {
     const browserInfo = browserName + '/' + browserVersion;
 
     // Relevant Selection
-    const selection = window.getSelection();
     let elementIdentifier = 'Unknown';
     let topLayer = 'Unknown';
     let dataURI = 'Unknown';
-    if (!selection.isCollapsed) {
-        const anchorNode = selection.anchorNode;
-        const parentNode = anchorNode.parentNode;
+    console.log(currentAnchorNode);
+    if (currentAnchorNode !== null) {
+        const parentNode = currentAnchorNode.parentNode;
         const id = parentNode.id;
         const classList = parentNode.classList;
         //if there is no id, than use class to identify
         elementIdentifier = id || classList[0] || 'Unknown';
+        console.log(elementIdentifier);
 
         //get the topLayer of id
         if (elementIdentifier.match(/^S\d/)) {
@@ -295,13 +302,6 @@ function submitBugReport (e) {
         } else {
             topLayer = id ? id.split('.')[0] : classList[0];
         }
-
-        // Prepare for selected HTML.
-        const container = document.createElement('div');
-        container.appendChild(range.cloneContents());
-        const selectedHtml = container.innerHTML;
-        // Use the selected text to generate the dataURI
-        dataURI = "data:text/html;charset=utf-8," + encodeURIComponent(selectedHtml);
     }
     
     const dataDescription = document.getElementById('description').value;
@@ -313,7 +313,6 @@ function submitBugReport (e) {
     issueData['uniqueId'] = uniqueId;
     issueData['canonicalURL'] = canonicalURL;
     issueData['conversionURL'] = window.location.origin + window.location.pathname;
-    issueData['dataURI'] = dataURI;
     issueData['reportTime'] = currentTime;
     issueData['browserInfo'] = browserInfo;
     issueData['description'] = dataDescription;
@@ -344,7 +343,6 @@ function makeGithubBody (issueData) {
     body += `### Issue ID: ${issueData.uniqueId}\n\n`;
     body += `### Article URL: ${issueData.canonicalURL}\n\n`;
     body += `### HTML URL: ${issueData.conversionURL}\n\n`;
-    body += `### Data URI: ${issueData.dataURI}\n\n`;
     body += `### Report Time: ${issueData.reportTime}\n\n`;
     body += `### Browser Info: ${issueData.browserInfo}\n\n`;
     body += `### Location Low: ${issueData.locationLow}\n\n`;
