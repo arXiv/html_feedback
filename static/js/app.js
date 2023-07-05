@@ -541,6 +541,7 @@ document.addEventListener("DOMContentLoaded", () => {
       //location-low
       //location-high
       const data_description = document.getElementById("description").value;
+      //document.getElementById("description").innerHTML = "";
 
       const timestamp = Date.now(); // Current timestamp in milliseconds
       const randomString = Math.random().toString(36).substring(3, 7); // Random string of 4 characters
@@ -782,6 +783,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleClickOutsideModal() {
     window.addEventListener('click', function (event) {
       if (event.target == modal) {
+        removePreviousButton();
         modal.style.display = 'none';
       }
     });
