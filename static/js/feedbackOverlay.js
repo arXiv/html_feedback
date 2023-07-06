@@ -82,6 +82,7 @@ function addBugReportForm() {
     const modalBody = document.createElement("div");
     modalBody.setAttribute("class", "modal-body");
 
+    // Update: Add warning label. Need add format in style.css.
     const warningLabel = document.createElement("div");
     warningLabel.id = "warningLabel";
     warningLabel.setAttribute('class', 'form-text');
@@ -99,6 +100,7 @@ function addBugReportForm() {
     descriptionTextarea.setAttribute("name", "description");
     descriptionTextarea.setAttribute("required", "required");
     descriptionTextarea.setAttribute("style", "height: 80px;");
+    // Update: Change to 500 for next two lines.
     descriptionTextarea.setAttribute("maxlength", "500"); // Set the maximum length to 200 characters
     descriptionTextarea.setAttribute("placeholder","500 characters maximum");
 
@@ -114,6 +116,7 @@ function addBugReportForm() {
     submitButton.setAttribute("style", "background-color: #b31b1b;");
     submitButton.appendChild(document.createTextNode("Submit"));
 
+    // Update: ScreenReader Submit Buttons. Needed for Submit without Github Function.
     const srSubmit = document.createElement("button");
     srSubmit.setAttribute("type", "submit");
     srSubmit.setAttribute("class", "sr-only button");
@@ -125,10 +128,12 @@ function addBugReportForm() {
     buttonsContainer.setAttribute("class", "d-flex justify-content-between");
 
     // Append the elements to their respective parents
+    // Update: Add warning label (next line)
     modalBody.appendChild(warningLabel);
     modalBody.appendChild(descriptionLabel);
     modalBody.appendChild(descriptionTextarea);
 
+    // Update: Add buttonsContainer (next line)
     modalFooter.appendChild(srSubmit);
     modalFooter.appendChild(submitButton);
 
@@ -161,7 +166,13 @@ function addSRButton(modal) {
     // Add a hidden button after each paragraph
     // Add a hidden button after each paragraph
     contents.forEach((content, i) => {
+        /* 
+            Comment: There are no hidden buttons after paragraphs, title, and authors right now. We can only
+            see the hidden button after the figures.
 
+            maybe change it to add hidden button to all the p, svg, figure, .ltx_title, .ltx_authors, .ltx_eqn_row 
+            unless content contains header-message, and logomark
+        */
         if (i < 5 || content.classList.contains("logomark")) return;
 
         const button = document.createElement("button");
@@ -172,6 +183,16 @@ function addSRButton(modal) {
         button.onfocus = () => previousFocusElement = document.activeElement;
 
         button.onclick = (e) => {
+            /* 
+                Comment: Need add a variable named initiateWay, so we can know how users initiate the report.
+            
+                For addSRbutton, initiateWay = "srButton"
+                For smallReportButton, initiateWay = "smallButton"
+                For ShortCut, initiateWay = "ShortCut"
+                For click the button(right bi button) created in the modal, initiateWay = "FixedButton".
+
+                So you may need to create a global variable. I have checked showModal it cannot send any parameter to modal.
+            */
             showModal(modal);
             e.preventDefault();
         };
@@ -226,6 +247,8 @@ function handleMouseUp (e, smallButton) {
             return;
         if (!window.getSelection().isCollapsed) {
             currentAnchorNode = window.getSelection().anchorNode;
+            //Comment: Need to get the selected text and pass it to the backend
+            //reference: var selectedhtml in app.js
             showSmallButton(smallButton);
         }
         else hideSmallButton(smallButton);
@@ -343,6 +366,12 @@ function submitBugReport (e) {
     const link = GITHUB_BASE_URL + queryString;
 
     window.open(link, '_blank');
+
+    /*
+        Comment: 
+        1. Add document.querySelector('#myFormContent').reset(); // Reset the form
+        2. Add hideModal(modal) and hideSmallButton(smallReportButton) here.
+    */
 }
 
 function handleClickOutsideModal(e, modal) {
@@ -378,6 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.onmouseup = (e) => handleMouseUp(e, smallReportButton);
 
     // Handle the window scroll event
+    // Comment: Should hide the button, not show!
     window.onscroll = () => showSmallButton(smallReportButton);
 
     document.getElementById('myFormContent').onsubmit = submitBugReport;

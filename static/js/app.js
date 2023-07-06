@@ -451,6 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Prepare for selected HTML.
+      //Comment: need to capture the selected text and pass it to the backend.
       var selectedHtml = '';
       var container = document.createElement('div');
       container.appendChild(range.cloneContents());
@@ -663,6 +664,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  /*
+  Comment:
+    Optional: The format of the text you may can use. 
+    Needed: Add a limit for the length of the link. (Limitation of GET Method)
+    You can find in the function reportWithGitHub.
+  */
   // Hadnle github report issue when click visible the button(Report with GitHub).
   function reportWithGitHub(obj) {
     const article_url_issue = "**article_url**: " + obj.article_url + "\n\n";
@@ -689,21 +696,27 @@ document.addEventListener("DOMContentLoaded", () => {
     var link = "https://github.com/arXiv/html_feedback/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
     //console.log("previous link length",link.length);
 
+
+    // Commnet: New Features.
     if(link.length>=8000){
       htmlText_issue= "**htmlText**: " + selectedHtml.substring(0, 4000) + "\n\n";
       //console.log("html_?length",htmlText_issue.length);
       autoFillData = "\n# Auto Fill Data \n\n" + article_url_issue + reportTime_issue + browserInfo_issue + description_issue + conversion_report_issue + source_file_issue + htmlText_issue + location_low_issue + location_high_issue + initiationWay_issue+uniqueId_issue;
       body = userDescription + autoFillData;
       encodedBody=encodeURIComponent(body);
-      //console.log("auto_fill",autoFillData.length);
-      //console.log("body",body.length);
-
       link="https://github.com/arXiv/html_feedback/issues/newassignees=&labels=bug&projects=&template=bug_report.md&title=" + encodedTitle + "&body=" + encodedBody;
     }
+
+
     //console.log("link length now",link.length);
     window.open(link, '_blank');
   }
 
+
+  /*
+    Comment:
+    New Feature:  Report without GitHub.
+  */
   // Handle github report issue when click invisible the button(Report without GitHub).
   async function reportWithoutGitHub(obj) {
     try {
@@ -772,10 +785,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (previousFocusElement) {
         previousFocusElement.focus();
       }
-      // Delay the execution of the modal close code by 3 second
-      // Hide for Phase1
-      //document.getElementById("screenshot").value = "";
-      //document.getElementById("screenshot-image").src = "";
     });
   }
 

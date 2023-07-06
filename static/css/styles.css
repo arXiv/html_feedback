@@ -290,6 +290,7 @@ body:after {
   overflow: hidden;
 }
 
+/* Update: For warning label. */
 #warningLabel {
   color: #b31313;
   background-color: rgb(250, 241, 230);
