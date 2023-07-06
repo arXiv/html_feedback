@@ -82,6 +82,11 @@ function addBugReportForm() {
     const modalBody = document.createElement("div");
     modalBody.setAttribute("class", "modal-body");
 
+    const warningLabel = document.createElement("div");
+    warningLabel.id = "warningLabel";
+    warningLabel.setAttribute('class', 'form-text');
+    warningLabel.textContent = "Warning: Issue reports are not private. If you are an author submitting feedback about a pre-release submission, be advised that the contents of the bug report will be publicly available.";
+
     // Create the description input field
     const descriptionLabel = document.createElement("label");
     descriptionLabel.setAttribute("for", "description");
@@ -94,8 +99,8 @@ function addBugReportForm() {
     descriptionTextarea.setAttribute("name", "description");
     descriptionTextarea.setAttribute("required", "required");
     descriptionTextarea.setAttribute("style", "height: 80px;");
-    descriptionTextarea.setAttribute("maxlength", "1000"); // Set the maximum length to 200 characters
-    descriptionTextarea.setAttribute("placeholder","1000 characters maximum");
+    descriptionTextarea.setAttribute("maxlength", "500"); // Set the maximum length to 200 characters
+    descriptionTextarea.setAttribute("placeholder","500 characters maximum");
 
     // Create the modal footer
     const modalFooter = document.createElement("div");
@@ -109,14 +114,22 @@ function addBugReportForm() {
     submitButton.setAttribute("style", "background-color: #b31b1b;");
     submitButton.appendChild(document.createTextNode("Submit"));
 
+    const srSubmit = document.createElement("button");
+    srSubmit.setAttribute("type", "submit");
+    srSubmit.setAttribute("class", "sr-only button");
+    srSubmit.setAttribute("id", "modal-submit-sr");
+    srSubmit.appendChild(document.createTextNode("Submit without Github"));
+
     // Create a container div for the buttons
     const buttonsContainer = document.createElement("div");
     buttonsContainer.setAttribute("class", "d-flex justify-content-between");
 
     // Append the elements to their respective parents
+    modalBody.appendChild(warningLabel);
     modalBody.appendChild(descriptionLabel);
     modalBody.appendChild(descriptionTextarea);
 
+    modalFooter.appendChild(srSubmit);
     modalFooter.appendChild(submitButton);
 
     form.appendChild(modalHeader);
