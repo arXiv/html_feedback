@@ -1,4 +1,13 @@
 var selectionAnchorNode;
+var bugReportState = {
+    initiateWay: null,
+    setInitiateWay: function(value) {
+        this.initiateWay = value;
+    },
+    getInitiateWay: function() {
+        return this.initiateWay;
+    }
+};
 
 function detectColorScheme() {
     var theme="light";
@@ -151,6 +160,7 @@ function addBugReportForm() {
     button.onclick = (e) => {
         currentAnchorNode = null;
         showModal(modal, 'button');
+        bugReportState.setInitiateWay("Fixedbutton");
     }
     closeButton.onclick = (e) => hideModal(modal);
 
@@ -194,6 +204,7 @@ function addSRButton(modal) {
                 So you may need to create a global variable. I have checked showModal it cannot send any parameter to modal.
             */
             showModal(modal);
+            bugReportState.setInitiateWay("SRButton");
             e.preventDefault();
         };
 
@@ -212,7 +223,9 @@ function showModal (modal) {
     modal.focus();
 }
 
-function hideModal (modal) { modal.style.display = 'none'; }
+function hideModal (modal) { 
+    modal.style.display = 'none'; 
+}
 
 function showButtons (buttons) {
     buttons.forEach((button) => {
@@ -236,6 +249,7 @@ const handleKeyDown = (e, modal, buttons) => {
         showButtons(buttons);
     } else if (ctrlOrMeta && (e.key === '/' || e.key === '?')) {
         showModal(modal)
+        bugReportState.setInitiateWay("ShortCut");
     } else if (ctrlOrMeta && (e.key === '}' || e.key === ']')) {
         hideModal(modal);
     }
@@ -267,6 +281,7 @@ function createSmallButton (modal) {
 
     smallReportButton.onclick = (e) => {
         showModal(modal); // do something with window.getSelection()
+        bugReportState.setInitiateWay("selectedText-smallButton");
     }
 
     smallReportButton.addEventListener("focusout", function (e) {
@@ -354,6 +369,8 @@ function submitBugReport (e) {
     issueData['description'] = dataDescription;
     issueData['locationLow'] = elementIdentifier;
     issueData['locationHigh'] = topLayer;
+    console.log(bugReportState.getInitiateWay());
+    // Use xxx = bugReportState.getInitiateWay() to get bug report initiation way.
 
 
     form = new FormData();
