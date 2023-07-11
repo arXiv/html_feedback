@@ -246,7 +246,13 @@ function handleMouseUp (e, smallButton) {
         if (e.target.id === "small-report-button") 
             return;
         if (!window.getSelection().isCollapsed) {
-            currentAnchorNode = window.getSelection().anchorNode;
+            selection = window.getSelection();
+            currentAnchorNode = selection.anchorNode;
+            var range = selection.getRangeAt(0);
+            var container = document.createElement('div');
+            container.appendChild(range.cloneContents());
+            // Use the selected text to generate the dataURI
+            selectedHtml = 'data:text/html;charset=utf-8,' + encodeURIComponent(container.innerHTML);
             //Comment: Need to get the selected text and pass it to the backend
             //reference: var selectedhtml in app.js
             showSmallButton(smallButton);
@@ -322,7 +328,6 @@ function submitBugReport (e) {
     // Relevant Selection
     let elementIdentifier = 'Unknown';
     let topLayer = 'Unknown';
-    let dataURI = 'Unknown';
     console.log(currentAnchorNode);
     if (currentAnchorNode !== null) {
         const parentNode = currentAnchorNode.parentNode;
@@ -354,11 +359,12 @@ function submitBugReport (e) {
     issueData['description'] = dataDescription;
     issueData['locationLow'] = elementIdentifier;
     issueData['locationHigh'] = topLayer;
-
+    issueData['selectedHtml'] = selectedHtml;
+    issueData['initiationWay'] = initiationWay;
 
     form = new FormData();
     form.append('template', 'bug_report.md');
-    form.append('title', `${arxivIdv}:${uniqueId}`)
+    form.append('title',`Improve article : ${arxivIdv}$`)
     form.append('body', makeGithubBody(issueData));
 
     const GITHUB_BASE_URL = 'https://github.com/arXiv/html_feedback/issues/new?' 
@@ -381,16 +387,27 @@ function handleClickOutsideModal(e, modal) {
 
 
 function makeGithubBody (issueData) {
-    let body = "";
-    body += `### Issue ID: ${issueData.uniqueId}\n\n`;
-    body += `### Article URL: ${issueData.canonicalURL}\n\n`;
-    body += `### HTML URL: ${issueData.conversionURL}\n\n`;
-    body += `### Report Time: ${issueData.reportTime}\n\n`;
-    body += `### Browser Info: ${issueData.browserInfo}\n\n`;
-    body += `### Location Low: ${issueData.locationLow}\n\n`;
-    body += `### Location High: ${issueData.locationHigh}\n\n`;
-    body += `### Description\n ${issueData.description}`;
-    
+    let body = "## Self Report Data\n\n Feel free to attach a screenshot (or document) link below:\n\n\n## Auto Fill Data \n\n";
+
+    body += `**Issue ID**: ${issueData.uniqueId}\n\n`;
+    body += `**Description**: ${issueData.description}\n\n`;
+    body += `**Article URL**: ${issueData.canonicalURL}\n\n`;
+    body += `**HTML URL**: ${issueData.conversionURL}\n\n`;
+    body += `**Report Time**: ${issueData.reportTime}\n\n`;
+    body += `**Browser Info**: ${issueData.browserInfo}\n\n`;
+    body += `**Location Low**: ${issueData.locationLow}\n\n`;
+    body += `**Location High**: ${issueData.locationHigh}\n\n`;
+    body += `**Initiation Way**: ${issueData.initiationWay}\n\n`;
+
+    var selectedText=`**Selected HTML**: ${issueData.selectedHtml}\n\n`;
+    if((body+selectedText).length>=8000){
+        selectedText="**htmlText**: " + selectedHtml.substring(0, 4000) + "\n\n"
+        body+=selectedText;
+    }
+    else{
+        body+=selectedText;
+    }
+
     return body;
 }
 
