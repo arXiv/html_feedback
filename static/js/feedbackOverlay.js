@@ -166,14 +166,7 @@ function addSRButton(modal) {
     // Add a hidden button after each paragraph
     // Add a hidden button after each paragraph
     contents.forEach((content, i) => {
-        /* 
-            Comment: There are no hidden buttons after paragraphs, title, and authors right now. We can only
-            see the hidden button after the figures.
-
-            maybe change it to add hidden button to all the p, svg, figure, .ltx_title, .ltx_authors, .ltx_eqn_row 
-            unless content contains header-message, and logomark
-        */
-        if (i < 5 || content.classList.contains("logomark")) return;
+        if (content.classList.contains("header-message") || content.classList.contains("logomark")) return;
 
         const button = document.createElement("button");
         button.setAttribute("class", "sr-only button");
@@ -378,6 +371,7 @@ function submitBugReport (e) {
         1. Add document.querySelector('#myFormContent').reset(); // Reset the form
         2. Add hideModal(modal) and hideSmallButton(smallReportButton) here.
     */
+    document.querySelector('#myFormContent').reset();
 }
 
 function handleClickOutsideModal(e, modal) {
@@ -423,9 +417,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.onclick = (e) => handleClickOutsideModal(e, modal);
     document.onmouseup = (e) => handleMouseUp(e, smallReportButton);
 
-    // Handle the window scroll event
-    // Comment: Should hide the button, not show!
-    window.onscroll = () => showSmallButton(smallReportButton);
+    let lastScrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+    window.addEventListener('scroll', () => {
+        const currentScrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+        if (currentScrollPosition > lastScrollPosition || currentScrollPosition < lastScrollPosition) {
+            smallReportButton.style.display = "none";
+          } else {
+            smallReportButton.style.display = "block";
+          }
+          lastScrollPosition = currentScrollPosition;
+    });
 
     document.getElementById('myFormContent').onsubmit = submitBugReport;
 });
