@@ -6,6 +6,30 @@ var bugReportState = {
     },
     getInitiateWay: function() {
         return this.initiateWay;
+    },
+    selectedHtml: null,
+    elementIdentifier: null,
+    setSelectedHtmlSRB: function(value) {
+        var htmlContent = value.innerHTML;
+        this.selectedHtml = "data:text/html;charset=utf-8," + encodeURIComponent(htmlContent);
+        this.elementIdentifier = value.id;
+    },
+    setSelectedHtmlSmallButton: function(value) {
+        var range = value.getRangeAt(0);
+        var container = document.createElement('div');
+        container.appendChild(range.cloneContents());
+        this.selectedHtml = 'data:text/html;charset=utf-8,' + encodeURIComponent(container.innerHTML);
+    },
+    getSelectedHtml: function() {
+        return this.selectedHtml;
+    },
+    getElementIdentifier: function() {
+        return this.elementIdentifier;
+    },
+    clear : function() {
+        this.selectedHtml = "undefined";
+        this.elementIdentifier = "undefined";
+        this.initiateWay = "undefined";
     }
 };
 
@@ -197,6 +221,7 @@ function addSRButton(modal) {
                 So you may need to create a global variable. I have checked showModal it cannot send any parameter to modal.
             */
             showModal(modal);
+            bugReportState.setSelectedHtmlSRB(content);
             bugReportState.setInitiateWay("SRButton");
             e.preventDefault();
         };
@@ -255,11 +280,12 @@ function handleMouseUp (e, smallButton) {
         if (!window.getSelection().isCollapsed) {
             selection = window.getSelection();
             currentAnchorNode = selection.anchorNode;
-            var range = selection.getRangeAt(0);
-            var container = document.createElement('div');
-            container.appendChild(range.cloneContents());
-            // Use the selected text to generate the dataURI
-            selectedHtml = 'data:text/html;charset=utf-8,' + encodeURIComponent(container.innerHTML);
+            bugReportState.setSelectedHtmlSmallButton(selection);
+            // var range = selection.getRangeAt(0);
+            // var container = document.createElement('div');
+            // container.appendChild(range.cloneContents());
+            // // Use the selected text to generate the dataURI
+            // selectedHtml = 'data:text/html;charset=utf-8,' + encodeURIComponent(container.innerHTML);
             //Comment: Need to get the selected text and pass it to the backend
             //reference: var selectedhtml in app.js
             showSmallButton(smallButton);
@@ -334,7 +360,7 @@ function submitBugReport (e) {
     const browserInfo = browserName + '/' + browserVersion;
 
     // Relevant Selection
-    let elementIdentifier = 'Unknown';
+    let elementIdentifier = bugReportState.getElementIdentifier();
     let topLayer = 'Unknown';
     console.log(currentAnchorNode);
     if (currentAnchorNode !== null) {
@@ -367,7 +393,7 @@ function submitBugReport (e) {
     issueData['description'] = dataDescription;
     issueData['locationLow'] = elementIdentifier;
     issueData['locationHigh'] = topLayer;
-    issueData['selectedHtml'] = selectedHtml;
+    issueData['selectedHtml'] = bugReportState.getSelectedHtml();
     issueData['initiationWay'] = bugReportState.getInitiateWay();
 
     form = new FormData();
@@ -387,6 +413,7 @@ function submitBugReport (e) {
         2. Add hideModal(modal) and hideSmallButton(smallReportButton) here.
     */
     document.querySelector('#myFormContent').reset();
+    bugReportState.clear();
 }
 
 function handleClickOutsideModal(e, modal) {
