@@ -27,9 +27,9 @@ var bugReportState = {
         return this.elementIdentifier;
     },
     clear : function() {
-        this.selectedHtml = "undefined";
-        this.elementIdentifier = "undefined";
-        this.initiateWay = "undefined";
+        this.selectedHtml = "Undefined";
+        this.elementIdentifier = "Undefined";
+        this.initiateWay = "Undefined";
     }
 };
 
@@ -350,7 +350,14 @@ function submitBugReport (e) {
     // const user_info = "account:yc2455 contact:@cornll.edu "
 
     // Report Time
-    const currentTime = Date.now();
+    const now = new Date();
+    const year = now.getFullYear();      // e.g. 2023
+    const month = now.getMonth() + 1;    // 0-11, so add 1
+    const day = now.getDate();           // 1-31
+    const hour = now.getHours();         // 0-23
+    const minute = now.getMinutes();     // 0-59
+    const second = now.getSeconds();     // 0-59
+    const currentTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 
     // Browser Version
     const userAgent = navigator.userAgent;
@@ -361,14 +368,14 @@ function submitBugReport (e) {
 
     // Relevant Selection
     let elementIdentifier = bugReportState.getElementIdentifier();
-    let topLayer = 'Unknown';
+    let topLayer = 'Undefined"';
     console.log(currentAnchorNode);
     if (currentAnchorNode !== null) {
         const parentNode = currentAnchorNode.parentNode;
         const id = parentNode.id;
         const classList = parentNode.classList;
         //if there is no id, than use class to identify
-        elementIdentifier = id || classList[0] || 'Unknown';
+        elementIdentifier = id || classList[0] || 'Undefined';
         console.log(elementIdentifier);
 
         //get the topLayer of id
@@ -407,13 +414,10 @@ function submitBugReport (e) {
 
     window.open(link, '_blank');
 
-    /*
-        Comment: 
-        1. Add document.querySelector('#myFormContent').reset(); // Reset the form
-        2. Add hideModal(modal) and hideSmallButton(smallReportButton) here.
-    */
+    // After Submit.
     document.querySelector('#myFormContent').reset();
     bugReportState.clear();
+    hideModal(document.getElementById('myForm'));
 }
 
 function handleClickOutsideModal(e, modal) {
