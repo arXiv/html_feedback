@@ -405,7 +405,7 @@ function submitBugReport (e) {
 
     form = new FormData();
     form.append('template', 'bug_report.md');
-    form.append('title',`Improve article : ${arxivIdv}$`)
+    form.append('title',`HTML conversion issue with : ${arxivIdv}$`)
     form.append('body', makeGithubBody(issueData));
 
     const GITHUB_BASE_URL = 'https://github.com/arXiv/html_feedback/issues/new?' 
@@ -427,10 +427,16 @@ function handleClickOutsideModal(e, modal) {
 
 
 function makeGithubBody (issueData) {
-    let body = "## Self Report Data\n\n Feel free to attach a screenshot (or document) link below:\n\n\n## Auto Fill Data \n\n";
-
-    body += `**Issue ID**: ${issueData.uniqueId}\n\n`;
+    // User Fill in Data
+    let body = "## Describe the issue\n\n";
     body += `**Description**: ${issueData.description}\n\n`;
+    body += "Feel free to attach a screenshot (or document) link below: \n\n\n\n";
+
+    // Auto Fill Data
+    body += "## Auto Fill Data - !!! Please do not edit below this line !!!";
+    body += "\n----------------------------------------------------------------------------------------\n";
+    body += `**Issue ID**: ${issueData.uniqueId}\n\n`;
+    body += `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`;
     body += `**Article URL**: ${issueData.canonicalURL}\n\n`;
     body += `**HTML URL**: ${issueData.conversionURL}\n\n`;
     body += `**Report Time**: ${issueData.reportTime}\n\n`;
