@@ -1,35 +1,26 @@
 var selectionAnchorNode;
 var bugReportState = {
     initiateWay: null,
-    setInitiateWay: function(value) {
-        this.initiateWay = value;
-    },
-    getInitiateWay: function() {
-        return this.initiateWay;
-    },
+    setInitiateWay: (value) => this.initiateWay = value,
+    getInitiateWay: () => this.initiateWay,
     selectedHtml: null,
     elementIdentifier: null,
-    setSelectedHtmlSRB: function(value) {
-        var htmlContent = value.innerHTML;
-        this.selectedHtml = "data:text/html;charset=utf-8," + encodeURIComponent(htmlContent);
+    setSelectedHtmlSRB: (value) => {
+        this.selectedHtml = "data:text/html;charset=utf-8," + encodeURIComponent(value.innerHTML);
         this.elementIdentifier = value.id;
     },
-    setSelectedHtmlSmallButton: function(value) {
-        var range = value.getRangeAt(0);
-        var container = document.createElement('div');
+    setSelectedHtmlSmallButton: (value) => {
+        const range = value.getRangeAt(0);
+        const container = document.createElement('div');
         container.appendChild(range.cloneContents());
         this.selectedHtml = 'data:text/html;charset=utf-8,' + encodeURIComponent(container.innerHTML);
     },
-    getSelectedHtml: function() {
-        return this.selectedHtml;
-    },
-    getElementIdentifier: function() {
-        return this.elementIdentifier;
-    },
-    clear : function() {
-        this.selectedHtml = "Undefined";
-        this.elementIdentifier = "Undefined";
-        this.initiateWay = "Undefined";
+    getSelectedHtml: () => this.selectedHtml,
+    getElementIdentifier: () => this.elementIdentifier,
+    clear: () => {
+        this.selectedHtml = "undefined";
+        this.elementIdentifier = "undefined";
+        this.initiateWay = "undefined";
     }
 };
 
@@ -46,7 +37,7 @@ function detectColorScheme() {
     if (theme=="dark") {
       document.documentElement.setAttribute("data-theme", "dark");
     } else {
-      document.documentElement.setAttribute("data-theme", "light"); } 
+      document.documentElement.setAttribute("data-theme", "light"); }
 }
 
 function toggleColorScheme(){
@@ -58,7 +49,7 @@ function toggleColorScheme(){
         localStorage.setItem("ar5iv_theme", "light"); } }
     else {
         localStorage.setItem("ar5iv_theme", "dark"); }
-    detectColorScheme(); 
+    detectColorScheme();
 }
 
 function addBugReportForm() {
@@ -68,7 +59,7 @@ function addBugReportForm() {
     button.setAttribute("type", "button");
     button.setAttribute("class", "btn btn-primary");
     button.setAttribute("id", "openForm");
-    button.appendChild(document.createTextNode("Report Bug"));
+    button.appendChild(document.createTextNode("Open Issue"));
 
     // Create the modal container element
     const modal = document.createElement("div");
@@ -94,7 +85,7 @@ function addBugReportForm() {
     // Create the modal title
     const modalTitle = document.createElement("h5");
     modalTitle.setAttribute("class", "modal-title");
-    modalTitle.appendChild(document.createTextNode("Bug Report Form"));
+    modalTitle.appendChild(document.createTextNode("Open Github Issue"));
 
     // Create the close button for the modal
     const closeButton = document.createElement("button");
@@ -119,13 +110,13 @@ function addBugReportForm() {
     const warningLabel = document.createElement("div");
     warningLabel.id = "warningLabel";
     warningLabel.setAttribute('class', 'form-text');
-    warningLabel.textContent = "Warning: Issue reports are not private. If you are an author submitting feedback about a pre-release submission, be advised that the contents of the bug report will be publicly available.";
+    warningLabel.textContent = "Warning: Issue reports are not private. If you are an author submitting feedback about a pre-release submission, be advised that the contents of the bug report will be publicly available on Github.";
 
     // Create the description input field
     const descriptionLabel = document.createElement("label");
     descriptionLabel.setAttribute("for", "description");
     //descriptionLabel.setAttribute("class", "form-label");
-    descriptionLabel.appendChild(document.createTextNode("Description*:"));
+    descriptionLabel.appendChild(document.createTextNode("Description*"));
 
     const descriptionTextarea = document.createElement("textarea");
     descriptionTextarea.setAttribute("class", "form-control");
@@ -146,8 +137,8 @@ function addBugReportForm() {
     submitButton.setAttribute("type", "submit");
     submitButton.setAttribute("class", "btn btn-primary");
     submitButton.setAttribute("id", "modal-submit");
-    submitButton.setAttribute("style", "background-color: #b31b1b;");
-    submitButton.appendChild(document.createTextNode("Submit"));
+    submitButton.setAttribute("style", "background-color: #b31b1b;", "border-color: #690604;" );
+    submitButton.appendChild(document.createTextNode("Submit in Github"));
 
     // Update: ScreenReader Submit Buttons. Needed for Submit without Github Function.
     const srSubmit = document.createElement("button");
@@ -205,14 +196,14 @@ function addSRButton(modal) {
         const button = document.createElement("button");
         button.setAttribute("class", "sr-only button");
         button.style.display = "none";
-        button.textContent = "Report Bug";
+        button.textContent = "Open Issue on Github";
 
         button.onfocus = () => previousFocusElement = document.activeElement;
 
         button.onclick = (e) => {
-            /* 
+            /*
                 Comment: Need add a variable named initiateWay, so we can know how users initiate the report.
-            
+
                 For addSRbutton, initiateWay = "srButton"
                 For smallReportButton, initiateWay = "smallButton"
                 For ShortCut, initiateWay = "ShortCut"
@@ -241,8 +232,8 @@ function showModal (modal) {
     modal.focus();
 }
 
-function hideModal (modal) { 
-    modal.style.display = 'none'; 
+function hideModal (modal) {
+    modal.style.display = 'none';
 }
 
 function showButtons (buttons) {
@@ -263,7 +254,7 @@ function hideButtons (buttons) {
 const handleKeyDown = (e, modal, buttons) => {
     const ctrlOrMeta = e.metaKey || e.ctrlKey;
 
-    if (e.shiftKey && e.code === 'KeyB') { 
+    if (e.shiftKey && e.code === 'KeyB') {
         showButtons(buttons);
     } else if (ctrlOrMeta && (e.key === '/' || e.key === '?')) {
         showModal(modal)
@@ -275,7 +266,7 @@ const handleKeyDown = (e, modal, buttons) => {
 
 //The highlight initiation way
 function handleMouseUp (e, smallButton) {
-        if (e.target.id === "small-report-button") 
+        if (e.target.id === "small-report-button")
             return;
         if (!window.getSelection().isCollapsed) {
             selection = window.getSelection();
@@ -299,7 +290,7 @@ function createSmallButton (modal) {
     smallReportButton.type = 'button';
     smallReportButton.className = 'btn btn-secondary btn-sm';
     smallReportButton.style.backgroundColor = '#b31b1b';
-    smallReportButton.textContent = 'Report';
+    smallReportButton.textContent = 'Open Issue';
     smallReportButton.style.position = 'fixed';
 
     document.body.appendChild(smallReportButton);
@@ -350,14 +341,7 @@ function submitBugReport (e) {
     // const user_info = "account:yc2455 contact:@cornll.edu "
 
     // Report Time
-    const now = new Date();
-    const year = now.getFullYear();      // e.g. 2023
-    const month = now.getMonth() + 1;    // 0-11, so add 1
-    const day = now.getDate();           // 1-31
-    const hour = now.getHours();         // 0-23
-    const minute = now.getMinutes();     // 0-59
-    const second = now.getSeconds();     // 0-59
-    const currentTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    const currentTime = Date.now();
 
     // Browser Version
     const userAgent = navigator.userAgent;
@@ -368,14 +352,14 @@ function submitBugReport (e) {
 
     // Relevant Selection
     let elementIdentifier = bugReportState.getElementIdentifier();
-    let topLayer = 'Undefined"';
+    let topLayer = 'Unknown';
     console.log(currentAnchorNode);
     if (currentAnchorNode !== null) {
         const parentNode = currentAnchorNode.parentNode;
         const id = parentNode.id;
         const classList = parentNode.classList;
         //if there is no id, than use class to identify
-        elementIdentifier = id || classList[0] || 'Undefined';
+        elementIdentifier = id || classList[0] || 'Unknown';
         console.log(elementIdentifier);
 
         //get the topLayer of id
@@ -385,7 +369,7 @@ function submitBugReport (e) {
             topLayer = id ? id.split('.')[0] : classList[0];
         }
     }
-    
+
     const dataDescription = document.getElementById('description').value;
 
     const uniqueId = window.crypto.randomUUID();
@@ -405,16 +389,17 @@ function submitBugReport (e) {
 
     form = new FormData();
     form.append('template', 'bug_report.md');
-    form.append('title',`HTML conversion issue with : ${arxivIdv}$`)
+    form.append('title',`Improve article : ${arxivIdv}`)
     form.append('body', makeGithubBody(issueData));
 
-    const GITHUB_BASE_URL = 'https://github.com/arXiv/html_feedback/issues/new?' 
+    const GITHUB_BASE_URL = 'https://github.com/arXiv/html_feedback/issues/new?'
     const queryString = new URLSearchParams(form).toString()
     const link = GITHUB_BASE_URL + queryString;
 
+    postToDB(issueData);
+
     window.open(link, '_blank');
 
-    // After Submit.
     document.querySelector('#myFormContent').reset();
     bugReportState.clear();
     hideModal(document.getElementById('myForm'));
@@ -425,35 +410,27 @@ function handleClickOutsideModal(e, modal) {
         modal.style.display = 'none';
 }
 
+function postToDB (issueData) {
+    const DB_BACKEND_URL = 'https://services.arxiv.org/latexml/feedback';
+    const queryString = new URLSearchParams(issueData).toString();
+    fetch(DB_BACKEND_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: queryString, // body data type must match "Content-Type" header
+    });
+}
 
 function makeGithubBody (issueData) {
-    // User Fill in Data
     let body = "## Describe the issue\n\n";
     body += `**Description**: ${issueData.description}\n\n`;
     body += "Feel free to attach a screenshot (or document) link below: \n\n\n\n";
-
     // Auto Fill Data
-    body += "## Auto Fill Data - !!! Please do not edit below this line !!!";
-    body += "\n----------------------------------------------------------------------------------------\n";
-    body += `**Issue ID**: ${issueData.uniqueId}\n\n`;
-    body += `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`;
-    body += `**Article URL**: ${issueData.canonicalURL}\n\n`;
-    body += `**HTML URL**: ${issueData.conversionURL}\n\n`;
-    body += `**Report Time**: ${issueData.reportTime}\n\n`;
-    body += `**Browser Info**: ${issueData.browserInfo}\n\n`;
-    body += `**Location Low**: ${issueData.locationLow}\n\n`;
-    body += `**Location High**: ${issueData.locationHigh}\n\n`;
-    body += `**Initiation Way**: ${issueData.initiationWay}\n\n`;
-
-    var selectedText=`**Selected HTML**: ${issueData.selectedHtml}\n\n`;
-    if((body+selectedText).length>=8000){
-        selectedText="**htmlText**: " + selectedHtml.substring(0, 4000) + "\n\n"
-        body+=selectedText;
-    }
-    else{
-        body+=selectedText;
-    }
-
+    body += "## Auto Fill Data - !!! Please do not edit below this line !!!\n";
+    body += "----------------------------------------------------------------------------------------\n\n";
+    body += `Id: ${issueData.uniqueId}\n`     
     return body;
 }
 
