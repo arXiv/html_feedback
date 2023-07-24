@@ -501,7 +501,6 @@ function checkCookiesAllowed() {
     }
 }
 
-
 // Function to set cookie
 // this also can modify the cookie, it will overwrite the old one.
 function setCookie(cookieName, cookieValue, expirationDays) {
@@ -551,12 +550,18 @@ function clearAllCookies() {
 }
 
 function addCookieModal(){
-    // 创建模态窗口
     const modal = document.createElement("div");
     modal.setAttribute("class", "modal");
     modal.setAttribute("id", "cookieModal");
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-labelledby", "modal-title");
     modal.style.display = "none";
 
+    const modalDialog = document.createElement("div");
+    modalDialog.setAttribute("class", "modal-dialog");
+
+
+    // content part.
     const modalContent = document.createElement("div");
     modalContent.setAttribute("class", "modal-content");
 
@@ -571,11 +576,13 @@ function addCookieModal(){
     rejectButton.setAttribute("id", "rejectCookies");
     rejectButton.textContent = "No";
 
+
+    // Combine all the elements.
     modalContent.appendChild(p);
     modalContent.appendChild(allowButton);
     modalContent.appendChild(rejectButton);
-    modal.appendChild(modalContent);
-
+    modalDialog.appendChild(modalContent);
+    modal.appendChild(modalDialog);
     document.body.appendChild(modal);
 }
 
