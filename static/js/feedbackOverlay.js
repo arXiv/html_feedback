@@ -271,6 +271,10 @@ const handleKeyDown = (e, modal, buttons) => {
     } else if (ctrlOrMeta && (e.key === '}' || e.key === ']')) {
         hideModal(modal);
     }
+    // cookie! need to clear!
+    else if(ctrlOrMeta && (e.key === 'c')){
+        clearAllCookies();
+    }
 }
 
 //The highlight initiation way
@@ -339,8 +343,6 @@ function hideSmallButton (smallReportButton) {
 //submit to the backend, next step: finish
 function submitBugReport (e) {
     e.preventDefault();
-    //Test Test 2455
-    clearAllCookies();
     //document.getElementById('notification').style = 'display: block';
     const issueData = {};
 
@@ -417,7 +419,10 @@ function submitBugReport (e) {
     window.open(link, '_blank');
 
     // After Submit.
-    setCookie("iniateWay", bugReportState.getInitiateWay(), 10);
+    if(checkCookiesAllowed()){
+        console.log("Cookies allowed");
+        setCookie("iniateWay", bugReportState.getInitiateWay(), 10);
+    }
     document.querySelector('#myFormContent').reset();
     bugReportState.clear();
     hideModal(document.getElementById('myForm'));
@@ -463,6 +468,7 @@ function makeGithubBody (issueData) {
 // RUN THIS CODE ON INITIALIZE
 detectColorScheme();
 
+//Cookie.
 // Function to handle cookies on page load
 function handlePageLoad() {
     const allowCookies = getCookie("allowCookies");
@@ -476,33 +482,39 @@ function handlePageLoad() {
         const modal = document.getElementById("cookieModal");
         modal.style.display = "block";
 
-        document.getElementById("allowCookies").addEventListener('click', function() {
-            setCookie("allowCookies", "true", 10); 
-            setCookie("rejectedCookies", "false", 10);
-            modal.style.display = "none";
-            console.log("Current cookies after allowing: ", document.cookie);
-        });
+        // document.getElementById("allowCookies").addEventListener('click', function() {
+        //     setCookie("allowCookies", "true", 10); 
+        //     setCookie("rejectedCookies", "false", 10);
+        //     modal.style.display = "none";
+        //     console.log("Current cookies after allowing: ", document.cookie);
+        // });
 
-        document.getElementById("rejectCookies").addEventListener('click', function() {
-            setCookie("rejectedCookies", "true", 10);
-            setCookie("allowCookies", "false", 10);
-            modal.style.display = "none";
-        });
+        // document.getElementById("rejectCookies").addEventListener('click', function() {
+        //     setCookie("rejectedCookies", "true", 10);
+        //     setCookie("allowCookies", "false", 10);
+        //     modal.style.display = "none";
+        // });
     }
 }
 
+//Cookie.
 // check if cookies are allowed.
 function checkCookiesAllowed() {
+    console.log("Check cookies allowed")
     const allowCookies = getCookie("allowCookies");
-    if (allowCookies) {
+    console.log("Test:" + allowCookies);
+    
+    if (allowCookies == "true") {
         return true;
     } else {
         return false;
     }
 }
 
-// Function to set cookie
-// this also can modify the cookie, it will overwrite the old one.
+/* Cookie
+Function to set cookie
+this also can modify the cookie, it will overwrite the old one.
+*/
 function setCookie(cookieName, cookieValue, expirationDays) {
     const date = new Date();
     date.setTime(date.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
@@ -510,7 +522,8 @@ function setCookie(cookieName, cookieValue, expirationDays) {
     document.cookie = `${cookieName}=${cookieValue};${expires};path=/;Secure;SameSite=Strict`;
 }
 
-// Function to get cookie
+// Cookie
+// Function to get cookie. 
 function getCookie(cookieName) {
     const name = `${cookieName}=`;
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -526,6 +539,7 @@ function getCookie(cookieName) {
     return "";
 }
 
+// Cookie
 // Function to delete one cookie.
 function deleteCookie(cookieName) {
     const expirationDate = new Date();
@@ -534,8 +548,11 @@ function deleteCookie(cookieName) {
     document.cookie = cookieName + "=; " + expires + ";path=/";
 }
 
-// This function clears all cookies, is build for test. 
-// Now it will clear all cookies after submit.
+// Cookie
+/* 
+This function clears all cookies, is build for test. 
+Now it will clear all cookies after submit.
+*/
 function clearAllCookies() {
     var cookies = document.cookie.split(";");
   
@@ -549,43 +566,183 @@ function clearAllCookies() {
     }
 }
 
-function addCookieModal(){
+// Cookie
+// Function to add cookie modal.
+// https://mdbootstrap.com/docs/standard/extended/cookie-consent/#
+// function addCookieModal(){
+//     const modal = document.createElement("div");
+//     modal.setAttribute("class", "modal");
+//     modal.setAttribute("id", "cookieModal");
+//     modal.setAttribute("role", "dialog");
+//     modal.setAttribute("aria-labelledby", "modal-title");
+//     modal.style.display = "none";
+
+//     const modalDialog = document.createElement("div");
+//     modalDialog.setAttribute("class", "modal-dialog");
+
+
+//     // content part.
+//     const modalContent = document.createElement("div");
+//     modalContent.setAttribute("class", "modal-content");
+
+//     const p = document.createElement("p");
+//     p.textContent = "Do you want to use cookies?";
+
+//     const allowButton = document.createElement("button");
+//     allowButton.setAttribute("id", "allowCookies");
+//     allowButton.textContent = "Yes";
+
+//     const rejectButton = document.createElement("button");
+//     rejectButton.setAttribute("id", "rejectCookies");
+//     rejectButton.textContent = "No";
+
+
+//     // Combine all the elements.
+//     modalContent.appendChild(p);
+//     modalContent.appendChild(allowButton);
+//     modalContent.appendChild(rejectButton);
+//     modalDialog.appendChild(modalContent);
+//     modal.appendChild(modalDialog);
+//     document.body.appendChild(modal);
+// }
+
+function generateHTML() {
+    // Create Button
+    const btn = document.createElement('button');
+    btn.className = "btn btn-primary";
+    btn.type = "button";
+    btn.dataset.mdbToggle = "modal";
+    btn.dataset.mdbTarget = "#cookieModal";
+    btn.textContent = "Launch cookie consent";
+
+    document.body.appendChild(btn);
+
+    // Create Modal
     const modal = document.createElement("div");
-    modal.setAttribute("class", "modal");
+    modal.setAttribute("class", "modal")
     modal.setAttribute("id", "cookieModal");
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-labelledby", "modal-title");
-    modal.style.display = "none";
+    // modal.tabIndex = "-1";
+    modal.setAttribute("aria-labelledby", "cookieconsentLabel");
+    // modal.setAttribute("aria-hidden", "true");
+    // modal.dataset.mdbBackdrop = "static";
+    // modal.dataset.mdbKeyboard = "false";
 
     const modalDialog = document.createElement("div");
-    modalDialog.setAttribute("class", "modal-dialog");
+    modalDialog.className = "modal-dialog";
 
-
-    // content part.
     const modalContent = document.createElement("div");
-    modalContent.setAttribute("class", "modal-content");
-
-    const p = document.createElement("p");
-    p.textContent = "Do you want to use cookies?";
-
-    const allowButton = document.createElement("button");
-    allowButton.setAttribute("id", "allowCookies");
-    allowButton.textContent = "Yes";
-
-    const rejectButton = document.createElement("button");
-    rejectButton.setAttribute("id", "rejectCookies");
-    rejectButton.textContent = "No";
+    modalContent.className = "modal-content d-block text-start";
 
 
-    // Combine all the elements.
-    modalContent.appendChild(p);
-    modalContent.appendChild(allowButton);
-    modalContent.appendChild(rejectButton);
+    // Create Modal Header
+    const modalHeader = document.createElement("div");
+    modalHeader.className = "modal-header d-block ";
+
+    const modalTitle = document.createElement("h5");
+    modalTitle.className = "modal-title";
+    modalTitle.id = "cookieconsentLabel";
+    modalTitle.textContent = "Cookies & Privacy";
+
+    const modalText = document.createElement("p");
+    modalText.textContent = "This website uses cookies to ensure you get the best experience on our website.";
+
+    const readMoreText = document.createElement("p");
+    const readMoreLink = document.createElement("a");
+    readMoreLink.href = "#";
+    readMoreLink.textContent = "Read more about cookies";
+    readMoreText.appendChild(readMoreLink);
+
+    modalHeader.appendChild(modalTitle);
+    modalHeader.appendChild(modalText);
+    modalHeader.appendChild(readMoreText);
+
+    // Create Modal Body
+    const modalBody = document.createElement("div");
+    modalBody.className = "modal-body";
+
+    const checkboxNames = ["Necessary", "Analytical", "Marketing"];
+    const checkboxDetails = ["help with the basic functionality of our website, e.g remember if you gave consent to cookies.",
+                             "make it possible to gather statistics about the use and trafiic on our website, so we can make it better.",
+                             "make it possible to show you more relevant social media content and advertisements on our website and other platforms."];
+
+    for(let i = 0; i < 3; i++) {
+        const checkDiv = document.createElement("div");
+        checkDiv.className = "form-check";
+
+        const checkInput = document.createElement("input");
+        checkInput.className = "form-check-input";
+        checkInput.type = "checkbox";
+        checkInput.value = "";
+        checkInput.id = checkboxNames[i].toLowerCase();
+        if (checkInput.id === "necessary") checkInput.checked = true;
+
+        const checkLabel = document.createElement("label");
+        checkLabel.className = "form-check-label";
+        checkLabel.htmlFor = checkboxNames[i].toLowerCase();
+
+        const checkText = document.createElement("p");
+
+        const checkStrong = document.createElement("strong");
+        checkStrong.textContent = checkboxNames[i] + " cookies";
+        const checkMuted = document.createElement("muted");
+        checkMuted.textContent = checkboxDetails[i];
+
+        checkText.appendChild(checkStrong);
+        checkText.appendChild(document.createElement("br"));
+        checkText.appendChild(checkMuted);
+
+        checkLabel.appendChild(checkText);
+
+        checkDiv.appendChild(checkInput);
+        checkDiv.appendChild(checkLabel);
+
+        modalBody.appendChild(checkDiv);
+    }
+
+    // Create Modal Footer
+    const modalFooter = document.createElement("div");
+    modalFooter.className = "modal-footer";
+
+    const acceptNecessaryButton = document.createElement("button");
+    acceptNecessaryButton.className = "btn btn-outline-primary";
+    acceptNecessaryButton.type = "button";
+    acceptNecessaryButton.dataset.mdbDismiss = "modal";
+    acceptNecessaryButton.id = "rejectCookies"
+    acceptNecessaryButton.textContent = "Reject cookies";
+
+    const acceptAllButton = document.createElement("button");
+    acceptAllButton.className = "btn btn-primary";
+    acceptAllButton.type = "button";
+    acceptAllButton.dataset.mdbDismiss = "modal";
+    acceptAllButton.id = "allowCookies"
+    acceptAllButton.textContent = "Accept cookies";
+
+    modalFooter.appendChild(acceptNecessaryButton);
+    modalFooter.appendChild(acceptAllButton);
+
+    // Combine modal elements
+    modalContent.appendChild(modalHeader);
+    modalContent.appendChild(modalBody);
+    modalContent.appendChild(modalFooter);
+
     modalDialog.appendChild(modalContent);
-    modal.appendChild(modalDialog);
-    document.body.appendChild(modal);
-}
 
+    modal.appendChild(modalDialog);
+
+    document.body.appendChild(modal);
+    // var bootstrapModal = new bootstrap.Modal(modal);
+    // bootstrapModal.show();
+
+    acceptNecessaryButton.onclick = (e) => {
+        setCookie("rejectedCookies", "true", 10);
+        modal.style.display = "none";
+    };
+
+    acceptAllButton.onclick = (e) => {
+        setCookie("allowCookies", "true", 10);
+        modal.style.display = "none";
+    };
+}
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -593,8 +750,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = addBugReportForm();
     const reportButtons = addSRButton(modal);
     const smallReportButton = createSmallButton(modal);
-    addCookieModal();
 
+    //cookie
+    // addCookieModal();
+    generateHTML();
+    
     document.onkeydown = (e) => handleKeyDown(e, modal, reportButtons);
     document.onclick = (e) => handleClickOutsideModal(e, modal);
     document.onmouseup = (e) => handleMouseUp(e, smallReportButton);
@@ -613,5 +773,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('myFormContent').onsubmit = submitBugReport;
 
 });
-// For cookies.
-window.onload = handlePageLoad;
+
+// cookies.
+window.onload = function(){
+    handlePageLoad();
+}
