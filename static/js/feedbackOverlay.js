@@ -1,32 +1,32 @@
 var selectionAnchorNode;
 var bugReportState = {
     initiateWay: null,
-    setInitiateWay: function(value) {
+    setInitiateWay: function (value) {
         this.initiateWay = value;
     },
-    getInitiateWay: function() {
+    getInitiateWay: function () {
         return this.initiateWay;
     },
     selectedHtml: null,
     elementIdentifier: null,
-    setSelectedHtmlSRB: function(value) {
+    setSelectedHtmlSRB: function (value) {
         var htmlContent = value.innerHTML;
         this.selectedHtml = "data:text/html;charset=utf-8," + encodeURIComponent(htmlContent);
         this.elementIdentifier = value.id;
     },
-    setSelectedHtmlSmallButton: function(value) {
+    setSelectedHtmlSmallButton: function (value) {
         var range = value.getRangeAt(0);
         var container = document.createElement('div');
         container.appendChild(range.cloneContents());
         this.selectedHtml = 'data:text/html;charset=utf-8,' + encodeURIComponent(container.innerHTML);
     },
-    getSelectedHtml: function() {
+    getSelectedHtml: function () {
         return this.selectedHtml;
     },
-    getElementIdentifier: function() {
+    getElementIdentifier: function () {
         return this.elementIdentifier;
     },
-    clear : function() {
+    clear: function () {
         this.selectedHtml = "Undefined";
         this.elementIdentifier = "Undefined";
         this.initiateWay = "Undefined";
@@ -34,31 +34,36 @@ var bugReportState = {
 };
 
 function detectColorScheme() {
-    var theme="light";
-    var current_theme = localStorage.getItem("ar5iv_theme");
-    if(current_theme){
-      if(current_theme == "dark"){
-        theme = "dark";
-      } }
-    else if(!window.matchMedia) { return false; }
-    else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      theme = "dark"; }
-    if (theme=="dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else {
-      document.documentElement.setAttribute("data-theme", "light"); } 
-}
-
-function toggleColorScheme(){
+    var theme = "light";
     var current_theme = localStorage.getItem("ar5iv_theme");
     if (current_theme) {
-      if (current_theme == "light") {
-        localStorage.setItem("ar5iv_theme", "dark"); }
-      else {
-        localStorage.setItem("ar5iv_theme", "light"); } }
-    else {
-        localStorage.setItem("ar5iv_theme", "dark"); }
-    detectColorScheme(); 
+        if (current_theme == "dark") {
+            theme = "dark";
+        }
+    } else if (!window.matchMedia) {
+        return false;
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+    }
+    if (theme == "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+        document.documentElement.setAttribute("data-theme", "light");
+    }
+}
+
+function toggleColorScheme() {
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if (current_theme) {
+        if (current_theme == "light") {
+            localStorage.setItem("ar5iv_theme", "dark");
+        } else {
+            localStorage.setItem("ar5iv_theme", "light");
+        }
+    } else {
+        localStorage.setItem("ar5iv_theme", "dark");
+    }
+    detectColorScheme();
 }
 
 function addBugReportForm() {
@@ -107,8 +112,8 @@ function addBugReportForm() {
     modalHeader.appendChild(modalTitle);
     modalHeader.appendChild(closeButton);
 
-    if(theme==='dark'){
-        modalHeader.setAttribute('data-bs-theme',"dark");
+    if (theme === 'dark') {
+        modalHeader.setAttribute('data-bs-theme', "dark");
     }
 
     // Create the modal body
@@ -135,7 +140,7 @@ function addBugReportForm() {
     descriptionTextarea.setAttribute("style", "height: 80px;");
     // Update: Change to 500 for next two lines.
     descriptionTextarea.setAttribute("maxlength", "500"); // Set the maximum length to 200 characters
-    descriptionTextarea.setAttribute("placeholder","500 characters maximum");
+    descriptionTextarea.setAttribute("placeholder", "500 characters maximum");
 
     // Create the modal footer
     const modalFooter = document.createElement("div");
@@ -235,17 +240,17 @@ function addSRButton(modal) {
     return buttons;
 }
 
-function showModal (modal) {
+function showModal(modal) {
     modal.style.display = 'block';
     modal.setAttribute('tabindex', '-1'); // Ensure the modal is focusable
     modal.focus();
 }
 
-function hideModal (modal) { 
-    modal.style.display = 'none'; 
+function hideModal(modal) {
+    modal.style.display = 'none';
 }
 
-function showButtons (buttons) {
+function showButtons(buttons) {
     buttons.forEach((button) => {
         console.log(button);
         console.log(button.style.display);
@@ -255,7 +260,7 @@ function showButtons (buttons) {
     })
 }
 
-function hideButtons (buttons) {
+function hideButtons(buttons) {
     buttons.forEach((button) => button.style.display = 'none');
 }
 
@@ -263,7 +268,7 @@ function hideButtons (buttons) {
 const handleKeyDown = (e, modal, buttons) => {
     const ctrlOrMeta = e.metaKey || e.ctrlKey;
 
-    if (e.shiftKey && e.code === 'KeyB') { 
+    if (e.shiftKey && e.code === 'KeyB') {
         showButtons(buttons);
     } else if (ctrlOrMeta && (e.key === '/' || e.key === '?')) {
         showModal(modal)
@@ -274,26 +279,18 @@ const handleKeyDown = (e, modal, buttons) => {
 }
 
 //The highlight initiation way
-function handleMouseUp (e, smallButton) {
-        if (e.target.id === "small-report-button") 
-            return;
-        if (!window.getSelection().isCollapsed) {
-            selection = window.getSelection();
-            currentAnchorNode = selection.anchorNode;
-            bugReportState.setSelectedHtmlSmallButton(selection);
-            // var range = selection.getRangeAt(0);
-            // var container = document.createElement('div');
-            // container.appendChild(range.cloneContents());
-            // // Use the selected text to generate the dataURI
-            // selectedHtml = 'data:text/html;charset=utf-8,' + encodeURIComponent(container.innerHTML);
-            //Comment: Need to get the selected text and pass it to the backend
-            //reference: var selectedhtml in app.js
-            showSmallButton(smallButton);
-        }
-        else hideSmallButton(smallButton);
+function handleMouseUp(e, smallButton) {
+    if (e.target.id === "small-report-button")
+        return;
+    if (!window.getSelection().isCollapsed) {
+        selection = window.getSelection();
+        currentAnchorNode = selection.anchorNode;
+        bugReportState.setSelectedHtmlSmallButton(selection);
+        showSmallButton(smallButton);
+    } else hideSmallButton(smallButton);
 }
 
-function createSmallButton (modal) {
+function createSmallButton(modal) {
     const smallReportButton = document.createElement('button');
     smallReportButton.id = 'small-report-button';
     smallReportButton.type = 'button';
@@ -332,12 +329,12 @@ function showSmallButton(smallReportButton) {
     smallReportButton.style.display = 'inline';
 }
 
-function hideSmallButton (smallReportButton) {
+function hideSmallButton(smallReportButton) {
     smallReportButton.style.display = 'none';
 }
 
 //submit to the backend, next step: finish
-function submitBugReport (e) {
+function submitBugReport(e) {
     e.preventDefault();
     //document.getElementById('notification').style = 'display: block';
     const issueData = {};
@@ -350,14 +347,7 @@ function submitBugReport (e) {
     // const user_info = "account:yc2455 contact:@cornll.edu "
 
     // Report Time
-    const now = new Date();
-    const year = now.getFullYear();      // e.g. 2023
-    const month = now.getMonth() + 1;    // 0-11, so add 1
-    const day = now.getDate();           // 1-31
-    const hour = now.getHours();         // 0-23
-    const minute = now.getMinutes();     // 0-59
-    const second = now.getSeconds();     // 0-59
-    const currentTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    const currentTime = new Date();
 
     // Browser Version
     const userAgent = navigator.userAgent;
@@ -385,7 +375,7 @@ function submitBugReport (e) {
             topLayer = id ? id.split('.')[0] : classList[0];
         }
     }
-    
+
     const dataDescription = document.getElementById('description').value;
 
     const uniqueId = window.crypto.randomUUID();
@@ -405,10 +395,10 @@ function submitBugReport (e) {
 
     form = new FormData();
     form.append('template', 'bug_report.md');
-    form.append('title',`HTML conversion issue with : ${arxivIdv}$`)
+    form.append('title', `HTML conversion issue with : ${arxivIdv}$`)
     form.append('body', makeGithubBody(issueData));
 
-    const GITHUB_BASE_URL = 'https://github.com/arXiv/html_feedback/issues/new?' 
+    const GITHUB_BASE_URL = 'https://github.com/arXiv/html_feedback/issues/new?'
     const queryString = new URLSearchParams(form).toString()
     const link = GITHUB_BASE_URL + queryString;
 
@@ -426,7 +416,7 @@ function handleClickOutsideModal(e, modal) {
 }
 
 
-function makeGithubBody (issueData) {
+function makeGithubBody(issueData) {
     // User Fill in Data
     let body = "## Describe the issue\n\n";
     body += `**Description**: ${issueData.description}\n\n`;
@@ -445,16 +435,142 @@ function makeGithubBody (issueData) {
     body += `**Location High**: ${issueData.locationHigh}\n\n`;
     body += `**Initiation Way**: ${issueData.initiationWay}\n\n`;
 
-    var selectedText=`**Selected HTML**: ${issueData.selectedHtml}\n\n`;
-    if((body+selectedText).length>=8000){
-        selectedText="**htmlText**: " + selectedHtml.substring(0, 4000) + "\n\n"
-        body+=selectedText;
-    }
-    else{
-        body+=selectedText;
+    var selectedText = `**Selected HTML**: ${issueData.selectedHtml}\n\n`;
+    if ((body + selectedText).length >= 8000) {
+        selectedText = "**htmlText**: " + selectedHtml.substring(0, 4000) + "\n\n"
+        body += selectedText;
+    } else {
+        body += selectedText;
     }
 
     return body;
+}
+
+function createTableofContents() {
+    // Get the reference to the table of contents placeholder
+    var tableOfContents = document.getElementById('tableOfContentsInside');
+
+    // Create an unordered list
+    var ul = document.createElement('ul');
+    ul.classList.add('nav', 'nav-pills');
+
+    // Add the title to the table of contents
+    var previousul = document.createElement('ul');
+    var titleLi = document.createElement('li');
+    titleLi.classList.add('nav-item', 'toc-title');
+    var titleLink = document.createElement('a');
+    titleLink.classList.add('nav-link', 'toc-title-link');
+    titleLink.href = '#ltx_title';
+    titleLink.textContent = 'Title';
+    titleLi.appendChild(titleLink);
+    previousul.appendChild(titleLi);
+
+    // Add the abstract to the table of contents
+    var abstractLi = document.createElement('li');
+    abstractLi.classList.add('nav-item', 'toc-abstract');
+    var abstractLink = document.createElement('a');
+    abstractLink.classList.add('nav-link', 'toc-abstract-link');
+    abstractLink.href = '#ltx_abstract';
+    abstractLink.textContent = 'Abstract';
+    abstractLi.appendChild(abstractLink);
+    previousul.appendChild(abstractLi);
+    ul.appendChild(previousul);
+
+    // Get all the section elements
+    var sections = document.querySelectorAll('.ltx_section, .ltx_subsection, .ltx_paragraph, .ltx_bibliography');
+
+    // Keep track of the current parent element
+    var currentParent = ul;
+
+    // Iterate over the sections and create list items for each section
+    for (var i = 0; i < sections.length; i++) {
+        var section = sections[i];
+        var sectionId = section.getAttribute('id');
+        var sectionTitle = section.querySelector('.ltx_title').textContent;
+
+        // Determine the level of the section
+        var level = 0;
+        if (section.classList.contains('ltx_section')) {
+            level = 1;
+        } else if (section.classList.contains('ltx_subsection')) {
+            level = 2;
+        } else if (section.classList.contains('ltx_paragraph')) {
+            level = 3;
+        } else if (section.classList.contains('ltx_bibliography')) {
+            level = 4;
+        }
+
+        // Create a list item and link for the section
+        var li = document.createElement('li');
+        li.classList.add('nav-item');
+        var a = document.createElement('a');
+        a.classList.add('nav-link');
+        a.href = '#' + sectionId;
+        a.textContent = sectionTitle;
+
+        // Append the link to the list item
+        li.appendChild(a);
+
+        // Adjust the parent element based on the level of the section
+        while (currentParent && level <= currentParent.dataset.level) {
+            currentParent = currentParent.parentElement.parentElement;
+        }
+
+        // Append the list item to the appropriate parent element
+        if (currentParent) {
+            var parentUl = currentParent.querySelector('ul');
+            if (!parentUl) {
+                parentUl = document.createElement('ul');
+                currentParent.appendChild(parentUl);
+            }
+            parentUl.appendChild(li);
+        } else {
+            ul.appendChild(li);
+        }
+
+        // Update the current parent to the current list item
+        currentParent = li;
+        currentParent.dataset.level = level;
+    }
+
+    // Function to handle the click event for the links
+    function handleClick(event) {
+        event.preventDefault();
+        var targetId = event.target.getAttribute('href').slice(1);
+        var targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth'
+            });
+            if(event.target.parentElement.querySelector('ul') !== null){
+                updateHighlight(event.target);
+                console.log("highlight",event.target);
+            }
+            else{
+                updateHighlight(event.target.parentElement);
+                console.log("highlight",event.target.parentElement);
+            }
+            //console.log("highlight",event.target.parentElement);
+        }
+    }
+
+    // Function to update highlighting
+    function updateHighlight(selectedLi) {
+        var selectedItems = document.querySelectorAll('.selected');
+        selectedItems.forEach(function (item) {
+            item.classList.remove('selected');
+        });
+        selectedLi.classList.add('selected');
+    }
+
+    // Add click event listeners to all the links in the table of contents
+    ul.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', handleClick);
+    });
+
+
+    // Append the unordered list to the table of contents placeholder
+    tableOfContents.appendChild(ul);
 }
 
 // RUN THIS CODE ON INITIALIZE
@@ -464,6 +580,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = addBugReportForm();
     const reportButtons = addSRButton(modal);
     const smallReportButton = createSmallButton(modal);
+    createTableofContents();
 
     document.onkeydown = (e) => handleKeyDown(e, modal, reportButtons);
     document.onclick = (e) => handleClickOutsideModal(e, modal);
@@ -474,10 +591,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentScrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
         if (currentScrollPosition > lastScrollPosition || currentScrollPosition < lastScrollPosition) {
             smallReportButton.style.display = "none";
-          } else {
+        } else {
             smallReportButton.style.display = "block";
-          }
-          lastScrollPosition = currentScrollPosition;
+        }
+        lastScrollPosition = currentScrollPosition;
     });
 
     document.getElementById('myFormContent').onsubmit = submitBugReport;

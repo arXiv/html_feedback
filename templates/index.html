@@ -64,15 +64,22 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/ar5iv.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/ar5iv.0.7.6.min.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/ar5iv-site.0.2.1.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
  </head>
  <body>
   <div class="ltx_page_main">
+    <!--table of contents-->
+    <nav id="tableOfContents" class="toc" aria-labelledby="toc-header">
+      <h5 id="toc-header">Table of Contents</h5>
+      <div id="tableOfContentsInside"></div>
+    </nav>
    <div class="ltx_page_content">
     <article class="ltx_document ltx_authors_1line">
-     <h1 class="ltx_title ltx_title_document">
+      <!--add id-->
+     <h1 class="ltx_title ltx_title_document" id="ltx_title">
       Polynomial Chaos-Based Adaptive Control for Nonlinear
 Systems
      </h1>
@@ -88,7 +95,8 @@ Davi Ferreira de Castro, and José Manoel Balthazar
        </span>
       </span>
      </div>
-     <div class="ltx_abstract">
+     <!--add id-->
+     <div class="ltx_abstract" id='ltx_abstract'>
       <h6 class="ltx_title ltx_title_abstract">
        Abstract
       </h6>

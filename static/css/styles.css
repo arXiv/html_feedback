@@ -300,3 +300,41 @@ body:after {
   border-radius: .5em;
   margin: 1em auto;
 }
+
+#tableOfContents {
+  position: fixed;
+  top: 55px; /* Adjust the top position as needed */
+  /*left: 10px; /* Adjust the right position as needed */
+  background-color: #f8f9fa; /* Set the background color */
+  border: 1px solid #dee2e6; /* Set the border */
+  border-radius: 5px; /* Set the border radius */
+  padding: 10px; /* Set the padding */
+  max-height: 93%; /* Set the maximum height */
+  max-width: 20%;
+  overflow-y: auto; /* Enable vertical scrolling */
+  font-size: 13px;
+}
+
+.nav-pills .nav-item {
+  margin-bottom: 5px; /* Set the margin between items */
+}
+
+.nav-pills .nav-link {
+  padding: 5px 10px; /* Set the padding for the link */
+  border-radius: 3px; /* Set the border radius for the link */
+  color: #595151;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #e9ecef; /* Set the background color on hover */
+  color: #b31313;
+}
+
+/* Add styles for the selected item */
+.nav-item.selected {
+  background-color: #e9ecef;/* Change this to your preferred highlight color */
+}
+
+.nav-link.selected{
+  background-color:  #e9ecef;
+}
