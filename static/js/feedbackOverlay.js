@@ -417,6 +417,7 @@ function submitBugReport (e) {
     window.open(link, '_blank');
 
     // After Submit.
+    setCookie("iniateWay", bugReportState.getInitiateWay(), 10);
     document.querySelector('#myFormContent').reset();
     bugReportState.clear();
     hideModal(document.getElementById('myForm'));
@@ -462,7 +463,47 @@ function makeGithubBody (issueData) {
 // RUN THIS CODE ON INITIALIZE
 detectColorScheme();
 
+// Function to handle cookies on page load
+function handlePageLoad() {
+    const allowCookies = getCookie("allowCookies");
+    const rejectedCookies = getCookie("rejectedCookies");
+
+    console.log("Current cookies: ", document.cookie);
+
+    if (allowCookies || rejectedCookies) {
+        return; 
+    } else {
+        const modal = document.getElementById("cookieModal");
+        modal.style.display = "block";
+
+        document.getElementById("allowCookies").addEventListener('click', function() {
+            setCookie("allowCookies", "true", 10); 
+            setCookie("rejectedCookies", "false", 10);
+            modal.style.display = "none";
+            console.log("Current cookies after allowing: ", document.cookie);
+        });
+
+        document.getElementById("rejectCookies").addEventListener('click', function() {
+            setCookie("rejectedCookies", "true", 10);
+            setCookie("allowCookies", "false", 10);
+            modal.style.display = "none";
+        });
+    }
+}
+
+// check if cookies are allowed.
+function checkCookiesAllowed() {
+    const allowCookies = getCookie("allowCookies");
+    if (allowCookies) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 // Function to set cookie
+// this also can modify the cookie, it will overwrite the old one.
 function setCookie(cookieName, cookieValue, expirationDays) {
     const date = new Date();
     date.setTime(date.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
@@ -486,37 +527,16 @@ function getCookie(cookieName) {
     return "";
 }
 
-// Function to handle cookies on page load
-function handlePageLoad() {
-    const userSettings = getCookie("userSettings");
-    const rejectedCookies = getCookie("rejectedCookies");
-
-    if (rejectedCookies) {
-        return; // If the user has previously rejected cookies, we don't prompt them again
-    } else if (userSettings) {
-        const settings = JSON.parse(userSettings);
-
-        console.log("Font: ", settings.font);
-        console.log("Font size: ", settings.fontSize);
-        console.log("Line space: ", settings.lineSpace);
-    } else {
-        const allowCookies = confirm("Do you want to use cookies?");
-
-        if (allowCookies) {
-            const settings = {
-                font: "default", // Your default font
-                fontSize: "default", // Your default font size
-                lineSpace: "default" // Your default line space
-            }
-
-            setCookie("userSettings", JSON.stringify(settings), 10); // Set cookie for 10 minutes
-        } else {
-            // If the user doesn't want cookies, we set a cookie to remember this choice
-            setCookie("rejectedCookies", "true", 10); // Set cookie for 10 minutes
-        }
-    }
+// Function to delete one cookie.
+function deleteCookie(cookieName) {
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() - 1); // Set the time to one millisecond in the past to delete the cookie
+    const expires = "expires=" + expirationDate.toUTCString();
+    document.cookie = cookieName + "=; " + expires + ";path=/";
 }
 
+// This function clears all cookies, is build for test. 
+// Now it will clear all cookies after submit.
 function clearAllCookies() {
     var cookies = document.cookie.split(";");
   
@@ -530,115 +550,35 @@ function clearAllCookies() {
     }
 }
 
-// // For format change
-// function increaseFontSize() {
-// var textElements = document.getElementsByClassName("ltx_p");
+function addCookieModal(){
+    // 创建模态窗口
+    const modal = document.createElement("div");
+    modal.setAttribute("class", "modal");
+    modal.setAttribute("id", "cookieModal");
+    modal.style.display = "none";
 
-// for (var i = 0; i < textElements.length; i++) {
-//     var currentSize = parseFloat(window.getComputedStyle(textElements[i]).fontSize);
-//     var newSize = currentSize + 2; // Increase the font size by 2 pixels
+    const modalContent = document.createElement("div");
+    modalContent.setAttribute("class", "modal-content");
 
-//     textElements[i].style.fontSize = newSize + "px";
-// }
-// }
+    const p = document.createElement("p");
+    p.textContent = "Do you want to use cookies?";
 
-// function decreaseFontSize() {
-// var textElements = document.getElementsByClassName("ltx_p");
+    const allowButton = document.createElement("button");
+    allowButton.setAttribute("id", "allowCookies");
+    allowButton.textContent = "Yes";
 
-// for (var i = 0; i < textElements.length; i++) {
-//     var currentSize = parseFloat(window.getComputedStyle(textElements[i]).fontSize);
-//     var newSize = currentSize - 2; // Decrease the font size by 2 pixels
+    const rejectButton = document.createElement("button");
+    rejectButton.setAttribute("id", "rejectCookies");
+    rejectButton.textContent = "No";
 
-//     textElements[i].style.fontSize = newSize + "px";
-// }
-// }
+    modalContent.appendChild(p);
+    modalContent.appendChild(allowButton);
+    modalContent.appendChild(rejectButton);
+    modal.appendChild(modalContent);
 
-// function increaseLineSpacing() {
-// var textElements = document.getElementsByClassName("ltx_p");
+    document.body.appendChild(modal);
+}
 
-// for (var i = 0; i < textElements.length; i++) {
-//     var currentSize = parseFloat(window.getComputedStyle(textElements[i]).fontSize);
-//     var currentLineHeight = parseFloat(window.getComputedStyle(textElements[i]).lineHeight);
-//     var newLineHeight = currentLineHeight + (currentSize * 0.1); // Increase the line spacing by 10% of the font size
-
-//     textElements[i].style.lineHeight = newLineHeight + "px";
-// }
-//   }
-  
-// function decreaseLineSpacing() {
-//     var textElements = document.getElementsByClassName("ltx_p");
-
-//     for (var i = 0; i < textElements.length; i++) {
-//     var currentSize = parseFloat(window.getComputedStyle(textElements[i]).fontSize);
-//     var currentLineHeight = parseFloat(window.getComputedStyle(textElements[i]).lineHeight);
-//     var newLineHeight = currentLineHeight - (currentSize * 0.1); // Decrease the line spacing by 10% of the font size
-
-//     textElements[i].style.lineHeight = newLineHeight + "px";
-//     }
-// }
-
-// // Create button for format change
-// function changeFomrtButton() {
-//     // increase font size
-//     var floatingButtonIncreaseFontSize = document.createElement("button");
-//     floatingButtonIncreaseFontSize.textContent = "+";
-//     floatingButtonIncreaseFontSize.style.position = "fixed";
-//     floatingButtonIncreaseFontSize.style.bottom = "140px";
-//     floatingButtonIncreaseFontSize.style.right = "60px";
-//     floatingButtonIncreaseFontSize.style.width = "50px";
-//     floatingButtonIncreaseFontSize.style.height = "50px";
-//     floatingButtonIncreaseFontSize.style.borderRadius = "50%";
-//     floatingButtonIncreaseFontSize.style.backgroundColor = "#007bff";
-//     floatingButtonIncreaseFontSize.addEventListener("click", increaseFontSize);
-  
-//     // decrease font size
-//     var floatingButtonDecreaseFontSize = document.createElement("button");
-//     floatingButtonDecreaseFontSize.textContent = "-";
-//     floatingButtonDecreaseFontSize.style.position = "fixed";
-//     floatingButtonDecreaseFontSize.style.bottom = "80px";
-//     floatingButtonDecreaseFontSize.style.right = "60px";
-//     floatingButtonDecreaseFontSize.style.width = "50px";
-//     floatingButtonDecreaseFontSize.style.height = "50px";
-//     floatingButtonDecreaseFontSize.style.borderRadius = "50%";
-//     floatingButtonDecreaseFontSize.style.backgroundColor = "#007bff";
-//     floatingButtonDecreaseFontSize.addEventListener("click", decreaseFontSize);
-
-//     // increase line spacing
-//     var floatingButtonIncreaseLineSpacing = document.createElement("button");
-//     floatingButtonIncreaseLineSpacing.textContent = "+";
-//     floatingButtonIncreaseLineSpacing.style.position = "fixed";
-//     floatingButtonIncreaseLineSpacing.style.bottom = "110px";
-//     floatingButtonIncreaseLineSpacing.style.right = "120px";
-//     floatingButtonIncreaseLineSpacing.style.width = "50px";
-//     floatingButtonIncreaseLineSpacing.style.height = "50px";
-//     floatingButtonIncreaseLineSpacing.style.borderRadius = "50%";
-//     floatingButtonIncreaseLineSpacing.style.backgroundColor = "#007bff";
-//     floatingButtonIncreaseLineSpacing.addEventListener("click", increaseLineSpacing);
-
-//     // decrease line spacing
-//     var floatingButtonDecreaseLineSpacing = document.createElement("button");
-//     floatingButtonDecreaseLineSpacing.textContent = "-";
-//     floatingButtonDecreaseLineSpacing.style.position = "fixed";
-//     floatingButtonDecreaseLineSpacing.style.bottom = "110px";
-//     floatingButtonDecreaseLineSpacing.style.right = "0px";
-//     floatingButtonDecreaseLineSpacing.style.width = "50px";
-//     floatingButtonDecreaseLineSpacing.style.height = "50px";
-//     floatingButtonDecreaseLineSpacing.style.borderRadius = "50%";
-//     floatingButtonDecreaseLineSpacing.style.backgroundColor = "#007bff";
-//     floatingButtonDecreaseLineSpacing.addEventListener("click", decreaseLineSpacing);
-
-  
-//     // Append the buttons to the body
-//     document.body.appendChild(floatingButtonIncreaseFontSize);
-//     document.body.appendChild(floatingButtonDecreaseFontSize);
-//     document.body.appendChild(floatingButtonIncreaseLineSpacing);
-//     document.body.appendChild(floatingButtonDecreaseLineSpacing);
-//   }
-
-  
-  
-  
-  
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -646,6 +586,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = addBugReportForm();
     const reportButtons = addSRButton(modal);
     const smallReportButton = createSmallButton(modal);
+    addCookieModal();
 
     document.onkeydown = (e) => handleKeyDown(e, modal, reportButtons);
     document.onclick = (e) => handleClickOutsideModal(e, modal);
@@ -665,6 +606,5 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('myFormContent').onsubmit = submitBugReport;
 
 });
-
 // For cookies.
 window.onload = handlePageLoad;
