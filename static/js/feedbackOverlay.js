@@ -339,7 +339,7 @@ function hideSmallButton (smallReportButton) {
 //submit to the backend, next step: finish
 function submitBugReport (e) {
     e.preventDefault();
-    //Test for cookie.
+    //Test Test 2455
     clearAllCookies();
     //document.getElementById('notification').style = 'display: block';
     const issueData = {};
@@ -528,11 +528,121 @@ function clearAllCookies() {
       var expires = "expires=" + expirationDate.toUTCString();
       document.cookie = cookieName + "=; " + expires + ";path=/";
     }
-  }
+}
+
+// // For format change
+// function increaseFontSize() {
+// var textElements = document.getElementsByClassName("ltx_p");
+
+// for (var i = 0; i < textElements.length; i++) {
+//     var currentSize = parseFloat(window.getComputedStyle(textElements[i]).fontSize);
+//     var newSize = currentSize + 2; // Increase the font size by 2 pixels
+
+//     textElements[i].style.fontSize = newSize + "px";
+// }
+// }
+
+// function decreaseFontSize() {
+// var textElements = document.getElementsByClassName("ltx_p");
+
+// for (var i = 0; i < textElements.length; i++) {
+//     var currentSize = parseFloat(window.getComputedStyle(textElements[i]).fontSize);
+//     var newSize = currentSize - 2; // Decrease the font size by 2 pixels
+
+//     textElements[i].style.fontSize = newSize + "px";
+// }
+// }
+
+// function increaseLineSpacing() {
+// var textElements = document.getElementsByClassName("ltx_p");
+
+// for (var i = 0; i < textElements.length; i++) {
+//     var currentSize = parseFloat(window.getComputedStyle(textElements[i]).fontSize);
+//     var currentLineHeight = parseFloat(window.getComputedStyle(textElements[i]).lineHeight);
+//     var newLineHeight = currentLineHeight + (currentSize * 0.1); // Increase the line spacing by 10% of the font size
+
+//     textElements[i].style.lineHeight = newLineHeight + "px";
+// }
+//   }
+  
+// function decreaseLineSpacing() {
+//     var textElements = document.getElementsByClassName("ltx_p");
+
+//     for (var i = 0; i < textElements.length; i++) {
+//     var currentSize = parseFloat(window.getComputedStyle(textElements[i]).fontSize);
+//     var currentLineHeight = parseFloat(window.getComputedStyle(textElements[i]).lineHeight);
+//     var newLineHeight = currentLineHeight - (currentSize * 0.1); // Decrease the line spacing by 10% of the font size
+
+//     textElements[i].style.lineHeight = newLineHeight + "px";
+//     }
+// }
+
+// // Create button for format change
+// function changeFomrtButton() {
+//     // increase font size
+//     var floatingButtonIncreaseFontSize = document.createElement("button");
+//     floatingButtonIncreaseFontSize.textContent = "+";
+//     floatingButtonIncreaseFontSize.style.position = "fixed";
+//     floatingButtonIncreaseFontSize.style.bottom = "140px";
+//     floatingButtonIncreaseFontSize.style.right = "60px";
+//     floatingButtonIncreaseFontSize.style.width = "50px";
+//     floatingButtonIncreaseFontSize.style.height = "50px";
+//     floatingButtonIncreaseFontSize.style.borderRadius = "50%";
+//     floatingButtonIncreaseFontSize.style.backgroundColor = "#007bff";
+//     floatingButtonIncreaseFontSize.addEventListener("click", increaseFontSize);
+  
+//     // decrease font size
+//     var floatingButtonDecreaseFontSize = document.createElement("button");
+//     floatingButtonDecreaseFontSize.textContent = "-";
+//     floatingButtonDecreaseFontSize.style.position = "fixed";
+//     floatingButtonDecreaseFontSize.style.bottom = "80px";
+//     floatingButtonDecreaseFontSize.style.right = "60px";
+//     floatingButtonDecreaseFontSize.style.width = "50px";
+//     floatingButtonDecreaseFontSize.style.height = "50px";
+//     floatingButtonDecreaseFontSize.style.borderRadius = "50%";
+//     floatingButtonDecreaseFontSize.style.backgroundColor = "#007bff";
+//     floatingButtonDecreaseFontSize.addEventListener("click", decreaseFontSize);
+
+//     // increase line spacing
+//     var floatingButtonIncreaseLineSpacing = document.createElement("button");
+//     floatingButtonIncreaseLineSpacing.textContent = "+";
+//     floatingButtonIncreaseLineSpacing.style.position = "fixed";
+//     floatingButtonIncreaseLineSpacing.style.bottom = "110px";
+//     floatingButtonIncreaseLineSpacing.style.right = "120px";
+//     floatingButtonIncreaseLineSpacing.style.width = "50px";
+//     floatingButtonIncreaseLineSpacing.style.height = "50px";
+//     floatingButtonIncreaseLineSpacing.style.borderRadius = "50%";
+//     floatingButtonIncreaseLineSpacing.style.backgroundColor = "#007bff";
+//     floatingButtonIncreaseLineSpacing.addEventListener("click", increaseLineSpacing);
+
+//     // decrease line spacing
+//     var floatingButtonDecreaseLineSpacing = document.createElement("button");
+//     floatingButtonDecreaseLineSpacing.textContent = "-";
+//     floatingButtonDecreaseLineSpacing.style.position = "fixed";
+//     floatingButtonDecreaseLineSpacing.style.bottom = "110px";
+//     floatingButtonDecreaseLineSpacing.style.right = "0px";
+//     floatingButtonDecreaseLineSpacing.style.width = "50px";
+//     floatingButtonDecreaseLineSpacing.style.height = "50px";
+//     floatingButtonDecreaseLineSpacing.style.borderRadius = "50%";
+//     floatingButtonDecreaseLineSpacing.style.backgroundColor = "#007bff";
+//     floatingButtonDecreaseLineSpacing.addEventListener("click", decreaseLineSpacing);
+
+  
+//     // Append the buttons to the body
+//     document.body.appendChild(floatingButtonIncreaseFontSize);
+//     document.body.appendChild(floatingButtonDecreaseFontSize);
+//     document.body.appendChild(floatingButtonIncreaseLineSpacing);
+//     document.body.appendChild(floatingButtonDecreaseLineSpacing);
+//   }
+
+  
+  
+  
   
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    //changeFomrtButton();
     const modal = addBugReportForm();
     const reportButtons = addSRButton(modal);
     const smallReportButton = createSmallButton(modal);
