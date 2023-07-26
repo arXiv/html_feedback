@@ -660,10 +660,10 @@ function generateHTML() {
     const modalBody = document.createElement("div");
     modalBody.className = "modal-body";
 
-    const checkboxNames = ["Necessary", "Analytical", "Marketing"];
+    const checkboxNames = ["Necessary", "Analytical", "ScreenReader"];
     const checkboxDetails = ["help with the basic functionality of our website, e.g remember if you gave consent to cookies.",
                              "make it possible to gather statistics about the use and trafiic on our website, so we can make it better.",
-                             "make it possible to show you more relevant social media content and advertisements on our website and other platforms."];
+                             "Help to make the website more accessible for screen readers."];
 
     for(let i = 0; i < 3; i++) {
         const checkDiv = document.createElement("div");
