@@ -2,11 +2,24 @@ body {
   position: relative;
 }
 
+
+
 #openForm {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  font-size: 20px;
+  /* font-size: 20px; */
+  width: 70px;
+  height: 70px;
+  background-color: #b31b1b;
+}
+#openSettings {
+  position: fixed;
+  bottom: 110px;
+  right: 20px;
+  /* font-size: 20px; */
+  width: 70px;
+  height: 70px;
   background-color: #b31b1b;
 }
 
@@ -138,6 +151,9 @@ header {
   background-color: #b31313;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  margin: 0 auto;
   padding: .5em 4em;
   align-items: center;
 }
@@ -164,6 +180,32 @@ header a {
   font-size: smaller;
   color: black;
 }
+
+/* Styles for the navigation list */
+.navigation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.navigation-list li {
+  margin-right: 15px;
+}
+
+/* Show the navigation list for smaller screens when the hamburger button is clicked */
+@media (max-width: 768px) {
+  .hamburger-button {
+      display: block; /* Show the hamburger button for smaller screens */
+  }
+  .navigation-list {
+      display: none; /* Hide the navigation list by default for smaller screens */
+  }
+  .navigation-list.show {
+      display: flex; /* Show the navigation list when the hamburger button is clicked */
+  }
+}
+
 
 .body-message {
   display: block;
@@ -299,4 +341,23 @@ body:after {
   padding: 1em;
   border-radius: .5em;
   margin: 1em auto;
+}
+
+#footer{
+  background-color: #b31b1b;
+  height: 40px;
+}
+
+.centered-message {
+  flex: 1;
+  text-align: center;
+}
+
+.header-links {
+  display: flex;
+  align-items: center;
+}
+
+.header-links a {
+  margin-left: 16px; /* Adjust the margin as needed */
 }

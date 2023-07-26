@@ -54,12 +54,44 @@ function toggleColorScheme(){
 
 function addBugReportForm() {
     const theme = document.documentElement.getAttribute("data-theme");
+
+    const SettingIssueContainer = document.createElement("div");
+    SettingIssueContainer.setAttribute("id", "SettingIssueContainer");
+    SettingIssueContainer.setAttribute("class", "d-flex flex-column");
+
     // Create the button element
     const button = document.createElement("button");
     button.setAttribute("type", "button");
     button.setAttribute("class", "btn btn-primary");
     button.setAttribute("id", "openForm");
+    button.setAttribute("style", "");
     button.appendChild(document.createTextNode("Open Issue"));
+
+    // Create the settings button
+    const settings = document.createElement("button");
+    settings.setAttribute("type", "button");
+    settings.setAttribute("class", "btn btn-primary");
+    settings.setAttribute("id", "openSettings");
+    settings.style.padding = "5px";
+
+    const settingsImage = document.createElement("img");
+    settingsImage.setAttribute("src", "static/img/setting-button.png");
+    settingsImage.setAttribute("alt", "Settings");
+    settingsImage.style.width = "50px";
+    settingsImage.style.height = "50px";
+    settingsImage.style.backgroundColor = "transparent";
+
+    settings.appendChild(settingsImage);
+
+    SettingIssueContainer.appendChild(button);
+    SettingIssueContainer.appendChild(settings);
+
+    settings.onclick = (e) => {
+        currentAnchorNode = null;
+        const settingsModal = createSettingsModal(); // Create the "Settings" modal
+        showSettingsModal(settingsModal); // Call the function to show the "Settings" modal
+        bugReportState.setInitiateWay("SettingsButton");
+    };
 
     // Create the modal container element
     const modal = document.createElement("div");
@@ -169,7 +201,8 @@ function addBugReportForm() {
 
     modal.appendChild(modalDialog);
 
-    document.body.appendChild(button);
+    document.body.appendChild(SettingIssueContainer);
+    //document.body.appendChild(button);
     document.body.appendChild(modal);
 
     button.onclick = (e) => {
@@ -236,6 +269,12 @@ function hideModal (modal) {
     modal.style.display = 'none';
 }
 
+function showSettingsModal(settingsModal) {
+    settingsModal.style.display = 'block';
+    settingsModal.setAttribute('tabindex', '-1'); // Ensure the modal is focusable
+    settingsModal.focus();
+}
+
 function showButtons (buttons) {
     buttons.forEach((button) => {
         console.log(button);
@@ -249,6 +288,107 @@ function showButtons (buttons) {
 function hideButtons (buttons) {
     buttons.forEach((button) => button.style.display = 'none');
 }
+
+  // Add floating banner.
+function addFloatingBanner() {
+    // Create header element
+    var header = document.createElement('header');
+
+    // Create "skip" link
+    var skipLink = document.createElement('a');
+    skipLink.className = 'skip';
+    skipLink.href = '#main';
+    skipLink.textContent = 'Skip to main content';
+
+    // Create logo image with background color set to transparent
+    var logoImage = document.createElement('img');
+    logoImage.alt = 'logo';
+    logoImage.className = 'logo';
+    logoImage.setAttribute('role', 'presentation');
+    logoImage.style.backgroundColor = 'transparent';
+    logoImage.src = '/static/img/arxiv-logo-one-color-white.svg';
+
+    // Create logomark image
+    var logomarkImage = document.createElement('img');
+    logomarkImage.alt = 'logo';
+    logomarkImage.className = 'logomark';
+    logomarkImage.setAttribute('role', 'presentation');
+    logomarkImage.src = '/static/img/arxiv-logomark-small-white.svg';
+
+    // Create header message
+    var headerMessage = document.createElement('div');
+    headerMessage.className = 'header-message centered-message';
+    headerMessage.setAttribute('role', 'banner');
+    headerMessage.innerHTML = '<strong>Experimental HTML</strong>. Report rendering errors with the "Open Issue" button or click <strong>Shift+b</strong> to toggle accessible section reporting links. <a href="#footer">Reference all keyboard commands</a> in the footer.';
+
+    // Create "open issue" link
+    var issueLink = document.createElement('a');
+    issueLink.href = '#myForm';
+    issueLink.textContent = 'Open Issue';
+
+    // Create "setting" link
+    // var settingLink = document.createElement('a');
+    // settingLink.href = '#settingsModal';
+    // settingLink.textContent = 'Settings';
+
+    // Create "back to abstract" link
+    var backLink = document.createElement('a');
+    backLink.href = '';
+    backLink.textContent = 'Back to Abstract';
+
+    //invisible element
+    const invisibleElement = document.createElement('div');
+    invisibleElement.className = 'sr-only keyboard-glossary';
+
+    // Create the <h2> element
+    const heading = document.createElement('h2');
+    heading.textContent = 'Keyboard commands glossary';
+
+    // Create the <ul> element
+    const list = document.createElement('ul');
+
+    // Create the list items and add them to the <ul> element
+    const listItem1 = document.createElement('li');
+    listItem1.textContent = 'List a command here';
+    list.appendChild(listItem1);
+
+    const listItem2 = document.createElement('li');
+    listItem2.textContent = 'A second command';
+    list.appendChild(listItem2);
+
+    const listItem3 = document.createElement('li');
+    listItem3.textContent = 'List a third command here';
+    list.appendChild(listItem3);
+
+
+    // Append the child elements to the invisible element
+    invisibleElement.appendChild(heading);
+    invisibleElement.appendChild(list);
+    
+
+    // Append all elements to the header element
+    header.appendChild(skipLink);
+    header.appendChild(logoImage);
+    header.appendChild(logomarkImage);
+    header.appendChild(headerMessage);
+    header.appendChild(issueLink);
+    // header.appendChild(settingLink);
+    header.appendChild(backLink);
+    header.appendChild(invisibleElement);
+
+    // Get the <body> element and append the header element to it
+    var body = document.querySelector('body');
+    body.insertBefore(header, body.firstChild);
+
+    var header = document.querySelector('header');
+    
+    issueLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        const modal = document.getElementById('myForm');
+        showModal(modal);
+        bugReportState.setInitiateWay("FixedButton");
+    });
+  };
 
 // Code for handling key press to open/close modal
 const handleKeyDown = (e, modal, buttons) => {
@@ -306,6 +446,75 @@ function createSmallButton (modal) {
 
     return smallReportButton;
 }
+
+function createSettingsModal() {
+    // Create the modal container element for settings
+    const settingsModal = document.createElement("div");
+    settingsModal.setAttribute("class", "modal");
+    settingsModal.setAttribute("id", "settingsModal");
+    settingsModal.setAttribute("role", "dialog");
+    settingsModal.setAttribute("aria-labelledby", "modal-title");
+
+    // Create the modal dialog element
+    const settingsModalDialog = document.createElement("div");
+    settingsModalDialog.setAttribute("class", "modal-dialog");
+
+    // Create the modal content
+    const settingsModalContent = document.createElement("div");
+    settingsModalContent.setAttribute("class", "modal-content");
+
+    // Create the modal header for settings
+    const settingsModalHeader = document.createElement("div");
+    settingsModalHeader.setAttribute("class", "modal-header");
+
+    // Create the modal title for settings
+    const settingsModalTitle = document.createElement("h5");
+    settingsModalTitle.setAttribute("class", "modal-title");
+    settingsModalTitle.appendChild(document.createTextNode("Settings"));
+
+    // Create the close button for the settings modal
+    const settingsCloseButton = document.createElement("button");
+    settingsCloseButton.setAttribute("type", "button");
+    settingsCloseButton.setAttribute("class", "btn-close");
+    settingsCloseButton.setAttribute("data-bs-dismiss", "modal");
+    settingsCloseButton.setAttribute("aria-label", "Close");
+
+    // Append the title and close button to the modal header
+    settingsModalHeader.appendChild(settingsModalTitle);
+    settingsModalHeader.appendChild(settingsCloseButton);
+
+    // ... (add the rest of your modal content, like body and footer)
+
+    // Append the modal header to the modal content
+    settingsModalContent.appendChild(settingsModalHeader);
+
+    // ... (append the rest of your modal elements to the modal content)
+
+    // Append the modal content to the modal dialog
+    settingsModalDialog.appendChild(settingsModalContent);
+
+    // Append the modal dialog to the modal container
+    settingsModal.appendChild(settingsModalDialog);
+
+    // Append the modal container to the document body
+    document.body.appendChild(settingsModal);
+
+    // Add event listener to the settings link in the header
+    const settingLink = document.querySelector('a[href="#settingsModal"]');
+    settingLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modal = document.getElementById('settingsModal');
+        showSettingsModal(modal); // Call the function to show the "Settings" modal
+    });
+
+    settingsCloseButton.addEventListener("click", () => {
+        hideModal(settingsModal); // Call your hideModal function to close the modal
+    });
+
+    return settingsModal;
+}
+
+
 
 // Display the smallButton for bug report, click and scroll included
 function showSmallButton(smallReportButton) {
@@ -434,13 +643,193 @@ function makeGithubBody (issueData) {
     return body;
 }
 
+// function addFooter() {
+//     // Create footer element
+//     var footer = document.createElement('footer');
+//     footer.style.display = 'flex';
+//     footer.style.alignItems = 'center';
+  
+//     // Create the logo column
+//     var logoColumn = document.createElement('div');
+//     logoColumn.className = 'footer-column';
+//     var logoImage = document.createElement('img');
+//     logoImage.alt = 'logo';
+//     logoImage.className = 'logo';
+//     logoImage.setAttribute('role', 'presentation');
+//     logoImage.style.backgroundColor = 'transparent';
+//     logoImage.src = '/static/img/arxiv-logo-one-color-white.svg'; 
+//     logoColumn.appendChild(logoImage);
+  
+//     // Create the links column
+//     var linksColumn = document.createElement('div');
+//     linksColumn.className = 'footer-column';
+//     linksColumn.style.justifyContent = 'space-evenly';
+//     // Create "skip" link in the footer
+//     var skipLink = document.createElement('a');
+//     skipLink.className = 'skip';
+//     skipLink.href = '#main';
+//     skipLink.textContent = 'Skip to main content';
+  
+//     // Create "open issue" link in the footer
+//     var issueLink = document.createElement('a');
+//     issueLink.href = '#myForm';
+//     issueLink.textContent = 'Open Issue';
+  
+//     // Create "setting" link in the footer
+//     var settingLink = document.createElement('a');
+//     settingLink.href = '#settingsModal';
+//     settingLink.textContent = 'Settings';
+  
+//     // Create "back to abstract" link in the footer
+//     var backLink = document.createElement('a');
+//     backLink.href = '';
+//     backLink.textContent = 'Back to Abstract';
+  
+//     // Append the links to the links column
+//     linksColumn.appendChild(skipLink);
+//     linksColumn.appendChild(issueLink);
+//     linksColumn.appendChild(settingLink);
+//     linksColumn.appendChild(backLink);
+  
+//     // Create the timestamp column
+//     var timestampColumn = document.createElement('div');
+//     timestampColumn.className = 'footer-column';
+//     var timestamp = document.createTextNode('Timestamp: ' + new Date().toLocaleString());
+//     timestampColumn.appendChild(timestamp);
+  
+//     // Append the columns to the footer element
+//     footer.appendChild(logoColumn);
+//     footer.appendChild(linksColumn);
+//     footer.appendChild(timestampColumn);
+//     footer.appendChild(logoColumn);
+  
+//     // Get the <body> element and append the footer element to it
+//     var body = document.querySelector('body');
+//     body.appendChild(footer);
+  
+//     // Add an ID to the footer for the keyboard commands reference link to jump to
+//     footer.setAttribute('id', 'footer');
+//   }
+  
+  
+
 // RUN THIS CODE ON INITIALIZE
+function addFooter(){
+    var footer = document.createElement('footer');
+
+    var night = document.createElement('a');
+    night.setAttribute('class', 'ar5iv-toggle-color-scheme');
+    night.setAttribute('href', 'javascript:toggleColorScheme()');
+    night.setAttribute('title', 'Toggle ar5iv color scheme');
+
+    var nightSpan = document.createElement('span');
+    nightSpan.setAttribute('class', 'color-scheme-icon');
+    night.appendChild(nightSpan);
+
+    // Create the second link with class "ar5iv-footer-button" for "Copyright"
+    var copyLink = document.createElement('a');
+    copyLink.setAttribute('class', 'ar5iv-footer-button');
+    copyLink.setAttribute('href', 'https://arxiv.org/help/license');
+    copyLink.setAttribute('target', '_blank');
+    copyLink.appendChild(document.createTextNode('Copyright'));
+
+    // Create the third link with class "ar5iv-footer-button" for "Privacy Policy"
+    var policyLink = document.createElement('a');
+    policyLink.setAttribute('class', 'ar5iv-footer-button');
+    policyLink.setAttribute('href', 'https://arxiv.org/help/policies/privacy_policy');
+    policyLink.setAttribute('target', '_blank');
+    policyLink.appendChild(document.createTextNode('Privacy Policy'));
+
+    // Create "skip" link in the footer
+    var skipLink = document.createElement('a');
+    skipLink.setAttribute('class', 'ar5iv-footer-button');
+    skipLink.setAttribute('target', '_blank');
+    skipLink.href = '#main';
+    skipLink.textContent = 'Back to Abstract';
+
+    // Create "open issue" link in the footer
+    var issueLink = document.createElement('a');
+    issueLink.setAttribute('class', 'ar5iv-footer-button');
+    issueLink.setAttribute('target', '_blank');
+    issueLink.href = '#myForm';
+    issueLink.textContent = 'Open Issue';
+
+    // Create "settings" link in the footer
+    // var settingLink = document.createElement('a');
+    // settingLink.setAttribute('class', 'ar5iv-footer-button');
+    // settingLink.setAttribute('target', '_blank');
+    // settingLink.href = '#myForm';
+    // settingLink.textContent = 'Settings';
+
+    var TimeLogo = document.createElement('div');
+    TimeLogo.setAttribute('class','ltx_page_logo');
+    // Create the timestamp
+    var timestamp = document.createTextNode('Generated on Wed Dec 14 18:01:44 2022 by ');
+    TimeLogo.appendChild(timestamp);
+
+    var logoLink = document.createElement('a');
+    logoLink.href = 'https://math.nist.gov/~BMiller/LaTeXML/';
+    logoLink.setAttribute('class','ltx_LaTeXML_logo');
+
+    var logoSpan1 = document.createElement('span');
+    logoSpan1.style.letterSpacing = '-0.2em';
+    logoSpan1.style.marginRight = '0.1em';
+
+    var letterL = document.createTextNode('L');
+    logoSpan1.appendChild(letterL);
+
+    var letterA = document.createElement('span');
+    letterA.style.fontSize = '70%';
+    letterA.style.position = 'relative';
+    letterA.style.bottom = '2.2pt';
+    letterA.appendChild(document.createTextNode('A'));
+    logoSpan1.appendChild(letterA);
+
+    var letterT = document.createTextNode('T');
+    logoSpan1.appendChild(letterT);
+
+    var letterE = document.createElement('span');
+    letterE.style.position = 'relative';
+    letterE.style.bottom = '-0.4ex';
+    letterE.appendChild(document.createTextNode('E'));
+    logoSpan1.appendChild(letterE);
+
+    var logoSpan2 = document.createElement('span');
+    logoSpan2.setAttribute('class', 'ltx_font_smallcaps');
+    logoSpan2.appendChild(document.createTextNode('xml'));
+
+    var logoImage = document.createElement('img');
+    logoImage.alt = '[LOGO]';
+    logoImage.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==';
+    logoLink.appendChild(logoSpan1);
+    logoLink.appendChild(logoSpan2);
+    logoLink.appendChild(logoImage);
+
+    TimeLogo.appendChild(logoLink);
+
+    footer.appendChild(night)
+    footer.appendChild(copyLink)
+    footer.appendChild(policyLink)
+    footer.appendChild(skipLink)
+    footer.appendChild(issueLink)
+    // footer.appendChild(settingLink)
+    footer.appendChild(TimeLogo)
+
+    var body = document.querySelector('body');
+    body.appendChild(footer);
+
+    footer.setAttribute('class', 'ltx_page_footer');
+}
+
 detectColorScheme();
 document.addEventListener("DOMContentLoaded", () => {
-
     const modal = addBugReportForm();
     const reportButtons = addSRButton(modal);
     const smallReportButton = createSmallButton(modal);
+
+    // Call the addFloatingBanner function to add the floating banner to the document
+    addFloatingBanner();
+    addFooter();
 
     document.onkeydown = (e) => handleKeyDown(e, modal, reportButtons);
     document.onclick = (e) => handleClickOutsideModal(e, modal);
@@ -451,11 +840,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentScrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
         if (currentScrollPosition > lastScrollPosition || currentScrollPosition < lastScrollPosition) {
             smallReportButton.style.display = "none";
-          } else {
+        } else {
             smallReportButton.style.display = "block";
-          }
-          lastScrollPosition = currentScrollPosition;
+        }
+        lastScrollPosition = currentScrollPosition;
     });
 
     document.getElementById('myFormContent').onsubmit = submitBugReport;
 });
+
