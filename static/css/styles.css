@@ -150,11 +150,11 @@ img#screenshot-img {
 header {
   background-color: #b31313;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   flex-direction: row;
   margin: 0 auto;
-  padding: .5em 4em;
+  padding: .5em 0em;
   align-items: center;
 }
 
@@ -350,7 +350,6 @@ body:after {
 
 .centered-message {
   flex: 1;
-  text-align: center;
 }
 
 .header-links {

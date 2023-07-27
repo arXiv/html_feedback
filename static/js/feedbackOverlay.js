@@ -289,7 +289,7 @@ function hideButtons (buttons) {
     buttons.forEach((button) => button.style.display = 'none');
 }
 
-  // Add floating banner.
+// Add floating banner.
 function addFloatingBanner() {
     // Create header element
     var header = document.createElement('header');
@@ -321,6 +321,8 @@ function addFloatingBanner() {
     headerMessage.setAttribute('role', 'banner');
     headerMessage.innerHTML = '<strong>Experimental HTML</strong>. Report rendering errors with the "Open Issue" button or click <strong>Shift+b</strong> to toggle accessible section reporting links. <a href="#footer">Reference all keyboard commands</a> in the footer.';
 
+    var Links = document.createElement('div');
+
     // Create "open issue" link
     var issueLink = document.createElement('a');
     issueLink.href = '#myForm';
@@ -335,6 +337,10 @@ function addFloatingBanner() {
     var backLink = document.createElement('a');
     backLink.href = '';
     backLink.textContent = 'Back to Abstract';
+    backLink.style.paddingLeft = '10px';
+
+    Links.appendChild(issueLink);
+    Links.appendChild(backLink);
 
     //invisible element
     const invisibleElement = document.createElement('div');
@@ -371,9 +377,10 @@ function addFloatingBanner() {
     header.appendChild(logoImage);
     header.appendChild(logomarkImage);
     header.appendChild(headerMessage);
-    header.appendChild(issueLink);
+    // header.appendChild(issueLink);
     // header.appendChild(settingLink);
-    header.appendChild(backLink);
+    // header.appendChild(backLink);
+    header.appendChild(Links);
     header.appendChild(invisibleElement);
 
     // Get the <body> element and append the header element to it
@@ -514,8 +521,6 @@ function createSettingsModal() {
     return settingsModal;
 }
 
-
-
 // Display the smallButton for bug report, click and scroll included
 function showSmallButton(smallReportButton) {
     selection = window.getSelection();
@@ -643,6 +648,20 @@ function makeGithubBody (issueData) {
     return body;
 }
 
+//An example of changing fonts
+function toggleFont() {
+    var paragraphs = document.getElementsByTagName('p');
+    for (var i = 0; i < paragraphs.length; i++) {
+        if (isFontCalibri) {
+            paragraphs[i].style.fontFamily = ''; // Reset to default font (inherit)
+        } else {
+            paragraphs[i].style.fontFamily = 'Calibri, sans-serif';
+        }
+    }
+    // Toggle the font state
+    isFontCalibri = !isFontCalibri;
+}
+
 // function addFooter() {
 //     // Create footer element
 //     var footer = document.createElement('footer');
@@ -714,6 +733,7 @@ function makeGithubBody (issueData) {
   
 
 // RUN THIS CODE ON INITIALIZE
+var isFontCalibri = false;
 function addFooter(){
     var footer = document.createElement('footer');
 
@@ -753,6 +773,12 @@ function addFooter(){
     issueLink.setAttribute('target', '_blank');
     issueLink.href = '#myForm';
     issueLink.textContent = 'Open Issue';
+
+    var changeFontButton = document.createElement('a');
+    changeFontButton.setAttribute('class', 'ar5iv-toggle-color-scheme');
+    changeFontButton.setAttribute('href', 'javascript:toggleFont()');
+    changeFontButton.textContent = 'Change Font Example';
+    // changeFontButton.addEventListener('click', changeFontToCalibri);
 
     // Create "settings" link in the footer
     // var settingLink = document.createElement('a');
@@ -812,6 +838,7 @@ function addFooter(){
     footer.appendChild(policyLink)
     footer.appendChild(skipLink)
     footer.appendChild(issueLink)
+    footer.appendChild(changeFontButton); 
     // footer.appendChild(settingLink)
     footer.appendChild(TimeLogo)
 
