@@ -360,3 +360,7 @@ body:after {
 .header-links a {
   margin-left: 16px; /* Adjust the margin as needed */
 }
+
+.font-icon{
+  content: "T";
+}

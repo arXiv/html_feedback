@@ -88,8 +88,8 @@ function addBugReportForm() {
 
     settings.onclick = (e) => {
         currentAnchorNode = null;
-        const settingsModal = createSettingsModal(); // Create the "Settings" modal
-        showSettingsModal(settingsModal); // Call the function to show the "Settings" modal
+        const settingsModal = createSettingsModal();
+        showSettingsModal(settingsModal);
         bugReportState.setInitiateWay("SettingsButton");
     };
 
@@ -202,7 +202,6 @@ function addBugReportForm() {
     modal.appendChild(modalDialog);
 
     document.body.appendChild(SettingIssueContainer);
-    //document.body.appendChild(button);
     document.body.appendChild(modal);
 
     button.onclick = (e) => {
@@ -271,7 +270,7 @@ function hideModal (modal) {
 
 function showSettingsModal(settingsModal) {
     settingsModal.style.display = 'block';
-    settingsModal.setAttribute('tabindex', '-1'); // Ensure the modal is focusable
+    settingsModal.setAttribute('tabindex', '-1');
     settingsModal.focus();
 }
 
@@ -325,6 +324,9 @@ function addFloatingBanner() {
 
     // Create "open issue" link
     var issueLink = document.createElement('a');
+    issueLink.setAttribute('class', 'ar5iv-footer-button');
+    issueLink.setAttribute('target', '_blank');
+    issueLink.style.color = 'white'
     issueLink.href = '#myForm';
     issueLink.textContent = 'Open Issue';
 
@@ -335,12 +337,38 @@ function addFloatingBanner() {
 
     // Create "back to abstract" link
     var backLink = document.createElement('a');
+    backLink.setAttribute('class', 'ar5iv-footer-button');
+    backLink.setAttribute('target', '_blank');
+    backLink.style.color = 'white'
     backLink.href = '';
     backLink.textContent = 'Back to Abstract';
     backLink.style.paddingLeft = '10px';
 
+    //night mode toggle
+    var night = document.createElement('a');
+    night.setAttribute('class', 'ar5iv-toggle-color-scheme');
+    night.setAttribute('href', 'javascript:toggleColorScheme()');
+    night.setAttribute('title', 'Toggle ar5iv color scheme');
+    var nightSpan = document.createElement('span');
+    nightSpan.setAttribute('class', 'color-scheme-icon');
+    night.appendChild(nightSpan);
+    night.style.float = 'right'
+
+    //font toggle
+    var changeFontButton = document.createElement('a');
+    changeFontButton.setAttribute('class', 'ar5iv-toggle-color-scheme');
+    changeFontButton.setAttribute('href', 'javascript:toggleFont()');
+    var fontImage = document.createElement('img');
+    fontImage.setAttribute('src', 'static/img/font-icon.png');
+    fontImage.style.width = '20px';
+    fontImage.style.backgroundColor = 'transparent';
+    changeFontButton.appendChild(fontImage)
+    changeFontButton.style.float = 'right'
+
     Links.appendChild(issueLink);
     Links.appendChild(backLink);
+    Links.appendChild(night);
+    Links.appendChild(changeFontButton);
 
     //invisible element
     const invisibleElement = document.createElement('div');
@@ -377,9 +405,6 @@ function addFloatingBanner() {
     header.appendChild(logoImage);
     header.appendChild(logomarkImage);
     header.appendChild(headerMessage);
-    // header.appendChild(issueLink);
-    // header.appendChild(settingLink);
-    // header.appendChild(backLink);
     header.appendChild(Links);
     header.appendChild(invisibleElement);
 
@@ -486,24 +511,11 @@ function createSettingsModal() {
     settingsCloseButton.setAttribute("data-bs-dismiss", "modal");
     settingsCloseButton.setAttribute("aria-label", "Close");
 
-    // Append the title and close button to the modal header
     settingsModalHeader.appendChild(settingsModalTitle);
     settingsModalHeader.appendChild(settingsCloseButton);
-
-    // ... (add the rest of your modal content, like body and footer)
-
-    // Append the modal header to the modal content
     settingsModalContent.appendChild(settingsModalHeader);
-
-    // ... (append the rest of your modal elements to the modal content)
-
-    // Append the modal content to the modal dialog
     settingsModalDialog.appendChild(settingsModalContent);
-
-    // Append the modal dialog to the modal container
     settingsModal.appendChild(settingsModalDialog);
-
-    // Append the modal container to the document body
     document.body.appendChild(settingsModal);
 
     // Add event listener to the settings link in the header
@@ -511,11 +523,11 @@ function createSettingsModal() {
     settingLink.addEventListener('click', (e) => {
         e.preventDefault();
         const modal = document.getElementById('settingsModal');
-        showSettingsModal(modal); // Call the function to show the "Settings" modal
+        showSettingsModal(modal); 
     });
 
     settingsCloseButton.addEventListener("click", () => {
-        hideModal(settingsModal); // Call your hideModal function to close the modal
+        hideModal(settingsModal); 
     });
 
     return settingsModal;
@@ -650,19 +662,18 @@ function makeGithubBody (issueData) {
 
 //An example of changing fonts
 function toggleFont() {
-    var paragraphs = document.getElementsByTagName('p');
-    for (var i = 0; i < paragraphs.length; i++) {
+    var elementsWithClassLtx = document.querySelectorAll('[class*="ltx_"]');
+    
+    for (var i = 0; i < elementsWithClassLtx.length; i++) {
         if (isFontCalibri) {
-            paragraphs[i].style.fontFamily = ''; // Reset to default font (inherit)
+            elementsWithClassLtx[i].style.fontFamily = ''; // Reset to default font (inherit)
         } else {
-            paragraphs[i].style.fontFamily = 'Calibri, sans-serif';
+            elementsWithClassLtx[i].style.fontFamily = 'Calibri, sans-serif';
         }
     }
-    // Toggle the font state
     isFontCalibri = !isFontCalibri;
 }
 
-// function addFooter() {
 //     // Create footer element
 //     var footer = document.createElement('footer');
 //     footer.style.display = 'flex';
@@ -777,8 +788,11 @@ function addFooter(){
     var changeFontButton = document.createElement('a');
     changeFontButton.setAttribute('class', 'ar5iv-toggle-color-scheme');
     changeFontButton.setAttribute('href', 'javascript:toggleFont()');
-    changeFontButton.textContent = 'Change Font Example';
-    // changeFontButton.addEventListener('click', changeFontToCalibri);
+    var fontImage = document.createElement('img');
+    fontImage.setAttribute('src', 'static/img/font-icon.png');
+    fontImage.style.width = '20px';
+    fontImage.style.backgroundColor = 'transparent';
+    changeFontButton.appendChild(fontImage)
 
     // Create "settings" link in the footer
     // var settingLink = document.createElement('a');
