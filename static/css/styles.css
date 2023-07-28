@@ -1,3 +1,152 @@
+header {
+  background-color: #b31313;
+  display: flex;
+  justify-content: space-between;
+  padding: .5em 4em;
+  align-items: center;
+}
+header a {
+  color: white;
+}
+.logo {
+  max-height: 2em
+}
+.logomark {
+  max-height: 1.5em;
+  display: none;
+}
+svg.icon, [data-theme=dark] svg.icon {
+  background-color: transparent !important;
+  z-index: 1 !important;
+  margin-left:2px;
+}
+.header-message {
+  border: 10px solid #fb595a;
+  background: #fb595a;
+  border-radius: 6px;
+  max-width: 50%;
+  font-family: sans-serif;
+  font-size: smaller;
+  color: black;
+}
+.report-container {
+  display: block;
+  max-width: 40em;
+  margin: 3em auto;
+  border: 2px solid #a5d6fe;
+  border-radius: 5px;
+  padding: 1em;
+  box-shadow: 1px 3px 8px 0.1px grey;
+}
+.report-container-mobile {
+  display: none;
+}
+a.skip{
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+a.skip:focus{
+  position:static;
+  width:auto;
+  height:auto;
+}
+button.feedback-button {
+  position: sticky;
+  bottom: 1em;
+  left: 1em;
+  margin-bottom: 0;
+  margin-top: 0.05em;
+  background-color: #a5d6fe;
+  color: black;
+  padding:.5em 1em;
+  border-radius: .5em;
+  font-size: 1.1em;
+  font-weight: bold;
+  box-shadow: 1px 1px 6px 0.05px grey;
+}
+.close-icon {
+  position: relative;
+  top: -10px;
+  right: -99%;
+}
+footer {
+  font-family: arial, tahoma, sans-serif;
+}
+footer h2 {
+  font-size: 1em;
+}
+footer p, footer ul {
+  font-size: 0.9em;
+}
+
+/*mobile*/
+@media only screen and (max-width: 719px) {
+  header {
+    gap: .75em;
+  }
+  .header-message {
+    max-width:100%;
+    display: none;
+  }
+  .report-container {
+    display: none;
+  }
+  .report-container-mobile {
+    display: block;
+    margin: 1em auto;
+    border: 1px solid #cecece;
+    padding: 1em;
+    max-width: 150px;
+    box-shadow: 1px 3px 8px 0.1px grey;
+    border-radius: .5em
+  }
+  .logo {
+    display: none;
+  }
+  .logomark {
+    display: inline-flex;
+  }
+  .banner {
+    display: none;
+  }
+}
+
+/*BETA corner banner*/
+body:after {
+  content: "beta";
+  position: fixed;
+  z-index: 1070;
+  width: 80px;
+  height: 25px;
+  background: #fb595a;
+  top: 7px;
+  left: -20px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: black;
+  line-height: 27px;
+  -ms-transform:rotate(-45deg);
+  -webkit-transform:rotate(-45deg);
+  transform:rotate(-45deg);
+}
+/*will display to screen readers, but not be visible to sighted users*/
+.sr-only {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
 body {
   position: relative;
 }
@@ -147,12 +296,17 @@ header a {
 }
 
 .logo {
+  background-color: transparent !important;
   max-height: 2em;
 }
 
 .logomark {
   max-height: 1.5em;
   display: none;
+}
+
+#back-arrow {
+  background-color: transparent !important;
 }
 
 .header-message {
@@ -290,7 +444,7 @@ body:after {
   overflow: hidden;
 }
 
-/* Update: For warning label. */
+/* For warning label. */
 #warningLabel {
   color: #b31313;
   background-color: rgb(250, 241, 230);
