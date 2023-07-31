@@ -662,17 +662,38 @@ function makeGithubBody (issueData) {
 
 //An example of changing fonts
 function toggleFont() {
-    var elementsWithClassLtx = document.querySelectorAll('[class*="ltx_"]');
+    // var elementsWithClassLtx = document.querySelectorAll('[class*="ltx_"]');
     
-    for (var i = 0; i < elementsWithClassLtx.length; i++) {
-        if (isFontCalibri) {
-            elementsWithClassLtx[i].style.fontFamily = ''; // Reset to default font (inherit)
-        } else {
-            elementsWithClassLtx[i].style.fontFamily = 'Calibri, sans-serif';
-        }
-    }
-    isFontCalibri = !isFontCalibri;
+    // for (var i = 0; i < elementsWithClassLtx.length; i++) {
+    //     if (isFontCalibri) {
+    //         elementsWithClassLtx[i].style.fontFamily = ''; // Reset to default font (inherit)
+    //     } else {
+    //         elementsWithClassLtx[i].style.fontFamily = 'Calibri, sans-serif';
+    //     }
+    // }
+    // isFontCalibri = !isFontCalibri;
+    changeFont();
 }
+
+// Add font change function.
+var settingState = {
+    currentFontIndex: 0,
+    fonts: ["default", "sans-serif", "fontVersion3"], // Add as many versions as you like
+    currentFont: function () {
+      return this.fonts[this.currentFontIndex];
+    },
+    changeFont: function () {
+      this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length;
+    },
+  };
+  
+  function changeFont() {
+    settingState.changeFont();
+    document.documentElement.setAttribute(
+      "data-font",
+      settingState.currentFont()
+    );
+  }
 
 //     // Create footer element
 //     var footer = document.createElement('footer');
