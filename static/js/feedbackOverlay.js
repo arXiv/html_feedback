@@ -28,17 +28,23 @@ var bugReportState = {
 
 // Add font change function.
 var settingState = {
-    currentFontIndex: 0,
-    fonts: ['default', 'sans-serif', 'fontVersion3'], // Add as many versions as you like
-    currentFont: function() { return this.fonts[this.currentFontIndex]; },
-    changeFont: function() { this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length; },
-  };
-  
-  function changeFont() {
-    settingState.changeFont();
-    document.documentElement.setAttribute("data-font", settingState.currentFont());
-  }
-  
+  currentFontIndex: 0,
+  fonts: ["default", "sans-serif", "fontVersion3"], // Add as many versions as you like
+  currentFont: function () {
+    return this.fonts[this.currentFontIndex];
+  },
+  changeFont: function () {
+    this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length;
+  },
+};
+
+function changeFont() {
+  settingState.changeFont();
+  document.documentElement.setAttribute(
+    "data-font",
+    settingState.currentFont()
+  );
+}
 
 function addChangeFontButton() {
   const button = document.createElement("button");
