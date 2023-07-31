@@ -321,6 +321,7 @@ function addFloatingBanner() {
     headerMessage.innerHTML = '<strong>Experimental HTML</strong>. Report rendering errors with the "Open Issue" button or click <strong>Shift+b</strong> to toggle accessible section reporting links. <a href="#footer">Reference all keyboard commands</a> in the footer.';
 
     var Links = document.createElement('div');
+    Links.setAttribute('class', 'headerLinks');
 
     // Create "open issue" link
     var issueLink = document.createElement('a');
@@ -344,17 +345,7 @@ function addFloatingBanner() {
     backLink.textContent = 'Back to Abstract';
     backLink.style.paddingLeft = '10px';
 
-    //night mode toggle
-    var night = document.createElement('a');
-    night.setAttribute('class', 'ar5iv-toggle-color-scheme');
-    night.setAttribute('href', 'javascript:toggleColorScheme()');
-    night.setAttribute('title', 'Toggle ar5iv color scheme');
-    var nightSpan = document.createElement('span');
-    nightSpan.setAttribute('class', 'color-scheme-icon');
-    night.appendChild(nightSpan);
-    night.style.float = 'right'
-
-    //font toggle
+        //font toggle
     var changeFontButton = document.createElement('a');
     changeFontButton.setAttribute('class', 'ar5iv-toggle-color-scheme');
     changeFontButton.setAttribute('href', 'javascript:toggleFont()');
@@ -365,10 +356,43 @@ function addFloatingBanner() {
     changeFontButton.appendChild(fontImage)
     changeFontButton.style.float = 'right'
 
+    var hamburger = document.createElement('a');
+    hamburger.className = 'hamburger-button';
+    hamburger.setAttribute('aria-label', 'Toggle Menu');
+    var hamburgerImage = document.createElement('img');
+    hamburgerImage.setAttribute('src', 'static/img/hamburger.png');
+    hamburgerImage.style.width = '20px';
+    hamburgerImage.style.backgroundColor = 'transparent';
+    hamburger.appendChild(hamburgerImage)
+    hamburger.addEventListener('click', toggleMenu);
+    var menuContainer = document.createElement('div');
+    menuContainer.className = 'menu-container';
+    var menuItem1 = document.createElement('a');
+    menuItem1.href = '#myForm';
+    menuItem1.textContent = 'Open Issue';
+    var menuItem2 = document.createElement('a');
+    menuItem2.href = '';
+    menuItem2.textContent = 'Back to Abstract';
+
+    menuContainer.appendChild(menuItem1);
+    menuContainer.appendChild(menuItem2);
+
+    //night mode toggle
+    var night = document.createElement('a');
+    night.setAttribute('class', 'ar5iv-toggle-color-scheme');
+    night.setAttribute('href', 'javascript:toggleColorScheme()');
+    night.setAttribute('title', 'Toggle ar5iv color scheme');
+    var nightSpan = document.createElement('span');
+    nightSpan.setAttribute('class', 'color-scheme-icon');
+    night.appendChild(nightSpan);
+    night.style.float = 'right'
+
     Links.appendChild(issueLink);
     Links.appendChild(backLink);
     Links.appendChild(night);
     Links.appendChild(changeFontButton);
+    Links.appendChild(hamburger);
+    Links.appendChild(menuContainer);
 
     //invisible element
     const invisibleElement = document.createElement('div');
@@ -398,7 +422,6 @@ function addFloatingBanner() {
     // Append the child elements to the invisible element
     invisibleElement.appendChild(heading);
     invisibleElement.appendChild(list);
-    
 
     // Append all elements to the header element
     header.appendChild(skipLink);
@@ -420,6 +443,10 @@ function addFloatingBanner() {
         showModal(modal);
         bugReportState.setInitiateWay("FixedButton");
     });
+
+    function toggleMenu() {
+        menuContainer.classList.toggle('menu-open');
+    }
   };
 
 // Code for handling key press to open/close modal

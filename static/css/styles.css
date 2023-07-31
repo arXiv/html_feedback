@@ -2,8 +2,6 @@ body {
   position: relative;
 }
 
-
-
 #openForm {
   position: fixed;
   bottom: 20px;
@@ -198,6 +196,17 @@ header a {
   .hamburger-button {
       display: block; /* Show the hamburger button for smaller screens */
   }
+  .menu-container {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+    flex-direction: row;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    top: auto;
+    right: auto;
+  }
   .navigation-list {
       display: none; /* Hide the navigation list by default for smaller screens */
   }
@@ -205,7 +214,11 @@ header a {
       display: flex; /* Show the navigation list when the hamburger button is clicked */
   }
 }
-
+@media (min-width: 768px){
+  .hamburger-button{
+    display: none;
+  }
+}
 
 .body-message {
   display: block;
@@ -272,6 +285,14 @@ button.feedback-button {
     display: none;
   }
 
+  .ar5iv-footer-button{
+    display: none;
+  }
+
+  footer{
+    display: none;
+  }
+
   .body-message {
     display: none;
   }
@@ -284,14 +305,6 @@ button.feedback-button {
     max-width: 150px;
     box-shadow: 1px 3px 8px 0.1px grey;
     border-radius: .5em
-  }
-
-  .logo {
-    display: none;
-  }
-
-  .logomark {
-    display: inline-flex;
   }
 
   .banner {
@@ -363,4 +376,53 @@ body:after {
 
 .font-icon{
   content: "T";
+}
+
+/* Hamburger button styles */
+.hamburger-button {
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+.menu-icon {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: black;
+  margin: 4px 0;
+}
+
+/* Menu container styles */
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.menu-container.menu-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-container a {
+  display: block;
+  padding: 5px;
+  color: black;
+  text-decoration: none;
+}
+
+.headerLinks{
+  display: flex;
 }
