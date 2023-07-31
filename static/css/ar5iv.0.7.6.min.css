@@ -29,18 +29,25 @@
     --index-ref-color: #026ecb
 }
 
-[data-font=fontVersion2]{
+[data-font=default]{
+    --headings-font-family: "Noto Sans",sans-serif;
+    --text-font-family: "Noto Serif", serif;
+    --math-font-family: "STIX Two Math","Cambria Math",math;
+    --code-font-family: "Noto Sans Mono",monospace
+}
+
+[data-font=sans-serif]{
     /* --headings-font-family: "Noto Sans",sans-serif; */
     --text-font-family: "Noto Serif",sans-serif;
     /* --math-font-family: "STIX Two Math","Cambria Math",math; */
     /* --code-font-family: "Noto Sans Mono",monospace */
 }
 
-[data-font=fontVersion1]{
-    /* --headings-font-family: "Noto Sans",sans-serif; */
-    --text-font-family: "Noto Serif", serif;
-    /* --math-font-family: "STIX Two Math","Cambria Math",math; */
-    /* --code-font-family: "Noto Sans Mono",monospace */
+[data-font=fontVersion3] {
+    --headings-font-family: "Arial", sans-serif;
+    --text-font-family: "Georgia", serif;
+    --math-font-family: "Times New Roman", "Cambria Math", math;
+    --code-font-family: "Courier New", monospace;
 }
 
 [data-theme=dark] {
