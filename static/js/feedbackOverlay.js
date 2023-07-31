@@ -73,7 +73,7 @@ function addBugReportForm() {
     button.setAttribute("type", "button");
     button.setAttribute("class", "btn btn-primary");
     button.setAttribute("id", "openForm");
-    button.appendChild(document.createTextNode("Report Bug"));
+    button.appendChild(document.createTextNode("Open Issue"));
 
     // Create the modal container element
     const modal = document.createElement("div");
@@ -210,7 +210,7 @@ function addSRButton(modal) {
         const button = document.createElement("button");
         button.setAttribute("class", "sr-only button");
         button.style.display = "none";
-        button.textContent = "Report Bug";
+        button.textContent = "Open Issue";
 
         button.onfocus = () => previousFocusElement = document.activeElement;
 
@@ -279,7 +279,7 @@ const handleKeyDown = (e, modal, buttons) => {
 }
 
 //The highlight initiation way
-function handleMouseUp(e, smallButton) {
+/*function handleMouseUp(e, smallButton) {
     if (e.target.id === "small-report-button")
         return;
     if (!window.getSelection().isCollapsed) {
@@ -288,6 +288,28 @@ function handleMouseUp(e, smallButton) {
         bugReportState.setSelectedHtmlSmallButton(selection);
         showSmallButton(smallButton);
     } else hideSmallButton(smallButton);
+}*/
+function handleMouseUp(e, smallButton) {
+    if (e.target.id === "small-report-button") return;
+    /*const toc = document.querySelector(".ltx_page_navbar");
+    document.addEventListener('click', (event) => {
+        // Check if the click event target is inside the TOC
+        if (!toc.contains(event.target)) {
+          // Click occurred outside the TOC, prevent focus loss
+          event.preventDefault();
+        }
+      });*/
+    const contentDiv = document.querySelector(".ltx_page_content");
+    if (contentDiv.contains(e.target)) {
+        if (!window.getSelection().isCollapsed) {
+            selection = window.getSelection();
+            currentAnchorNode = selection.anchorNode;
+            bugReportState.setSelectedHtmlSmallButton(selection);
+            showSmallButton(smallButton);
+        }
+    } else {
+        hideSmallButton(smallButton);
+    }
 }
 
 function createSmallButton(modal) {
@@ -410,9 +432,21 @@ function submitBugReport(e) {
     hideModal(document.getElementById('myForm'));
 }
 
-function handleClickOutsideModal(e, modal) {
+function handleClickOutsideModal(e, modal, hamburger) {
     if (e.target == modal)
+    {
         modal.style.display = 'none';
+    }
+    if (e.target == hamburger)
+    {
+        console.log('hambuger clicked');
+        const toc = document.querySelector('.ltx_TOC');
+        if (toc.style.display === 'block') {
+            toc.style.display = 'none';
+        } else {
+            toc.style.display = 'block';
+        }
+    }
 }
 
 
@@ -446,7 +480,8 @@ function makeGithubBody(issueData) {
     return body;
 }
 
-function createTableofContents() {
+//customized table of contents
+/*function createTableofContents() {
     // Get the reference to the table of contents placeholder
     var tableOfContents = document.getElementById('tableOfContentsInside');
 
@@ -571,7 +606,7 @@ function createTableofContents() {
 
     // Append the unordered list to the table of contents placeholder
     tableOfContents.appendChild(ul);
-}
+}*/
 
 // RUN THIS CODE ON INITIALIZE
 detectColorScheme();
@@ -580,10 +615,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = addBugReportForm();
     const reportButtons = addSRButton(modal);
     const smallReportButton = createSmallButton(modal);
-    createTableofContents();
+    const hamburger = document.getElementById('hamburgerIcon');
 
     document.onkeydown = (e) => handleKeyDown(e, modal, reportButtons);
-    document.onclick = (e) => handleClickOutsideModal(e, modal);
+    document.onclick = (e) => handleClickOutsideModal(e, modal,hamburger);
     document.onmouseup = (e) => handleMouseUp(e, smallReportButton);
 
     let lastScrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;

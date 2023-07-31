@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.setAttribute("type", "button");
     button.setAttribute("class", "btn btn-primary");
     button.setAttribute("id", "openForm");
-    button.appendChild(document.createTextNode("Report Bug"));
+    button.appendChild(document.createTextNode("Open Issue"));
 
     // Create the modal container element
     var modal = document.createElement("div");
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
       var button = document.createElement("button");
       button.setAttribute("class", "sr-only button");
       button.style.display = "none";
-      button.appendChild(document.createTextNode("Report Bug"));
+      button.appendChild(document.createTextNode("Open Issue"));
 
       // handle the focus
       button.addEventListener("focus", function () {

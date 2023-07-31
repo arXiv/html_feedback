@@ -110,6 +110,15 @@ label {
   /* Add additional styles as needed */
 }
 
+[data-theme=dark] .form-control::placeholder {
+  color: #c9d1d9;
+}
+
+[data-theme=dark] .btn.btn-primary {
+  color:  #c9d1d9;
+  border-color:  #c9d1d9;
+}
+
 [data-theme=dark] .btn.btn-outline-secondary#take-screenshot {
   color:  #c9d1d9;
   border-color:  #c9d1d9;
@@ -255,6 +264,10 @@ button.feedback-button {
   .banner {
     display: none;
   }
+
+  .ltx_TOC{
+    display: none;
+  }
 }
 
 /*BETA corner banner*/
@@ -291,7 +304,7 @@ body:after {
 }
 
 /* Update: For warning label. */
-#warningLabel {
+[data-theme=light] #warningLabel {
   color: #b31313;
   background-color: rgb(250, 241, 230);
   font-size: 12px;
@@ -301,40 +314,54 @@ body:after {
   margin: 1em auto;
 }
 
-#tableOfContents {
+[data-theme=dark] #warningLabel {
+  color: rgb(209, 190, 137);
+  background-color: rgb(65, 57, 33);
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 1em;
+  border-radius: .5em;
+  margin: 1em auto;
+}
+
+/* Update: For toc */
+.ltx_page_navbar {
   position: fixed;
-  top: 55px; /* Adjust the top position as needed */
-  /*left: 10px; /* Adjust the right position as needed */
-  background-color: #f8f9fa; /* Set the background color */
-  border: 1px solid #dee2e6; /* Set the border */
-  border-radius: 5px; /* Set the border radius */
-  padding: 10px; /* Set the padding */
-  max-height: 93%; /* Set the maximum height */
+  overflow-y: auto;
+  top: 13%;
   max-width: 20%;
-  overflow-y: auto; /* Enable vertical scrolling */
-  font-size: 13px;
+  max-height: 90%;
+  margin-bottom: 0.5rem;
+  user-select: none;
+  background-color: white;
 }
 
-.nav-pills .nav-item {
-  margin-bottom: 5px; /* Set the margin between items */
+[data-theme=dark] .ltx_page_navbar {
+  background-color: #0d1117;
+  color: #c9d1d9;
 }
 
-.nav-pills .nav-link {
-  padding: 5px 10px; /* Set the padding for the link */
-  border-radius: 3px; /* Set the border radius for the link */
-  color: #595151;
+.ltx_tocentry.ltx_tocentry_section {
+  margin-bottom: 0.5rem;
 }
 
-.nav-pills .nav-link:hover {
-  background-color: #e9ecef; /* Set the background color on hover */
-  color: #b31313;
+.ltx_page_content {
+  margin-left: 18%;
 }
 
-/* Add styles for the selected item */
-.nav-item.selected {
-  background-color: #e9ecef;/* Change this to your preferred highlight color */
+div.ar5iv-footer {
+  margin-left: 25%;
 }
 
-.nav-link.selected{
-  background-color:  #e9ecef;
+.ltx_page_footer {
+  margin-left: 25%;
 }
+
+#hamburgerIcon {
+  /* Customize your hamburger icon/button appearance */
+  width: 15px;
+  height: 15px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
