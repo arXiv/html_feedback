@@ -345,6 +345,10 @@ body:after {
   margin-bottom: 0.5rem;
 }
 
+.ltx_ref:hover{
+  background-color: #ffffd4;
+}
+
 .ltx_page_content {
   margin-left: 18%;
 }

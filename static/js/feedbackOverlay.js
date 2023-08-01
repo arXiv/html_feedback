@@ -449,7 +449,6 @@ function handleClickOutsideModal(e, modal, hamburger) {
     }
 }
 
-
 function makeGithubBody(issueData) {
     // User Fill in Data
     let body = "## Describe the issue\n\n";
@@ -611,7 +610,6 @@ function makeGithubBody(issueData) {
 // RUN THIS CODE ON INITIALIZE
 detectColorScheme();
 document.addEventListener("DOMContentLoaded", () => {
-
     const modal = addBugReportForm();
     const reportButtons = addSRButton(modal);
     const smallReportButton = createSmallButton(modal);
