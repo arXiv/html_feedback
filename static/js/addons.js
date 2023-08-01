@@ -8,7 +8,7 @@ let create_header = () => {
         <img src="images/arxiv-logo-one-color-white.svg" alt="logo" role="presentation" class="logo"> \
         <img src="images/arxiv-logomark-small-white.svg" alt="logo" role="presentation" class="logomark"> \
         <div role="banner" class="header-message"> \
-            <strong>Experimental HTML</strong>. Report rendering errors with the "Open Issue" button or click <strong>Shift+b</strong> to toggle accessible section reporting links. <a href="#footer">Reference all keyboard commands</a> in the footer. \
+            <strong>Experimental HTML</strong>. Report rendering errors with the "Open Issue" button or click <strong>option/Alt+Y</strong> to toggle accessible section reporting links on and <strong>Shift+option/Alt+Y</strong> off. <a href="#footer">Reference all keyboard commands</a> in the footer. \
         </div> \
         <div></div>';
     } else {
@@ -17,7 +17,7 @@ let create_header = () => {
         <img src="images/arxiv-logo-one-color-white.svg" alt="logo" role="presentation" class="logo"> \
         <img src="images/arxiv-logomark-small-white.svg" alt="logo" role="presentation" class="logomark"> \
         <div role="banner" class="header-message"> \
-            <strong>Experimental HTML</strong>. Report rendering errors with the "Open Issue" button or click <strong>Shift+b</strong> to toggle accessible section reporting links. <a href="#footer">Reference all keyboard commands</a> in the footer. \
+            <strong>Experimental HTML</strong>. Report rendering errors with the "Open Issue" button or click <strong>option/Alt+Y</strong> to toggle accessible section reporting links on and <strong>Shift+option/Alt+Y</strong> off. <a href="#footer">Reference all keyboard commands</a> in the footer. \
         </div> \
         <a href="${ABS_URL_BASE}/${id}"> \
             Back to Abstract \
@@ -52,7 +52,7 @@ let create_footer = () => {
         <ul> \
             <li>Use the "Open Issue" button.</li> \
             <li><strong>Ctrl + ?</strong> will open the report feedback form via keyboard.</li> \
-            <li>If using a screen reader, <strong>Shift + b</strong> will toggle individual reporting buttons at each section on and off. Useful when you want to report an issue just within a specific section, as highligting is not screen reader compatible.</li> \
+            <li>If using a screen reader, <strong>option/Alt+Y</strong> will toggle individual reporting buttons at each section on and <strong>Shift+option/Alt+Y</strong> off. Useful when you want to report an issue just within a specific section, as highligting is not screen reader compatible.</li> \
             <li>You can also highlight any text and click the "Open Issue" button that will display near your cursor. Highlighting is not screen reader compatible so the method above is also available.</li> \
             <li>Reporting will prompt you to login to Github to complete the process. Need an account? <a href="https://github.com/account/organizations/new?plan=free" target="_blank">Create a GitHub account for free</a>.</li> \
         </ul> \
