@@ -228,10 +228,30 @@ button.feedback-button {
   right: -99%;
 }
 
+@media only screen and (min-width: 719px) {
+  .ltx_page_navbar {
+    max-width: 20%;
+  }
+  .ltx_page_content{
+    margin-left: 18%;
+  }
+  .ltx_page_footer {
+    margin-left: 25%;
+  }
+}
+
 /*mobile*/
 @media only screen and (max-width: 719px) {
   header {
     gap: .75em;
+  }
+
+  .ltx_page_content{
+    margin-left: 3%;
+  }
+
+  .ltx_page_footer {
+    margin-left: 3%;
   }
 
   .header-message {
@@ -267,6 +287,12 @@ button.feedback-button {
 
   .ltx_TOC{
     display: none;
+    border-style: outset;
+    border-radius: 5px;
+  }
+
+  .ltx_page_navbar {
+    max-width: 60%;
   }
 }
 
@@ -329,7 +355,6 @@ body:after {
   position: fixed;
   overflow-y: auto;
   top: 13%;
-  max-width: 20%;
   max-height: 90%;
   margin-bottom: 0.5rem;
   user-select: none;
@@ -349,15 +374,7 @@ body:after {
   background-color: #ffffd4;
 }
 
-.ltx_page_content {
-  margin-left: 18%;
-}
-
 div.ar5iv-footer {
-  margin-left: 25%;
-}
-
-.ltx_page_footer {
   margin-left: 25%;
 }
 
