@@ -1,33 +1,24 @@
----
-name: HTML Feedback template
-about: Formatting for feedback from bug report feature
-title: ''
-labels: ''
-assignees: ''
-
----
-
-- type: markdown
+name: "ArXiv HTML Content issue"
+description: Testing Version for Issue Template!
+body:
+  - type: markdown
     attributes:
       value: |
-        ### Before you start
+        ### ISSUE_TEMPLATE_DEVELOPING
 
         **This is just a testing issue report**
         ↩ Developing.
 
-        **Write base on**
-        ↩ https://github.com/mdn/content/blob/main/.github/ISSUE_TEMPLATE/content-bug.yml?plain=1
-
         **Feasible link format**
         🙋 [Report issue](https://github.com/YiChen8185/TestForGitHubIssue/issues/new?assignees=&labels=&projects=&template=bug_report.yml&articleTitle=test_title)
-        ↩ https://github.com/YiChen8185/TestForGitHubIssue/issues/new?assignees=&labels=&projects=&template=bug_report.yml&articleTitle=test_title
 
         ---
 
   - type: textarea
+    id: more-info
     attributes:
-      label: Anything you want to write.
-
+      label: Do you have anything more you want to share?
+      description: For example, steps to reproduce a bug, screenshots, screen recordings, or sample code
 
   # Below is autofill section.
   - type: markdown
@@ -64,10 +55,5 @@ assignees: ''
   - type: textarea
     id: references
     attributes:
-      label: Do you have any supporting links, references, or citations?
-      description: Link to information that helps us confirm your issue.
-  - type: textarea
-    id: more-info
-    attributes:
-      label: Do you have anything more you want to share?
-      description: For example, steps to reproduce a bug, screenshots, screen recordings, or sample code
+      label: Do you have any supporting links?
+      description: Link to information that helps us confirm your article issue.
