@@ -1,30 +1,78 @@
 name: "ArXiv HTML Content issue"
-description: Testing Version for Issue Template!
+description: Testing Template!
 body:
   - type: markdown
     attributes:
       value: |
-        ### ISSUE_TEMPLATE_DEVELOPING
+        ### Before you start
 
-        **This is just a testing issue report**
+        **This is a testing report template**
         ↩ Developing.
 
-        **Feasible link format**
-        🙋 [Report issue](https://github.com/YiChen8185/TestForGitHubIssue/issues/new?assignees=&labels=&projects=&template=bug_report.yml&articleTitle=test_title)
+        **Report general problem**
+        🙋 [Report issue](https://github.com/YiChen8185/TestForGitHubIssue/issues/new?assignees=&labels=&projects=&title=General_Problem&template=bug_report.yml&articleTitle=GeneralProblem)
+        
+        **Problem**
+        ‼️ Chrome may disable the accsess to open new windows, and users will need to manually allow it.
 
+        
         ---
 
   - type: textarea
-    id: more-info
+    id: extra-info
     attributes:
-      label: Do you have anything more you want to share?
-      description: For example, steps to reproduce a bug, screenshots, screen recordings, or sample code
+      label: Please free feel to share anything more?
+      description: For example, steps to reproduce a bug, screenshots, screen recordings, or sample code.
+
+   
+  - type: dropdown
+    id: problem-type
+    attributes:
+      label: Define the type of the problem?
+      options:
+        - Math
+        - Figures
+        - References
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: screenReader-device
+    attributes:
+      label: If you use screenReader, which reader do you use?
+      options:
+        - VoiceOver
+        - NVDA
+        - JAWS
+        - Other
+
+  - type: input
+    id: other-sr
+    attributes:
+      label: what is your screenReader 
+      description: If you select other above for screenReader, please enter what screenReader do you use.
+
+  - type: input
+    id: contact-info
+    attributes:
+      label: Email
+      description: if you like to be volunteer to have future test on arXiv website.
+      placeholder: "Your email"
+    validations:
+      required: true
+
 
   # Below is autofill section.
   - type: markdown
     attributes:
       value: |
-        ---
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <br>
         <br>
         <br>
@@ -35,7 +83,7 @@ body:
         # Set automatically. Do not modify.
         
         
-  - type: textarea
+  - type: input
     id: description
     attributes:
       description: Set automatically. Do not modify.
@@ -43,17 +91,44 @@ body:
     validations:
       required: true
   
-  - type: textarea
+  - type: input
     id: uniqueId
     attributes:
       label: UniqueId for the Article
       description: Set automatically. Do not modify.
     validations:
       required: true
-
-  # Example.
-  - type: textarea
-    id: references
+      
+  - type: input
+    id: fullUrl
     attributes:
-      label: Do you have any supporting links?
-      description: Link to information that helps us confirm your article issue.
+      label: Url for the Article
+      description: Set automatically. Do not modify.
+    validations:
+      required: true
+  
+  - type: input
+    id: arxivId
+    attributes:
+      label: arXiv Id for the Article
+      description: Set automatically. Do not modify.
+    validations:
+      required: true
+  
+  - type: input
+    id: browserInfo
+    attributes:
+      label: browserInfo for the Article
+      description: Set automatically. Do not modify.
+    validations:
+      required: true
+
+  - type: input
+    id: deviceType
+    attributes:
+      label: Device Type
+      description: Set automatically. Do not modify.
+    validations:
+      required: true
+
+      
