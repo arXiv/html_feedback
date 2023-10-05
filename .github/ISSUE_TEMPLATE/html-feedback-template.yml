@@ -5,9 +5,7 @@ body:
     attributes:
       value: |
         ### Review and add any new info before submitting an issue
-
-        ---
-
+        
   - type: input
     id: description
     attributes:
@@ -34,9 +32,7 @@ body:
     validations:
       required: true
 
-        ---
-
-  # Below is autofill section.
+# Below is autofill section.
   - type: markdown
     attributes:
       value: The following data is collected automatically to help with troubleshooting. Do not modify.
