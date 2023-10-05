@@ -30,23 +30,6 @@ body:
         - Other
     validations:
       required: true
-    #ADD TO INITIAL MODAL INSTEAD, SO WE GET THIS INFO EVEN IF THEY SUBMIT WITHOUT GITHUB
-  # - type: dropdown
-  #   id: screenReader-device
-  #   attributes:
-  #     label: (Optional) If you use a screen reader, which one do you use? Select one.
-  #     options:
-  #       - NVDA
-  #       - JAWS
-  #       - VoiceOver
-  #       - Other
-  #
-  # - type: input
-  #   id: other-sr
-  #   attributes:
-  #     label: (Optional) Other screen reader
-  #     description: If you selected 'other', what screen reader or text-to-speech software do you use?
-
 
         ---
 
