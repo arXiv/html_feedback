@@ -58,7 +58,7 @@ body:
       required: true
 
 #CAN WE HIDE THESE, BUT STILL HAVE THEM WRITE TO THE TICKET?
-  - type: input
+  - type: textarea
     id: browserInfo
     attributes:
       label: Browser
@@ -67,7 +67,7 @@ body:
     validations:
       required: true
 
-  - type: input
+  - type: textarea
     id: deviceType
     attributes:
       label: Device Type
