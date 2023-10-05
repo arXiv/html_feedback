@@ -6,29 +6,27 @@ body:
       value: |
         ### Before you start
 
-        **This is a testing report template**
+        **TEST REPORT TEMPLATE**
         ↩ Developing.
 
         **Report general problem**
         🙋 [Report issue](https://github.com/YiChen8185/TestForGitHubIssue/issues/new?assignees=&labels=&projects=&title=General_Problem&template=bug_report.yml&articleTitle=GeneralProblem)
-        
+
         **Problem**
         ‼️ Chrome may disable the accsess to open new windows, and users will need to manually allow it.
 
-        
         ---
 
   - type: textarea
     id: extra-info
     attributes:
-      label: Please free feel to share anything more?
-      description: For example, steps to reproduce a bug, screenshots, screen recordings, or sample code.
+      label: (Optional) Please add any additional info about this issue
+      description: For example the steps to reproduce a bug or screenshots.
 
-   
   - type: dropdown
     id: problem-type
     attributes:
-      label: Define the type of the problem?
+      label: (Required) What is this issue most closely related to? Select one.
       options:
         - Math
         - Figures
@@ -40,30 +38,21 @@ body:
   - type: dropdown
     id: screenReader-device
     attributes:
-      label: If you use screenReader, which reader do you use?
+      label: (Optional) If you use a screen reader, which one do you use? Select one.
       options:
-        - VoiceOver
         - NVDA
         - JAWS
+        - VoiceOver
         - Other
 
   - type: input
     id: other-sr
     attributes:
-      label: what is your screenReader 
-      description: If you select other above for screenReader, please enter what screenReader do you use.
-
-  - type: input
-    id: contact-info
-    attributes:
-      label: Email
-      description: if you like to be volunteer to have future test on arXiv website.
-      placeholder: "Your email"
-    validations:
-      required: true
-
+      label: (Optional) Other screen reader
+      description: If you selected 'other', what screen reader or text-to-speech software do you use?
 
   # Below is autofill section.
+  #DO WE NEED ALL OF THESE HTML BREAKS?
   - type: markdown
     attributes:
       value: |
@@ -79,10 +68,9 @@ body:
         <br>
         <br>
         <br>
-        
-        # Set automatically. Do not modify.
-        
-        
+        # The following data is set automatically. It can help with troubleshooting reported issues. Do not modify.
+
+# WHAT IS THIS ONE? IS THIS WHERE THE USER'S ORIGINAL DESCRIPTION IS CAPTURED?
   - type: input
     id: description
     attributes:
@@ -90,35 +78,35 @@ body:
       label: Description
     validations:
       required: true
-  
+
   - type: input
     id: uniqueId
     attributes:
-      label: UniqueId for the Article
+      label: Internal unique ID
       description: Set automatically. Do not modify.
     validations:
       required: true
-      
+
   - type: input
     id: fullUrl
     attributes:
-      label: Url for the Article
+      label: Paper URL
       description: Set automatically. Do not modify.
     validations:
       required: true
-  
+
   - type: input
     id: arxivId
     attributes:
-      label: arXiv Id for the Article
+      label: arXiv Id
       description: Set automatically. Do not modify.
     validations:
       required: true
-  
+
   - type: input
     id: browserInfo
     attributes:
-      label: browserInfo for the Article
+      label: Browser
       description: Set automatically. Do not modify.
     validations:
       required: true
@@ -130,5 +118,3 @@ body:
       description: Set automatically. Do not modify.
     validations:
       required: true
-
-      
