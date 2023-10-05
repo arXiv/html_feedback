@@ -1,10 +1,6 @@
 name: "ArXiv HTML Content issue"
 description: Testing Template!
 body:
-  - type: markdown
-    attributes:
-      value: "Review and add any new information before submitting your issue report."
-
   - type: input
     id: description
     attributes:
