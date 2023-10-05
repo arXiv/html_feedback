@@ -47,7 +47,8 @@ body:
   #     label: (Optional) Other screen reader
   #     description: If you selected 'other', what screen reader or text-to-speech software do you use?
 
-  ---
+
+        ---
 
   # Below is autofill section.
   - type: markdown
