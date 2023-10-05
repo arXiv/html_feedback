@@ -63,7 +63,7 @@ body:
     attributes:
       label: Browser
       description: Set automatically. Do not modify.
-      render: YAML
+      render: bash
     validations:
       required: true
 
@@ -72,6 +72,6 @@ body:
     attributes:
       label: Device Type
       description: Set automatically. Do not modify.
-      render: YAML
+      render: bash
     validations:
       required: true
