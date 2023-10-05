@@ -57,13 +57,13 @@ body:
     validations:
       required: true
 
-#CAN WE HIDE THESE, BUT STILL HAVE THEM WRITE TO THE TICKET?
+#CAN WE HIDE THESE, BUT STILL HAVE THEM WRITE TO THE TICKET? (Probably not)
   - type: textarea
     id: browserInfo
     attributes:
       label: Browser
       description: Set automatically. Do not modify.
-      render: bash
+      render: text
     validations:
       required: true
 
@@ -72,6 +72,6 @@ body:
     attributes:
       label: Device Type
       description: Set automatically. Do not modify.
-      render: bash
+      render: text
     validations:
       required: true
