@@ -41,19 +41,22 @@ body:
     attributes:
       value: The following data is collected automatically to help with troubleshooting. Do not modify.
 
-  - type: input
+  - type: textarea
     id: uniqueId
     attributes:
       label: Internal issue ID
       description: Set automatically. Do not modify.
+      render: text
     validations:
       required: true
 
-  - type: input
+  - type: textarea
     id: fullUrl
     attributes:
       label: Paper URL
       description: Set automatically. Do not modify.
+      render: text
+
     validations:
       required: true
 
