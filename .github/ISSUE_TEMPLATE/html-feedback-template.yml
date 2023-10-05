@@ -1,11 +1,10 @@
 name: "ArXiv HTML Content issue"
 description: Testing Version for Issue Template!
-description: Testing Template!
 body:
   - type: markdown
     attributes:
       value: |
-        ### Review and add any new info before submitting issue
+        ### Review and add any new info before submitting an issue
 
         ---
 
