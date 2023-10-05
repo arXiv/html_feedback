@@ -4,18 +4,15 @@ body:
   - type: markdown
     attributes:
       value: |
-        ### Before you start
+      **Review and add any new information before submitting your issue report.**
 
-        **TEST REPORT TEMPLATE**
-        ↩ Developing.
-
-        **Report general problem**
-        🙋 [Report issue](https://github.com/YiChen8185/TestForGitHubIssue/issues/new?assignees=&labels=&projects=&title=General_Problem&template=bug_report.yml&articleTitle=GeneralProblem)
-
-        **Problem**
-        ‼️ Chrome may disable the accsess to open new windows, and users will need to manually allow it.
-
-        ---
+  - type: input
+    id: description
+    attributes:
+      description: User description
+      label: Description
+    validations:
+      required: true
 
   - type: textarea
     id: extra-info
@@ -34,55 +31,34 @@ body:
         - Other
     validations:
       required: true
+    #ADD TO INITIAL MODAL INSTEAD, SO WE GET THIS INFO EVEN IF THEY SUBMIT WITHOUT GITHUB
+  # - type: dropdown
+  #   id: screenReader-device
+  #   attributes:
+  #     label: (Optional) If you use a screen reader, which one do you use? Select one.
+  #     options:
+  #       - NVDA
+  #       - JAWS
+  #       - VoiceOver
+  #       - Other
+  #
+  # - type: input
+  #   id: other-sr
+  #   attributes:
+  #     label: (Optional) Other screen reader
+  #     description: If you selected 'other', what screen reader or text-to-speech software do you use?
 
-  - type: dropdown
-    id: screenReader-device
-    attributes:
-      label: (Optional) If you use a screen reader, which one do you use? Select one.
-      options:
-        - NVDA
-        - JAWS
-        - VoiceOver
-        - Other
-
-  - type: input
-    id: other-sr
-    attributes:
-      label: (Optional) Other screen reader
-      description: If you selected 'other', what screen reader or text-to-speech software do you use?
+  ---
 
   # Below is autofill section.
-  #DO WE NEED ALL OF THESE HTML BREAKS?
   - type: markdown
     attributes:
-      value: |
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        # The following data is set automatically. It can help with troubleshooting reported issues. Do not modify.
-
-# WHAT IS THIS ONE? IS THIS WHERE THE USER'S ORIGINAL DESCRIPTION IS CAPTURED?
-  - type: input
-    id: description
-    attributes:
-      description: Set automatically. Do not modify.
-      label: Description
-    validations:
-      required: true
+      value: The following data is collected automatically to help with troubleshooting. Do not modify.
 
   - type: input
     id: uniqueId
     attributes:
-      label: Internal unique ID
+      label: Internal issue ID
       description: Set automatically. Do not modify.
     validations:
       required: true
@@ -95,14 +71,7 @@ body:
     validations:
       required: true
 
-  - type: input
-    id: arxivId
-    attributes:
-      label: arXiv Id
-      description: Set automatically. Do not modify.
-    validations:
-      required: true
-
+#CAN WE HIDE THESE, BUT STILL HAVE THEM WRITE TO THE TICKET?
   - type: input
     id: browserInfo
     attributes:
