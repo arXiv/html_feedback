@@ -35,8 +35,11 @@ body:
 # Below is autofill section.
   - type: markdown
     attributes:
-      value: --- |
-      The following data is collected automatically to help with troubleshooting. Do not modify.
+      value: --- 
+      
+  - type: markdown
+    attributes:
+      value: The following data is collected automatically to help with troubleshooting. Do not modify.
 
   - type: input
     id: uniqueId
