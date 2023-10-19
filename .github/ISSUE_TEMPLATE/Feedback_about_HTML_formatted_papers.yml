@@ -1,34 +1,29 @@
 name: "ArXiv HTML Content issue"
-description: Testing Template!
+description: Testing Version for Issue Template!
 body:
   - type: markdown
     attributes:
       value: |
-        ### Before you start
-
-        **This is a testing report template**
-        ↩ Developing.
-
-        **Report general problem**
-        🙋 [Report issue](https://github.com/YiChen8185/TestForGitHubIssue/issues/new?assignees=&labels=&projects=&title=General_Problem&template=bug_report.yml&articleTitle=GeneralProblem)
+        ### Review and add any new info before submitting an issue
         
-        **Problem**
-        ‼️ Chrome may disable the accsess to open new windows, and users will need to manually allow it.
-
-        
-        ---
+  - type: input
+    id: description
+    attributes:
+      description: User description
+      label: Description
+    validations:
+      required: true
 
   - type: textarea
     id: extra-info
     attributes:
-      label: Please free feel to share anything more?
-      description: For example, steps to reproduce a bug, screenshots, screen recordings, or sample code.
+      label: (Optional) Please add any additional info about this issue
+      description: For example the steps to reproduce a bug or screenshots.
 
-   
   - type: dropdown
     id: problem-type
     attributes:
-      label: Define the type of the problem?
+      label: (Required) What is this issue most closely related to? Select one.
       options:
         - Math
         - Figures
@@ -37,98 +32,49 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: screenReader-device
-    attributes:
-      label: If you use screenReader, which reader do you use?
-      options:
-        - VoiceOver
-        - NVDA
-        - JAWS
-        - Other
-
-  - type: input
-    id: other-sr
-    attributes:
-      label: what is your screenReader 
-      description: If you select other above for screenReader, please enter what screenReader do you use.
-
-  - type: input
-    id: contact-info
-    attributes:
-      label: Email
-      description: if you like to be volunteer to have future test on arXiv website.
-      placeholder: "Your email"
-    validations:
-      required: true
-
-
-  # Below is autofill section.
+# Below is autofill section.
   - type: markdown
     attributes:
-      value: |
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        
-        # Set automatically. Do not modify.
-        
-        
-  - type: input
-    id: description
+      value: --- 
+      
+  - type: markdown
     attributes:
-      description: Set automatically. Do not modify.
-      label: Description
-    validations:
-      required: true
-  
-  - type: input
+      value: The following data is collected automatically to help with troubleshooting. Do not modify.
+
+  - type: textarea
     id: uniqueId
     attributes:
-      label: UniqueId for the Article
+      label: Internal issue ID
       description: Set automatically. Do not modify.
-    validations:
-      required: true
-      
-  - type: input
-    id: fullUrl
-    attributes:
-      label: Url for the Article
-      description: Set automatically. Do not modify.
-    validations:
-      required: true
-  
-  - type: input
-    id: arxivId
-    attributes:
-      label: arXiv Id for the Article
-      description: Set automatically. Do not modify.
-    validations:
-      required: true
-  
-  - type: input
-    id: browserInfo
-    attributes:
-      label: browserInfo for the Article
-      description: Set automatically. Do not modify.
+      render: text
     validations:
       required: true
 
-  - type: input
+  - type: textarea
+    id: fullUrl
+    attributes:
+      label: Paper URL
+      description: Set automatically. Do not modify.
+      render: text
+
+    validations:
+      required: true
+
+#CAN WE HIDE THESE, BUT STILL HAVE THEM WRITE TO THE TICKET? (Probably not)
+  - type: textarea
+    id: browserInfo
+    attributes:
+      label: Browser
+      description: Set automatically. Do not modify.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
     id: deviceType
     attributes:
       label: Device Type
       description: Set automatically. Do not modify.
+      render: text
     validations:
       required: true
-
-      
