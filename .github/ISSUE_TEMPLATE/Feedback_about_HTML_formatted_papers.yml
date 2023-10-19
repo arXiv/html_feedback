@@ -1,29 +1,34 @@
 name: "ArXiv HTML Content issue"
-description: Testing Version for Issue Template!
+description: Testing Template!
 body:
   - type: markdown
     attributes:
       value: |
-        ### Review and add any new info before submitting an issue
+        ### Before you start
+
+        **This is a testing report template**
+        ↩ Developing.
+
+        **Report general problem**
+        🙋 [Report issue](https://github.com/YiChen8185/TestForGitHubIssue/issues/new?assignees=&labels=&projects=&title=General_Problem&template=bug_report.yml&articleTitle=GeneralProblem)
         
-  - type: input
-    id: description
-    attributes:
-      description: User description
-      label: Description
-    validations:
-      required: true
+        **Problem**
+        ‼️ Chrome may disable the accsess to open new windows, and users will need to manually allow it.
+
+        
+        ---
 
   - type: textarea
     id: extra-info
     attributes:
-      label: (Optional) Please add any additional info about this issue
-      description: For example the steps to reproduce a bug or screenshots.
+      label: Please free feel to share anything more?
+      description: For example, steps to reproduce a bug, screenshots, screen recordings, or sample code.
 
+   
   - type: dropdown
     id: problem-type
     attributes:
-      label: (Required) What is this issue most closely related to? Select one.
+      label: Define the type of the problem?
       options:
         - Math
         - Figures
@@ -32,49 +37,98 @@ body:
     validations:
       required: true
 
-# Below is autofill section.
-  - type: markdown
+  - type: dropdown
+    id: screenReader-device
     attributes:
-      value: --- 
-      
-  - type: markdown
-    attributes:
-      value: The following data is collected automatically to help with troubleshooting. Do not modify.
+      label: If you use screenReader, which reader do you use?
+      options:
+        - VoiceOver
+        - NVDA
+        - JAWS
+        - Other
 
-  - type: textarea
+  - type: input
+    id: other-sr
+    attributes:
+      label: what is your screenReader 
+      description: If you select other above for screenReader, please enter what screenReader do you use.
+
+  - type: input
+    id: contact-info
+    attributes:
+      label: Email
+      description: if you like to be volunteer to have future test on arXiv website.
+      placeholder: "Your email"
+    validations:
+      required: true
+
+
+  # Below is autofill section.
+  - type: markdown
+    attributes:
+      value: |
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+        # Set automatically. Do not modify.
+        
+        
+  - type: input
+    id: description
+    attributes:
+      description: Set automatically. Do not modify.
+      label: Description
+    validations:
+      required: true
+  
+  - type: input
     id: uniqueId
     attributes:
-      label: Internal issue ID
+      label: UniqueId for the Article
       description: Set automatically. Do not modify.
-      render: text
     validations:
       required: true
-
-  - type: textarea
+      
+  - type: input
     id: fullUrl
     attributes:
-      label: Paper URL
+      label: Url for the Article
       description: Set automatically. Do not modify.
-      render: text
-
     validations:
       required: true
-
-#CAN WE HIDE THESE, BUT STILL HAVE THEM WRITE TO THE TICKET? (Probably not)
-  - type: textarea
+  
+  - type: input
+    id: arxivId
+    attributes:
+      label: arXiv Id for the Article
+      description: Set automatically. Do not modify.
+    validations:
+      required: true
+  
+  - type: input
     id: browserInfo
     attributes:
-      label: Browser
+      label: browserInfo for the Article
       description: Set automatically. Do not modify.
-      render: text
     validations:
       required: true
 
-  - type: textarea
+  - type: input
     id: deviceType
     attributes:
       label: Device Type
       description: Set automatically. Do not modify.
-      render: text
     validations:
       required: true
+
+      
