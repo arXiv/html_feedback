@@ -41,7 +41,7 @@ body:
     attributes:
       value: The following data is collected automatically to help with troubleshooting. Do not modify.
 
-  - type: textarea
+  - type: input
     id: uniqueId
     attributes:
       label: Internal issue ID
@@ -50,7 +50,7 @@ body:
     validations:
       required: true
 
-  - type: textarea
+  - type: input
     id: fullUrl
     attributes:
       label: Paper URL
@@ -61,7 +61,7 @@ body:
       required: true
 
 #CAN WE HIDE THESE, BUT STILL HAVE THEM WRITE TO THE TICKET? (Probably not)
-  - type: textarea
+  - type: input
     id: browserInfo
     attributes:
       label: Browser
@@ -70,7 +70,7 @@ body:
     validations:
       required: true
 
-  - type: textarea
+  - type: input
     id: deviceType
     attributes:
       label: Device Type
