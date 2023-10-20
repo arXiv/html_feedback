@@ -1,4 +1,4 @@
-name: "ArXiv HTML Content issue"
+name: "Report HTML Paper Issue"
 description: Testing Version for Issue Template!
 body:
   - type: markdown
@@ -41,40 +41,35 @@ body:
     attributes:
       value: The following data is collected automatically to help with troubleshooting. Do not modify.
 
-  - type: textarea
+  - type: input
     id: uniqueId
     attributes:
       label: Internal issue ID
       description: Set automatically. Do not modify.
-      render: text
     validations:
       required: true
 
-  - type: textarea
+  - type: input
     id: fullUrl
     attributes:
       label: Paper URL
       description: Set automatically. Do not modify.
-      render: text
-
     validations:
       required: true
 
 #CAN WE HIDE THESE, BUT STILL HAVE THEM WRITE TO THE TICKET? (Probably not)
-  - type: textarea
+  - type: input
     id: browserInfo
     attributes:
       label: Browser
       description: Set automatically. Do not modify.
-      render: text
     validations:
       required: true
 
-  - type: textarea
+  - type: input
     id: deviceType
     attributes:
       label: Device Type
       description: Set automatically. Do not modify.
-      render: text
     validations:
       required: true
