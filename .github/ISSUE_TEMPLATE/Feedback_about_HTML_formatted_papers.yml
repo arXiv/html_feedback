@@ -17,7 +17,7 @@ body:
   - type: textarea
     id: extra-info
     attributes:
-      label: Optional: Please add any files, screenshots, or other information here.
+      label: (Optional:) Please add any files, screenshots, or other information here.
       description: For example the steps to reproduce a bug or screenshots.
 
   - type: dropdown
