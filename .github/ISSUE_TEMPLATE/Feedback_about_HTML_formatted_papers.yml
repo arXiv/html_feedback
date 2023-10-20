@@ -1,4 +1,4 @@
-name: "ArXiv HTML Content issue"
+name: "Report HTML Paper Issue"
 description: Testing Version for Issue Template!
 body:
   - type: markdown
