@@ -6,7 +6,7 @@ body:
       value: |
         ### Review and add any new info before submitting an issue
         
-  - type: input
+  - type: textarea
     id: description
     attributes:
       description: User description
@@ -17,7 +17,7 @@ body:
   - type: textarea
     id: extra-info
     attributes:
-      label: (Optional) Please add any additional info about this issue
+      label: (Optional:) Please add any files, screenshots, or other information here.
       description: For example the steps to reproduce a bug or screenshots.
 
   - type: dropdown
