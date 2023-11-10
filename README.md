@@ -1,2 +1,2 @@
-# html_feedback
-Supports a student project developing a UI for feedback on arXiv articles rendered as html. 
+# automated comment generation
+Support automatically genrating the comments whenever an issue is created or a label is marked.
