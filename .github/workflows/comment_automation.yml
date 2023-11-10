@@ -1,0 +1,60 @@
+name: Automated Issue Responses
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Automated Comment on Issue Creation
+        if: github.event.action == 'opened'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issueComment = `Hello @${{ github.actor }}, thanks for the issue report! Your report is being reviewed and will be addressed as soon as possible.`;
+            github.issues.createComment({
+              issue_number: ${{ github.event.issue.number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: issueComment
+            })
+
+      - name: Automated Comment on Label
+        if: github.event.action == 'labeled'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const labelName = ${{ github.event.label.name }};
+            const commentBody = getCannedResponseForLabel(labelName);
+            
+            // Define a function to get the appropriate canned response for a label
+            function getCannedResponseForLabel(label) {
+              // You would need to define your mapping of labels to canned responses
+              const cannedResponses = {
+                'bug': 'This issue has been marked as a bug. Our team will look into it shortly.',
+                'enhancement': 'This issue has been marked for enhancement. We are evaluating the suggestions.',
+                'fidelity': 'Misc mistakes and bugs in the produced HTML',
+                'front matter': 'Title page metadata and related content',
+                'figure': 'General image issues: too big, too small, position, and etc.',
+                // Add other labels and responses as needed
+                'default': 'Thank you for your contribution! We will review it soon.'
+              };
+              return cannedResponses[label] || cannedResponses['default'];
+            }
+            
+            // Leave a comment with the canned response
+            if (commentBody) {
+              github.issues.createComment({
+                issue_number: ${{ github.event.issue.number }},
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: commentBody
+              });
+            }
