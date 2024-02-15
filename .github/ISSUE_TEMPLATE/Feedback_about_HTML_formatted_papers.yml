@@ -25,6 +25,7 @@ body:
     attributes:
       label: (Required) What is this issue most closely related to? Select one.
       options:
+        - Choose One
         - Formula
         - Figures
         - References
