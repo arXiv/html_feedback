@@ -59,8 +59,14 @@ def main(request):
     internal_id = _get_internal_id(payload['issue']['body'])
     installation_id = payload['installation']['id']
 
+    print (issue_id)
+    print (internal_id)
+    print (installation_id)
+
     if internal_id:
         feedback_data = get_feedback_data(internal_id)
+
+        print (feedback_data)
 
         if feedback_data and installation_id:
             print(feedback_data)

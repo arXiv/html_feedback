@@ -32,7 +32,7 @@ def get_installation_token (installation_id: str) -> Optional[str]:
                             'Authorization': f'Bearer {_get_jwt()}',
                             'X-GitHub-Api-Version': '2022-11-28'
                         })
-    if res.status_code == 200:
+    if res.status_code == 201:
         return res.json()['token']
     else:
         logging.warning('Failed to retrieve installation token')
