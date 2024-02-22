@@ -55,7 +55,7 @@ def main(request):
 
     print(payload)
 
-    issue_id = payload['issue']['id']
+    issue_number = payload['issue']['number']
     internal_id = _get_internal_id(payload['issue']['body'])
     installation_id = payload['installation']['id']
 
@@ -70,7 +70,7 @@ def main(request):
 
         if feedback_data and installation_id:
             print(feedback_data)
-            _make_response (issue_id, _make_content(*feedback_data), installation_id)
+            _make_response (issue_number, _make_content(*feedback_data), installation_id)
         else:
             print('no feedback_data')
 
