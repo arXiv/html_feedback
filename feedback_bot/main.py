@@ -1,35 +1,44 @@
+from typing import Optional
 import re
 import os
 import requests
 
 import functions_framework
 
+from db_queries import get_feedback_data
+from feedback_bot.gh_auth import get_installation_token
+
+import logging
+
 # TODO: What to do with failures?
 
-GH_API_TOKEN = os.environ['GH_API_TOKEN']
+INTERNAL_ID_RE = re.compile(r'Internal issue ID\\n\\n([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})')
+UUID_RE = re.compile(r'[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}')
 
-INTERNAL_ID_RE = re.compile(r'Internal issue ID\s?([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})')
-UUID_RE = re.compile(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
-
-def _get_internal_id (issue_body: str) -> str:
-    if (match := re.match(INTERNAL_ID_RE, issue_body)):
+def _get_internal_id (issue_body: str) -> Optional[str]:
+    if (match := re.search(INTERNAL_ID_RE, issue_body)):
         return match.group(1)
-    elif (match := re.match(UUID_RE, issue_body)):
+    elif (match := re.search(UUID_RE, issue_body)):
         return match.group(0)
-    raise Exception # ???
+    return None
 
-def _make_response_url (issue_id: int, content: str) -> str:
+def _make_response (issue_id: int, content: str, installation_id: str) -> str:
     request_str = f'https://api.github.com/repos/arXiv/html_feedback/issues/{issue_id}/comments'
-    requests.post(request_str,
-                  json={
-                      "body": content
-                  },
-                  headers={
-                      'Accept': 'application/vnd.github+json',
-                      'Authorization': f'Bearer {GH_API_TOKEN}',
-                      'X-GitHub-Api-Version': '2022-11-28'
-                  })
-    # TODO: Add logging
+    installation_token = get_installation_token(installation_id)
+    if installation_token:
+        res = requests.post(request_str,
+                    json={
+                        "body": content
+                    },
+                    headers={
+                        'Accept': 'application/vnd.github+json',
+                        'Authorization': f'Bearer {installation_token}',
+                        'X-GitHub-Api-Version': '2022-11-28'
+                    })
+        print(f'{res.status_code}: {res.text}')
+
+def _make_content (location: str, selected_html: str) -> str:
+    return f'Location in document: {location}\n\nSelected HTML: {selected_html}'
 
 @functions_framework.http
 def main(request):
@@ -44,9 +53,19 @@ def main(request):
     """
     payload = request.get_json(silent=True)
 
+    print(payload)
+
     issue_id = payload['issue']['id']
     internal_id = _get_internal_id(payload['issue']['body'])
+    installation_id = payload['installation']['id']
 
+    if internal_id:
+        feedback_data = get_feedback_data(internal_id)
 
+        if feedback_data and installation_id:
+            print(feedback_data)
+            _make_response (issue_id, _make_content(*feedback_data), installation_id)
+        else:
+            print('no feedback_data')
 
-    
+    return '', 200

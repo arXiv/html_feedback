@@ -1,0 +1,4 @@
+sqlalchemy
+pg8000
+jwt
+requests
