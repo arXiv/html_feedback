@@ -59,7 +59,7 @@ def main(request):
     internal_id = _get_internal_id(payload['issue']['body'])
     installation_id = payload['installation']['id']
 
-    print (issue_id)
+    print (issue_number)
     print (internal_id)
     print (installation_id)
 
