@@ -6,7 +6,7 @@ import requests
 import functions_framework
 
 from db_queries import get_feedback_data
-from feedback_bot.gh_auth import get_installation_token
+from gh_auth import get_installation_token
 
 import logging
 
