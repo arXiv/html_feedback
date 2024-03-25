@@ -1,14 +1,13 @@
 from typing import Optional
+import base64
+from urllib.parse import unquote
 import re
-import os
 import requests
 
 import functions_framework
 
 from db_queries import get_feedback_data
 from gh_auth import get_installation_token
-
-import logging
 
 # TODO: What to do with failures?
 
@@ -37,8 +36,35 @@ def _make_response (issue_id: int, content: str, installation_id: str) -> str:
                     })
         print(f'{res.status_code}: {res.text}')
 
+def _data_url_to_html(data_url):
+    """
+    Converts a data URL to human-readable HTML or text.
+    
+    Parameters:
+    - data_url (str): A data URL containing encoded HTML or text.
+    
+    Returns:
+    - str: The decoded HTML or text.
+    """
+    # Split the data URL at the first comma to separate metadata from data
+    metadata, encoded_data = data_url.split(',', 1)
+    
+    # Check if the data is Base64 encoded
+    if ";base64" in metadata:
+        # Decode the Base64 data
+        raw_data = base64.b64decode(encoded_data)
+    else:
+        # URL-decode the data
+        raw_data = unquote(encoded_data)
+    
+    # Convert bytes to string if necessary
+    if isinstance(raw_data, bytes):
+        raw_data = raw_data.decode('utf-8')
+    
+    return raw_data
+
 def _make_content (location: str, selected_html: str) -> str:
-    return f'Location in document: {location}\n\nSelected HTML: {selected_html}'
+    return f'Location in document: {location}\n\nSelected HTML: {_data_url_to_html(selected_html)}'
 
 @functions_framework.http
 def main(request):
