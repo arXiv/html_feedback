@@ -38,7 +38,7 @@ def _make_response (issue_id: int, content: str, installation_id: str) -> str:
         print(f'{res.status_code}: {res.text}')
 
 def _make_content (location: str, selected_html: str) -> str:
-    return f'Location in document: {location}\n\nSelected HTML: [Link]({selected_html})'
+    return f'Location in document: {location}\n\nSelected HTML: {selected_html}'
 
 @functions_framework.http
 def main(request):
