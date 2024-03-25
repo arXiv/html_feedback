@@ -55,6 +55,9 @@ def main(request):
 
     print(payload)
 
+    if payload.get('action') != 'opened':
+        return '', 200
+
     issue_number = payload['issue']['number']
     internal_id = _get_internal_id(payload['issue']['body'])
     installation_id = payload['installation']['id']
