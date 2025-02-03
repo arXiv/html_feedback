@@ -17,7 +17,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueComment = `Hello @${{ github.actor }}, thanks for the issue report! We are reviewing your report and will address it as soon as possible.`;
+            const issueComment = `Hello @${{ github.actor }}, we have received your feedback and are reviewing it. \n Your reports on HTML issues help our developers prioritize improvements to our HTML conversion process, helping make arXiv more accessible. Thank you! \nPlease note that:\n • We receive a high volume of reports – while we track, review, and assess each issue reported, we cannot respond to reporters individually.\n • This GitHub repository ONLY tracks reports that are about the experimental HTML format – if you report an issue that is not relevant to HTML rendering, it will not be noted or tracked. \n • For issues that are not relevant to HTML rendering (e.g. issues that also appear in the PDF) please contact the author (for issues like typos or deadlinks) or submit a ticket to the arXiv user support portal (http://arxiv.org/support/general_help). `;
             github.issues.createComment({
               issue_number: ${{ github.event.issue.number }},
               owner: context.repo.owner,
